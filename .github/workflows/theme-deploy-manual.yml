@@ -1,0 +1,65 @@
+name: Theme Deploy (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      theme_id:
+        description: "Theme ID à déployer (laisse vide pour utiliser le secret THEME_ID)"
+        type: string
+        required: false
+      allow_live:
+        description: "Autoriser le push sur le thème LIVE ?"
+        type: boolean
+        default: false
+        required: true
+      message:
+        description: "Message de déploiement (optionnel)"
+        type: string
+        required: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_STORE }}            # ex: thepetsociety.paris
+      SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}  # shptka_...
+      THEME_ID_FALLBACK: ${{ secrets.THEME_ID }}                  # valeur par défaut
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Vérifs préalables
+        run: |
+          [ -n "${SHOPIFY_FLAG_STORE:-}" ] || { echo "❌ SHOPIFY_STORE manquant (secret)"; exit 1; }
+          [ -n "${SHOPIFY_CLI_THEME_TOKEN:-}" ] || { echo "❌ SHOPIFY_CLI_THEME_TOKEN manquant (secret)"; exit 1; }
+          if [ -z "${{ inputs.theme_id }}" ] && [ -z "${THEME_ID_FALLBACK:-}" ]; then
+            echo "❌ Aucun THEME_ID fourni (ni input, ni secret THEME_ID)."
+            exit 1
+          fi
+
+      - name: Installer Shopify CLI
+        run: npm i -g @shopify/cli @shopify/theme
+
+      - name: Résoudre THEME_ID
+        id: rid
+        run: |
+          THEME_ID="${{ inputs.theme_id }}"
+          if [ -z "$THEME_ID" ]; then THEME_ID="${THEME_ID_FALLBACK}"; fi
+          echo "theme_id=$THEME_ID" >> "$GITHUB_OUTPUT"
+
+      - name: Lister les thèmes (sanity check)
+        run: shopify theme list --json
+
+      - name: Déploiement
+        run: |
+          THEME_ID="${{ steps.rid.outputs.theme_id }}"
+          MSG="${{ inputs.message }}"
+          ARGS="--theme-id \"$THEME_ID\" --force"
+          # Par défaut, on bloque le live. On n'ajoute --allow-live que si demandé.
+          if [ "${{ inputs.allow_live }}" = "true" ]; then
+            ARGS="$ARGS --allow-live"
+          fi
+          if [ -n "$MSG" ]; then
+            ARGS="$ARGS --message \"$MSG\""
+          fi
+          echo "➡️ shopify theme push $ARGS"
+          eval shopify theme push $ARGS
