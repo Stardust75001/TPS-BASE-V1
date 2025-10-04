@@ -105,7 +105,7 @@
     {% comment %} Sentry Monitoring {% endcomment %}
     <!-- Sentry Monitoring (local asset loader with CDN fallback) -->
     {% if settings.sentry_enabled and settings.sentry_dsn %}
-      <script src="{{ 'sentry-init.js.liquid' | asset_url }}" defer></script>
+      <script src="{{ 'sentry-init.js' | asset_url }}" defer></script>
     {% endif %}
     <!-- /Sentry Monitoring -->
 
