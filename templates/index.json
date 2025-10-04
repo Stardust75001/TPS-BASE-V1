@@ -1,9 +1,35 @@
 {
   "sections": {
-    "banner": {
-      "type": "banner",
-      "settings": {}
+    "hero": {
+      "type": "video-hero",
+      "settings": {
+        "heading": "Bienvenue chez THE PET SOCIETY",
+        "subheading": "Nouveautés & best-sellers",
+        "autoplay": true,
+        "muted": true,
+        "loop": true
+      }
+    },
+    "feat_col": {
+      "type": "featured-collections",
+      "settings": {
+        "title": "Nos collections"
+      }
+    },
+    "feat_prod": {
+      "type": "featured-products",
+      "settings": {
+        "title": "Nos best-sellers",
+        "products_to_show": 8
+      }
+    },
+    "about": {
+      "type": "richtext",
+      "settings": {
+        "title": "À propos",
+        "text": "<p>Notre sélection premium pour vos compagnons.</p>"
+      }
     }
   },
-  "order": ["banner"]
+  "order": ["hero", "feat_col", "feat_prod", "about"]
 }
