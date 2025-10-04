@@ -1,0 +1,64 @@
+name: Theme Deploy with Backup (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      theme_id:
+        description: "Theme ID à déployer (sinon secret THEME_ID)"
+        type: string
+        required: false
+      allow_live:
+        description: "Autoriser le push sur le thème LIVE ?"
+        type: boolean
+        default: false
+      message:
+        description: "Message de déploiement (optionnel)"
+        type: string
+        required: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SHOPIFY_FLAG_STORE: ${{ secrets.SHOPIFY_STORE }}
+      SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+      THEME_ID_FALLBACK: ${{ secrets.THEME_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Vérifs préalables
+        run: |
+          [ -n "${SHOPIFY_FLAG_STORE:-}" ] || { echo "❌ SHOPIFY_STORE manquant (secret)"; exit 1; }
+          [ -n "${SHOPIFY_CLI_THEME_TOKEN:-}" ] || { echo "❌ SHOPIFY_CLI_THEME_TOKEN manquant (secret)"; exit 1; }
+
+      - name: Installer Shopify CLI
+        run: npm i -g @shopify/cli @shopify/theme
+
+      - name: Résoudre THEME_ID
+        id: rid
+        run: |
+          THEME_ID="${{ inputs.theme_id }}"
+          if [ -z "$THEME_ID" ]; then THEME_ID="${THEME_ID_FALLBACK}"; fi
+          echo "theme_id=$THEME_ID" >> "$GITHUB_OUTPUT"
+
+      - name: Créer un backup du thème
+        run: |
+          THEME_ID="${{ steps.rid.outputs.theme_id }}"
+          BACKUP_NAME="backup-$(date +'%Y%m%d-%H%M%S')"
+          echo "➡️ Création d’un backup : $BACKUP_NAME"
+          shopify theme pull --theme-id "$THEME_ID" --path "backup-$BACKUP_NAME"
+          shopify theme push --theme-id "$THEME_ID" --development --message "Backup $BACKUP_NAME" --force
+
+      - name: Déployer le thème
+        run: |
+          THEME_ID="${{ steps.rid.outputs.theme_id }}"
+          MSG="${{ inputs.message }}"
+          ARGS="--theme-id \"$THEME_ID\" --force"
+          if [ "${{ inputs.allow_live }}" = "true" ]; then
+            ARGS="$ARGS --allow-live"
+          fi
+          if [ -n "$MSG" ]; then
+            ARGS="$ARGS --message \"$MSG\""
+          fi
+          echo "➡️ Déploiement sur $THEME_ID"
+          eval shopify theme push $ARGS
