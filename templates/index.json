@@ -1,9 +1,9 @@
 {
   "sections": {
-    "hero": {
+    "banner": {
       "type": "banner",
       "settings": {}
     }
   },
-  "order": ["hero"]
+  "order": ["banner"]
 }
