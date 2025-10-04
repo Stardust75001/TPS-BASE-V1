@@ -1,0 +1,157 @@
+name: Shopify CI
+
+on:
+  pull_request:
+    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  basic-build:
+    name: basic-build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install deps
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm i --no-audit --no-fund; fi
+      - name: Build
+        run: |
+          if npm run | grep -qE '^  build'; then npm run build; else echo "No build script; skipping."; fi
+      - name: Upload build artifacts (optional)
+        if: ${{ hashFiles('dist/**','build/**','public/**') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: |
+            dist/**
+            build/**
+            public/**
+          if-no-files-found: ignore
+
+  theme-check:
+    name: theme-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+        if: ${{ hashFiles('**/Gemfile') != '' }}
+      - name: Install theme-check via Bundler
+        run: bundle install --without development test || true
+        if: ${{ hashFiles('**/Gemfile') != '' }}
+      - name: Install theme-check gem
+        run: sudo gem install theme-check --no-document
+        if: ${{ hashFiles('**/Gemfile') == '' }}
+      - name: Run theme-check (fail on error)
+        run: |
+          if [ -f Gemfile ]; then
+            bundle exec theme-check --fail-level=error .
+          else
+            theme-check --fail-level=error .
+          fi
+
+  json-sanity:
+    name: json-sanity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JSON files (config/, locales/)
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          files=()
+          for d in config locales; do for f in "$d"/*.json; do files+=("$f"); done; done
+          [ ${#files[@]} -eq 0 ] && { echo "No JSON files"; exit 0; }
+          for f in "${files[@]}"; do jq -e . "$f" >/dev/null; done
+          echo "All JSON valid ✅"
+
+  eslint:
+    name: eslint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install deps
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm i --no-audit --no-fund; fi
+      - name: ESLint
+        run: |
+          if npm run | grep -qE '^  lint:js'; then
+            npm run lint:js
+          elif npx --yes eslint -v >/dev/null 2>&1; then
+            npx eslint --ext .js,.ts,.tsx assets scripts src || exit $?
+          else
+            echo "ESLint not configured; skipping."; exit 0
+          fi
+
+  stylelint:
+    name: stylelint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install deps
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm i --no-audit --no-fund; fi
+      - name: Stylelint
+        run: |
+          if npm run | grep -qE '^  lint:css'; then
+            npm run lint:css
+          elif npx --yes stylelint --version >/dev/null 2>&1; then
+            npx stylelint "**/*.{css,scss}" --allow-empty-input
+          else
+            echo "Stylelint not configured; skipping."; exit 0
+          fi
+
+  bundle-size:
+    name: bundle-size
+    runs-on: ubuntu-latest
+    needs: basic-build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install deps
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm i --no-audit --no-fund; fi
+      - name: Build (ensure dist/)
+        run: |
+          if npm run | grep -qE '^  build'; then npm run build; else echo "No build script; exit 0"; fi
+      - name: Check bundle size (<= 500 KB each asset)
+        shell: bash
+        run: |
+          shopt -s nullglob
+          max_kb=500
+          fails=0
+          for f in dist/**/*.js dist/**/*.css build/**/*.js build/**/*.css; do
+            [ -e "$f" ] || continue
+            size_kb=$(( $(stat -c%s "$f" 2>/dev/null || stat -f%z "$f") / 1024 ))
+            echo "$f — ${size_kb}KB"
+            if [ "$size_kb" -gt "$max_kb" ]; then
+              echo "::error file=$f::Bundle exceeds ${max_kb}KB (${size_kb}KB)"; fails=1
+            fi
+          done
+          exit $fails
