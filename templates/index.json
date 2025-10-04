@@ -1,7 +1,7 @@
 {
   "sections": {
     "hero": {
-      "type": "image-banner",
+      "type": "banner",
       "settings": {}
     }
   },
