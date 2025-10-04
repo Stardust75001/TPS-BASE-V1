@@ -1,19 +1,5 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "current": {
-    "sentry_enabled": true,
-    "sentry_dsn": "https://7a7975bb87b245b9a5d4b0e6b492f6d0@o4501342949672960.ingest.sentry.io/4501342950033408",
-    "sentry_traces_sample_rate": 0.1,
-    "sentry_debug": false,
-    "sentry_security_token": "https://7a7975bb87b245b9a5d4b0e6b492f6d0@o4501342949672960.ingest.sentry.io/4501342950033408",
     "color_primary": "#816c58",
     "color_secondary": "#889080",
     "color_tertiary": "#435661",
@@ -34,6 +20,10 @@
     "browser_tab_enable": false,
     "browser_tab_text": "Come back ❤️",
     "wishlist_enable": true,
+    "sentry_enabled": true,
+    "sentry_dsn": "https://7a7975bb87b245b9a5d4b0e6b492f6d0@o4501342949672960.ingest.sentry.io/4501342950033408",
+    "sentry_traces_sample_rate": 0.1,
+    "sentry_debug": false,
     "cooks": true,
     "bg_cooks": "bg-secondary text-white",
     "cooks_subtitle": "Hey there! It’s us",
@@ -249,6 +239,8 @@
         "disabled": false,
         "settings": {}
       }
-    }
+    },
+    "sentry_security_token": "NOT_SET",
+    "code_head": ""
   }
 }
