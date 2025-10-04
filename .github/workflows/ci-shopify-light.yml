@@ -1,0 +1,67 @@
+name: CI · Shopify (light)
+
+on:
+  push:
+    branches: [ dev, main ]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-shopify-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SITE_ORIGIN: https://www.thepetsociety.paris
+  URL_HOME: https://www.thepetsociety.paris/
+  URL_COLLECTION: https://www.thepetsociety.paris/collections/tous-les-produits
+  URL_PRODUCT: https://www.thepetsociety.paris/products/un-produit-exemple
+  SITEMAP_URL: https://www.thepetsociety.paris/sitemap.xml
+  ROBOTS_URL: https://www.thepetsociety.paris/robots.txt
+  # ⚠️ remplace par un vrai variantId (en stock) ou laisse 0 pour sauter le test add-to-cart
+  VARIANT_ID: "0"
+
+jobs:
+  theme-check:
+    name: Theme Check (Liquid)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+      - name: Install & run Theme Check
+        run: |
+          gem install theme-check
+          theme-check --version
+          # mets --fail-level=error pour être plus strict
+          theme-check --fail-level suggestion
+
+  smoke:
+    name: Smoke tests (200 + add-to-cart optionnel)
+    runs-on: ubuntu-latest
+    needs: [theme-check]
+    steps:
+      - name: Pages clés: HTTP 200
+        run: |
+          for u in "${URL_HOME}" "${URL_COLLECTION}" "${URL_PRODUCT}"; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$u")
+            echo "$u -> $code"
+            [ "$code" = "200" ] || { echo "FAIL $u ($code)"; exit 1; }
+          done
+      - name: robots.txt & sitemap existent
+        run: |
+          curl -sSf "${ROBOTS_URL}"  >/dev/null
+          curl -sSf "${SITEMAP_URL}" >/dev/null
+      - name: Add to cart (skipped if VARIANT_ID=0)
+        run: |
+          if [ "${VARIANT_ID}" = "0" ]; then
+            echo "VARIANT_ID=0 -> test add-to-cart sauté."
+            exit 0
+          fi
+          code=$(curl -s -X POST \
+            -H "Content-Type: application/json" \
+            -d "{\"items\":[{\"id\":${VARIANT_ID},\"quantity\":1}]}" \
+            -o /dev/null -w "%{http_code}" \
+            "${SITE_ORIGIN}/cart/add.js")
+          echo "Add-to-cart status: $code"
+          # Shopify peut renvoyer 302 selon la config
+          echo "$code" | grep -qE '200|302' || exit 1
