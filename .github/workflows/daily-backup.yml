@@ -1,0 +1,102 @@
+name: Daily Shopify Theme Backup (live → backups)
+
+on:
+  schedule:
+    - cron: "15 3 * * *"      # quotidien 03:15 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+env:
+  SHOPIFY_STORE: ${{ secrets.SHOPIFY_STORE }}                 # ex: red72-6f.myshopify.com
+  SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout (main)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Switch to backups branch (create if missing)
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch origin
+          if git ls-remote --exit-code --heads origin backups >/dev/null 2>&1; then
+            git checkout backups
+          else
+            git checkout --orphan backups
+            find . -mindepth 1 -maxdepth 1 ! -name ".git" -exec rm -rf {} +
+            echo "# Shopify theme backups" > README.md
+            git add README.md
+            git commit -m "init backups branch"
+            git push -u origin backups
+          fi
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Shopify CLI + jq
+        run: |
+          npm i -g @shopify/cli
+          sudo apt-get update -y
+          sudo apt-get install -y jq
+
+      - name: Configure Git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Detect live theme (ID + name)
+        shell: bash
+        run: |
+          set -euo pipefail
+          json="$(shopify theme list --store="$SHOPIFY_STORE" --json)"
+          THEME_ID=$(echo "$json" | jq -r '.themes[] | select(.role=="live") | .id')
+          THEME_NAME=$(echo "$json" | jq -r '.themes[] | select(.role=="live") | .name')
+          [ -n "$THEME_ID" ] && [ "$THEME_ID" != "null" ] || { echo "No live theme"; exit 1; }
+          THEME_SLUG=$(echo "$THEME_NAME" | tr '[:space:]' '_' | tr -cd '[:alnum:]_-')
+          echo "THEME_ID=$THEME_ID"     >> "$GITHUB_ENV"
+          echo "THEME_NAME=$THEME_NAME" >> "$GITHUB_ENV"
+          echo "THEME_SLUG=$THEME_SLUG" >> "$GITHUB_ENV"
+          echo "✔ Live theme: $THEME_NAME (ID: $THEME_ID)"
+
+      - name: Pull live theme
+        shell: bash
+        run: |
+          set -euo pipefail
+          TS="$(date +%Y%m%d-%H%M%S)"
+          OUTDIR="backup_${THEME_SLUG}_${THEME_ID}_${TS}"
+          echo "→ Pulling to $OUTDIR"
+          shopify theme pull \
+            --store="$SHOPIFY_STORE" \
+            --theme "$THEME_ID" \
+            --path "$OUTDIR"
+
+      - name: Cleanup old backups (keep last 30)
+        shell: bash
+        run: |
+          set -euo pipefail
+          KEEP=30
+          TO_DELETE=$(ls -1dt backup_* 2>/dev/null | tail -n +$((KEEP+1)) || true)
+          if [ -n "$TO_DELETE" ]; then
+            echo "Deleting old backups:"; echo "$TO_DELETE"
+            rm -rf $TO_DELETE
+          else
+            echo "No old backups to delete."
+          fi
+
+      - name: Commit & push to backups
+        shell: bash
+        run: |
+          set -euo pipefail
+          git add -A
+          git commit -m "backup(live): ${THEME_NAME} [${THEME_ID}] @ $(date +%Y%m%d-%H%M%S)" || echo "Nothing to commit"
+          git push origin backups
