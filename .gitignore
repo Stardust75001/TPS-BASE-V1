@@ -1,0 +1,28 @@
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Node / build
+node_modules/
+npm-debug.log*
+dist/
+build/
+coverage/
+
+# Shopify / secrets / état local
+.env
+.env.*
+.shopify-cli.yml
+.shopify/
+*.local
+*.min.*.map
+
+# Theme Check cache
+.tmp/
+.cache/
+.theme-check.yml.lock
+
+# Config sensibles (ne versionne pas l'état de la boutique)
+config/settings_data.json

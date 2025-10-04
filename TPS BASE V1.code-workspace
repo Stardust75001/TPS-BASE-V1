@@ -1,0 +1,16 @@
+{
+  "folders": [],
+  "settings": {
+    "typescript.validate.enable": false,
+    "javascript.validate.enable": true,
+    "typescript.preferences.includePackageJsonAutoImports": "auto",
+    "files.associations": {
+      "*.css.liquid": "css",
+      "*.liquid": "liquid"
+    },
+    "emmet.includeLanguages": {
+      "liquid": "html"
+    },
+    "liquid.format.enable": true
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "tps-base-v1",
+  "version": "1.6.0",
+  "description": "TPS BASE V1 - Shopify Theme by Shopiweb Premium",
+  "main": "index.js",
+  "scripts": {
+    "dev": "shopify theme dev",
+    "build": "shopify theme build",
+    "deploy": "shopify theme push",
+    "pull": "shopify theme pull",
+    "check": "theme-check .",
+    "troubleshoot": "node -e \"console.log(\"🔧 VS Code Language Server Troubleshooter\"); console.log(\"Node.js version:\", process.version);\"",
+    "fix-stylelint": "npm uninstall stylelint && npm install --save-dev stylelint@14.16.1",
+    "update-analytics": "node scripts/update-analytics-config.js",
+    "check-integrations": "node scripts/check-integrations.js"
+  },
+  "author": "Équipe Shopiweb",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "devDependencies": {
+    "stylelint": "^14.16.1"
+  }
+}
