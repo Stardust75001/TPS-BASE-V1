@@ -1,1 +1,51 @@
-{"sections":{"breadcrumbs":{"type":"breadcrumbs","settings":{"bg_color":"","container":"container","pt":3,"pb":0,"mt":0,"mb":0}},"contact_form":{"type":"contact-form","settings":{"bg_color":"","max_width":"800","pt":5,"pb":5,"mt":0,"mb":0}},"contact_info":{"type":"page-content","settings":{"bg_color":"","max_width":"1320","pt":0,"pb":5,"mt":0,"mb":0}}},"order":["breadcrumbs","contact_form","contact_info"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumbs": {
+      "type": "breadcrumbs",
+      "settings": {
+        "bg_color": "",
+        "container": "container",
+        "pt": 3,
+        "pb": 0,
+        "mt": 0,
+        "mb": 0
+      }
+    },
+    "contact_form": {
+      "type": "contact-form",
+      "settings": {
+        "bg_color": "",
+        "max_width": "800",
+        "pt": 5,
+        "pb": 5,
+        "mt": 0,
+        "mb": 0
+      }
+    },
+    "contact_info": {
+      "type": "page-content",
+      "settings": {
+        "bg_color": "",
+        "max_width": "1320",
+        "pt": 0,
+        "pb": 5,
+        "mt": 0,
+        "mb": 0
+      }
+    }
+  },
+  "order": [
+    "breadcrumbs",
+    "contact_form",
+    "contact_info"
+  ]
+}
