@@ -1,107 +1,126 @@
 {% comment %}
----------------------------------------------------------
-Copyright © 2019/2024 Theme Shopiweb Premium. Tous droits réservés.
-La copie, la modification, la distribution ou l'utilisation
-non autorisée de ce code ou de toute partie de celui-ci est formellement interdite.
-Les contrevenants seront poursuivis dans toute la mesure permise par la loi.
----------------------------------------------------------
+  ---------------------------------------------------------
+  Copyright © 2019/2024 Theme Shopiweb Premium. Tous droits réservés.
+  La copie, la modification, la distribution ou l'utilisation
+  non autorisée de ce code ou de toute partie de celui-ci est formellement interdite.
+  Les contrevenants seront poursuivis dans toute la mesure permise par la loi.
+  ---------------------------------------------------------
 {% endcomment %}
 
-{% liquid 
-    assign pt = section.settings.pt | prepend: 'pt-'
-    assign pb = section.settings.pb | prepend: 'pb-'
-    assign mt = section.settings.mt | prepend: 'mt-'
-    assign mb = section.settings.mb | prepend: 'mb-'
+{% liquid
+  assign pt = section.settings.pt | prepend: 'pt-'
+  assign pb = section.settings.pb | prepend: 'pb-'
+  assign mt = section.settings.mt | prepend: 'mt-'
+  assign mb = section.settings.mb | prepend: 'mb-'
 
-    assign bg_color = section.settings.bg_color
+  assign bg_color = section.settings.bg_color
 
-    if section.settings.bg_gradient
-        assign bg_color = bg_color | append: ' bg-gradient'
-    endif
+  if section.settings.bg_gradient
+    assign bg_color = bg_color | append: ' bg-gradient'
+  endif
 %}
-  
-<section id="counter-elite-{{ section.id }}" 
-         class="counter-elite enter-view {{ bg_color }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+
+<section
+  id="counter-elite-{{ section.id }}"
+  class="counter-elite enter-view {{ bg_color }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}"
+>
   <div
     class="countdown-banner-{{ section.id }}-wrapper container mx-auto"
-    style="max-width: {{ section.settings.max_width }}px;">
-
+    style="max-width: {{ section.settings.max_width }}px;"
+  >
     <div
-      class="countdown-banner-{{ section.id }}">
-      
+      class="countdown-banner-{{ section.id }}"
+    >
       <div class="countdown-banner-content">
         {% for block in section.blocks %}
           {% case block.type %}
             {% when 'text' %}
-              <div class="countdown-banner-text-{{ section.id }}-{{ block.id }} {{ block.settings.text_align }}" {{ block.shopify_attributes }}>
+              <div
+                class="countdown-banner-text-{{ section.id }}-{{ block.id }} {{ block.settings.text_align }}"
+                {{ block.shopify_attributes }}
+              >
                 {% unless block.settings.subtitle_img == blank %}
-                    <div 
-                        class="animate__animated animate__faster opacity-0"
-                        {% if settings.effect_apply_caption_enable %}
-                          data-animate-class="{{ settings.animation_caption_name }}"
-                          style="animation-delay: 1200ms;"
-                        {% endif %}>
-                            <img
-                                class="img-fluid mb-5"
-                                src="{{ block.settings.subtitle_img.src | image_url: width: block.settings.brand_image_size }}"
-                                alt="{{ block.settings.subtitle_img.alt | escape }}"
-                                width="{{ block.settings.brand_image_size }}"
-                                height="auto"
-                                loading="lazy">
-                        </div>
+                  <div
+                    class="animate__animated animate__faster opacity-0"
+                    {% if settings.effect_apply_caption_enable %}
+                      data-animate-class="{{ settings.animation_caption_name }}"
+                      style="animation-delay: 1200ms;"
+                    {% endif %}
+                  >
+                    <img
+                      class="img-fluid mb-5"
+                      src="{{ block.settings.subtitle_img.src | image_url: width: block.settings.brand_image_size }}"
+                      alt="{{ block.settings.subtitle_img.alt | escape }}"
+                      width="{{ block.settings.brand_image_size }}"
+                      height="auto"
+                      loading="lazy"
+                    >
+                  </div>
                 {% endunless %}
                 {% unless block.settings.subtitle == blank %}
-                    <div 
-                        class="animate__animated animate__faster opacity-0"
-                        {% if settings.effect_apply_caption_enable %}
-                          data-animate-class="{{ settings.animation_caption_name }}"
-                          style="animation-delay: 1000ms;"
-                        {% endif %}>
-                            <p class="subtitle text-uppercase fw-500 mb-3 {{ block.settings.subtitle_size }}"
-                                style="color:{{ block.settings.color_caption }};">
-                                {{ block.settings.subtitle }}
-                            </p>
-                    </div>
-                {% endunless %} 
-                {% unless block.settings.title == blank %}
-                    <{{ block.settings.heading_tag }} class="title mb-4 {{ block.settings.title_size }} animate__animated animate__faster opacity-0"
-                      {% if settings.effect_apply_title_enable %}
-                        data-animate-class="{{ settings.animation_title_name }}"
-                        style="animation-delay: 200ms;"
-                      {% endif %}
+                  <div
+                    class="animate__animated animate__faster opacity-0"
+                    {% if settings.effect_apply_caption_enable %}
+                      data-animate-class="{{ settings.animation_caption_name }}"
+                      style="animation-delay: 1000ms;"
+                    {% endif %}
+                  >
+                    <p
+                      class="subtitle text-uppercase fw-500 mb-3 {{ block.settings.subtitle_size }}"
+                      style="color:{{ block.settings.color_caption }};"
                     >
-                        {{ block.settings.title }}
-                        {% if settings.custom_svg_h2 != blank %}
-                          <div class="h2_svg animate__animated animate__faster opacity-0"
-                              {% if settings.effect_apply_svg_enable %} 
-                                data-animate-class="{{ settings.animation_svg_name }}"
-                                style="animation-delay: 400ms;"
-                              {% endif %}
-                          >
-                            <span style="fill:{{ block.settings.color_svg_h2 }}; width:{{ settings.width_svg_h2 }}rem;"> {{ settings.custom_svg_h2 }}</span>
-                          </div>
-                        {% else %}
-                          {% if settings.svg_h2 != 'none' %}
-                            <div class="h2_svg mb-4 animate__animated animate__faster opacity-0"
-                                  {% if settings.effect_apply_svg_enable %} 
-                                    data-animate-class="{{ settings.animation_svg_name }}"
-                                    style="animation-delay: 400ms;"
-                                  {% endif %}>
-                              <span style="fill:{{ block.settings.color_svg_h2 }}; width:{{ settings.width_svg_h2 }}rem;"> {% render 'svg-subtitle', svg_h2: settings.svg_h2 %}</span>
-                            </div>
-                          {% endif %}
+                      {{ block.settings.subtitle }}
+                    </p>
+                  </div>
+                {% endunless %}
+                {% unless block.settings.title == blank %}
+                  <{{ block.settings.heading_tag }}
+                    class="title mb-4 {{ block.settings.title_size }} animate__animated animate__faster opacity-0"
+                    {% if settings.effect_apply_title_enable %}
+                      data-animate-class="{{ settings.animation_title_name }}"
+                      style="animation-delay: 200ms;"
+                    {% endif %}
+                  >
+                    {{ block.settings.title }}
+                    {% if settings.custom_svg_h2 != blank %}
+                      <div
+                        class="h2_svg animate__animated animate__faster opacity-0"
+                        {% if settings.effect_apply_svg_enable %}
+                          data-animate-class="{{ settings.animation_svg_name }}"
+                          style="animation-delay: 400ms;"
                         {% endif %}
-                    </{{ block.settings.heading_tag }}>
+                      >
+                        <span style="fill:{{ block.settings.color_svg_h2 }}; width:{{ settings.width_svg_h2 }}rem;">
+                          {{ settings.custom_svg_h2 -}}
+                        </span>
+                      </div>
+                    {% else %}
+                      {% if settings.svg_h2 != 'none' %}
+                        <div
+                          class="h2_svg mb-4 animate__animated animate__faster opacity-0"
+                          {% if settings.effect_apply_svg_enable %}
+                            data-animate-class="{{ settings.animation_svg_name }}"
+                            style="animation-delay: 400ms;"
+                          {% endif %}
+                        >
+                          <span style="fill:{{ block.settings.color_svg_h2 }}; width:{{ settings.width_svg_h2 }}rem;">
+                            {% render 'svg-subtitle', svg_h2: settings.svg_h2 -%}
+                          </span>
+                        </div>
+                      {% endif %}
+                    {% endif %}
+                  </{{ block.settings.heading_tag }}>
                 {% endunless %}
                 {% unless block.settings.description == blank %}
-                    <div class="description rte text-muted mt-n2 {{ block.settings.description_size }} animate__animated animate__faster opacity-0"
-                         {% if settings.effect_apply_description_enable %} 
-                            data-animate-class="{{ settings.animation_description_name }}"
-                            style="animation-delay: 600ms;"
-                         {% endif %}
-                    >
-                        {{ block.settings.description }}
-                    </div>
+                  <div
+                    class="description rte text-muted mt-n2 {{ block.settings.description_size }} animate__animated animate__faster opacity-0"
+                    {% if settings.effect_apply_description_enable %}
+                      data-animate-class="{{ settings.animation_description_name }}"
+                      style="animation-delay: 600ms;"
+                    {% endif %}
+                  >
+                    {{ block.settings.description }}
+                  </div>
                 {% endunless %}
               </div>
             {% when 'timer' %}
@@ -151,7 +170,8 @@ Les contrevenants seront poursuivis dans toute la mesure permise par la loi.
               </style>
 
               <div
-                class="timer-countdown-{{ section.id }}-{{ block.id }}"{{ block.shopify_attributes }}
+                class="timer-countdown-{{ section.id }}-{{ block.id }}"
+                {{ block.shopify_attributes }}
                 style="color: {{ block.settings.color }}; --color: {{ block.settings.color }};"
               >
                 <div class="time-block">
@@ -273,85 +293,85 @@ Les contrevenants seront poursuivis dans toute la mesure permise par la loi.
       "info": "👉 Version de l'application Shopiweb Premium"
     },
     {
-        "type": "paragraph", 
-        "content": "Documentation FR : [Compteur Elite by Shopiweb](https:\/\/www.docs.shopiweb.fr\/theme-premium\/documentation\/sections\/compteur-elite)"
+      "type": "paragraph",
+      "content": "Documentation FR : [Compteur Elite by Shopiweb](https:\/\/www.docs.shopiweb.fr\/theme-premium\/documentation\/sections\/compteur-elite)"
     },
     {
       "type": "header",
       "content": "General"
     },
     {
-        "type": "select",
-        "id": "bg_color",
-        "label": "Couleur de l'arrière plan",
-        "default": "bg-body text-body",
-        "options": [
-            { "group": "Principal", "value": "bg-primary text-white", "label": "Primaire" },
-            { "group": "Principal", "value": "bg-secondary text-white", "label": "Secondaire" },
-            { "group": "Principal", "value": "bg-tertiary text-white", "label": "Tertiaire" },
-            { "group": "Intermédiaire", "value": "bg-white text-dark", "label": "Blanc" },
-            { "group": "Intermédiaire", "value": "bg-light text-body", "label": "Claire" },
-            { "group": "Intermédiaire", "value": "bg-dark text-white", "label": "Sombre" },
-            { "group": "Par défaut", "value": "bg-body text-body", "label": "Corps (body)" },
-            { "group": "Alerte", "value": "bg-success text-white", "label": "Succès" },
-            { "group": "Alerte", "value": "bg-warning text-dark", "label": "Avertissement" },
-            { "group": "Alerte", "value": "bg-danger text-white", "label": "Danger" },
-            { "group": "Alerte", "value": "bg-info text-white", "label": "Info" }
-        ]
+      "type": "select",
+      "id": "bg_color",
+      "label": "Couleur de l'arrière plan",
+      "default": "bg-body text-body",
+      "options": [
+        { "group": "Principal", "value": "bg-primary text-white", "label": "Primaire" },
+        { "group": "Principal", "value": "bg-secondary text-white", "label": "Secondaire" },
+        { "group": "Principal", "value": "bg-tertiary text-white", "label": "Tertiaire" },
+        { "group": "Intermédiaire", "value": "bg-white text-dark", "label": "Blanc" },
+        { "group": "Intermédiaire", "value": "bg-light text-body", "label": "Claire" },
+        { "group": "Intermédiaire", "value": "bg-dark text-white", "label": "Sombre" },
+        { "group": "Par défaut", "value": "bg-body text-body", "label": "Corps (body)" },
+        { "group": "Alerte", "value": "bg-success text-white", "label": "Succès" },
+        { "group": "Alerte", "value": "bg-warning text-dark", "label": "Avertissement" },
+        { "group": "Alerte", "value": "bg-danger text-white", "label": "Danger" },
+        { "group": "Alerte", "value": "bg-info text-white", "label": "Info" }
+      ]
     },
     {
-        "type": "checkbox",
-        "id": "bg_gradient",
-        "label": "Dégradé d'arrière-plan",
-        "default": false,
-        "info": "Ne s'applique pas aux couleurs claires"
+      "type": "checkbox",
+      "id": "bg_gradient",
+      "label": "Dégradé d'arrière-plan",
+      "default": false,
+      "info": "Ne s'applique pas aux couleurs claires"
     },
     {
-        "type": "text",
-        "id": "max_width",
-        "label": "Largeur maximale (px)",
-        "info": "Ajuster la largeur du conteneur (en pixels)",
-        "default": "991"
+      "type": "text",
+      "id": "max_width",
+      "label": "Largeur maximale (px)",
+      "info": "Ajuster la largeur du conteneur (en pixels)",
+      "default": "991"
     },
     {
-        "type": "header",
-        "content": "Espacement de la section"
+      "type": "header",
+      "content": "Espacement de la section"
     },
     {
-        "type": "range",
-        "id": "pt",
-        "label": "Padding supérieure",
-        "min": 0,
-        "max": 20,
-        "step": 1,
-        "default": 0
+      "type": "range",
+      "id": "pt",
+      "label": "Padding supérieure",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 0
     },
     {
-        "type": "range",
-        "id": "pb",
-        "label": "Padding inférieure",
-        "min": 0,
-        "max": 20,
-        "step": 1,
-        "default": 0
+      "type": "range",
+      "id": "pb",
+      "label": "Padding inférieure",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 0
     },
     {
-        "type": "range",
-        "id": "mt",
-        "label": "Marge supérieure",
-        "min": 0,
-        "max": 20,
-        "step": 1,
-        "default": 0
+      "type": "range",
+      "id": "mt",
+      "label": "Marge supérieure",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 0
     },
     {
-        "type": "range",
-        "id": "mb",
-        "label": "Marge inférieure",
-        "min": 0,
-        "max": 20,
-        "step": 1,
-        "default": 0
+      "type": "range",
+      "id": "mb",
+      "label": "Marge inférieure",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 0
     }
   ],
   "blocks": [
@@ -361,120 +381,120 @@ Les contrevenants seront poursuivis dans toute la mesure permise par la loi.
       "limit": 1,
       "settings": [
         {
-            "type": "header",
-            "content": "Texte"
+          "type": "header",
+          "content": "Texte"
         },
         {
-            "type": "select",
-            "id": "text_align",
-            "label": "Alignement du texte",
-            "default": "text-center",
-            "options": [
-                { "value": "text-start", "label": "Gauche" },
-                { "value": "text-center", "label": "Centre" }
-            ]
+          "type": "select",
+          "id": "text_align",
+          "label": "Alignement du texte",
+          "default": "text-center",
+          "options": [
+            { "value": "text-start", "label": "Gauche" },
+            { "value": "text-center", "label": "Centre" }
+          ]
         },
         {
-            "type": "image_picker",
-            "id": "subtitle_img",
-            "label": "Légende Image"
+          "type": "image_picker",
+          "id": "subtitle_img",
+          "label": "Légende Image"
         },
         {
-            "type": "text",
-            "id": "brand_image_size",
-            "label": "Image Largeur/Hauteur (px)",
-            "default": "60"
+          "type": "text",
+          "id": "brand_image_size",
+          "label": "Image Largeur/Hauteur (px)",
+          "default": "60"
         },
         {
-            "type": "text",
-            "id": "subtitle",
-            "label": "Légende Texte"
+          "type": "text",
+          "id": "subtitle",
+          "label": "Légende Texte"
         },
         {
-            "type": "select",
-            "id": "subtitle_size",
-            "label": "Taille de la légende",
-            "default": "fs-5",
-            "options": [
-                { "group": "Légende Standard", "value": "fs-1", "label": "Extra Grand" },
-                { "group": "Légende Standard", "value": "fs-2", "label": "Super Grand" },
-                { "group": "Légende Standard", "value": "fs-3", "label": "Très Grand" },
-                { "group": "Légende Standard", "value": "fs-4", "label": "Grand" },
-                { "group": "Légende Standard", "value": "fs-5", "label": "Moyen" },
-                { "group": "Légende Standard", "value": "fs-6", "label": "Petit" } 
-            ]
+          "type": "select",
+          "id": "subtitle_size",
+          "label": "Taille de la légende",
+          "default": "fs-5",
+          "options": [
+            { "group": "Légende Standard", "value": "fs-1", "label": "Extra Grand" },
+            { "group": "Légende Standard", "value": "fs-2", "label": "Super Grand" },
+            { "group": "Légende Standard", "value": "fs-3", "label": "Très Grand" },
+            { "group": "Légende Standard", "value": "fs-4", "label": "Grand" },
+            { "group": "Légende Standard", "value": "fs-5", "label": "Moyen" },
+            { "group": "Légende Standard", "value": "fs-6", "label": "Petit" }
+          ]
         },
         {
-            "type": "color",
-            "id": "color_caption",
-            "label": "Couleur de la légende",
-            "default": "#6c757d"
+          "type": "color",
+          "id": "color_caption",
+          "label": "Couleur de la légende",
+          "default": "#6c757d"
         },
         {
-            "type": "inline_richtext",
-            "id": "title",
-            "label": "Titre",
-            "default": "Texte du compteur"
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Titre",
+          "default": "Texte du compteur"
         },
         {
-            "type": "select",
-            "id": "heading_tag",
-            "label": "Balise titre (SEO)",
-            "default": "h2",
-            "options": [
-                { "value": "h1", "label": "h1" },
-                { "value": "h2", "label": "h2" },
-                { "value": "h3", "label": "h3" },
-                { "value": "h4", "label": "h4" },
-                { "value": "h5", "label": "h5" },
-                { "value": "h6", "label": "h6" },
-                { "value": "span", "label": "Aucune" }
-            ]
+          "type": "select",
+          "id": "heading_tag",
+          "label": "Balise titre (SEO)",
+          "default": "h2",
+          "options": [
+            { "value": "h1", "label": "h1" },
+            { "value": "h2", "label": "h2" },
+            { "value": "h3", "label": "h3" },
+            { "value": "h4", "label": "h4" },
+            { "value": "h5", "label": "h5" },
+            { "value": "h6", "label": "h6" },
+            { "value": "span", "label": "Aucune" }
+          ]
         },
         {
-            "type": "select",
-            "id": "title_size",
-            "label": "Taille du titre",
-            "default": "h2",
-            "options": [
-                { "group": "Titre Standard", "value": "h1", "label": "Très Grand" },
-                { "group": "Titre Standard", "value": "h2", "label": "Grand" },
-                { "group": "Titre Standard", "value": "h3", "label": "Moyen" },
-                { "group": "Titre Standard", "value": "h4", "label": "Petit" },
-                { "group": "Titre Standard", "value": "h5", "label": "Très Petit" },
-                { "group": "Titre Standard", "value": "h6", "label": "Super Petit" }
-            ]
+          "type": "select",
+          "id": "title_size",
+          "label": "Taille du titre",
+          "default": "h2",
+          "options": [
+            { "group": "Titre Standard", "value": "h1", "label": "Très Grand" },
+            { "group": "Titre Standard", "value": "h2", "label": "Grand" },
+            { "group": "Titre Standard", "value": "h3", "label": "Moyen" },
+            { "group": "Titre Standard", "value": "h4", "label": "Petit" },
+            { "group": "Titre Standard", "value": "h5", "label": "Très Petit" },
+            { "group": "Titre Standard", "value": "h6", "label": "Super Petit" }
+          ]
         },
         {
-            "type": "header",
-            "content": "🏆 Application SVG Sous-titre",
-            "info": "👉 Application Version Shopiweb Premium"
+          "type": "header",
+          "content": "🏆 Application SVG Sous-titre",
+          "info": "👉 Application Version Shopiweb Premium"
         },
         {
-            "type": "color",
-            "id": "color_svg_h2",
-            "label": "Couleur du SVG",
-            "default": "#fff"
+          "type": "color",
+          "id": "color_svg_h2",
+          "label": "Couleur du SVG",
+          "default": "#fff"
         },
         {
-            "type": "richtext",
-            "id": "description",
-            "label": "Description (facultatif)",
-            "default": "<p>Ajouter une description facultative à cette section</p>"
+          "type": "richtext",
+          "id": "description",
+          "label": "Description (facultatif)",
+          "default": "<p>Ajouter une description facultative à cette section</p>"
         },
         {
-            "type": "select",
-            "id": "description_size",
-            "label": "Taille de description",
-            "default": "fs-5",
-            "options": [
-                { "group": "Description Standard", "value": "fs-1", "label": "Extra Grand" },
-                { "group": "Description Standard", "value": "fs-2", "label": "Super Grand" },
-                { "group": "Description Standard", "value": "fs-3", "label": "Très Grand" },
-                { "group": "Description Standard", "value": "fs-4", "label": "Grand" },
-                { "group": "Description Standard", "value": "fs-5", "label": "Moyen" },
-                { "group": "Description Standard", "value": "fs-6", "label": "Petit" } 
-            ]
+          "type": "select",
+          "id": "description_size",
+          "label": "Taille de description",
+          "default": "fs-5",
+          "options": [
+            { "group": "Description Standard", "value": "fs-1", "label": "Extra Grand" },
+            { "group": "Description Standard", "value": "fs-2", "label": "Super Grand" },
+            { "group": "Description Standard", "value": "fs-3", "label": "Très Grand" },
+            { "group": "Description Standard", "value": "fs-4", "label": "Grand" },
+            { "group": "Description Standard", "value": "fs-5", "label": "Moyen" },
+            { "group": "Description Standard", "value": "fs-6", "label": "Petit" }
+          ]
         }
       ]
     },
@@ -484,9 +504,9 @@ Les contrevenants seront poursuivis dans toute la mesure permise par la loi.
       "limit": 1,
       "settings": [
         {
-            "type": "header",
-            "content": "🏆 Bloc Compteur",
-            "info": "👉 Bloc Version Shopiweb Premium"
+          "type": "header",
+          "content": "🏆 Bloc Compteur",
+          "info": "👉 Bloc Version Shopiweb Premium"
         },
         {
           "type": "select",

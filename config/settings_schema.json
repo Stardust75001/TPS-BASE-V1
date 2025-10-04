@@ -48,6 +48,52 @@
     ]
   },
   {
+    "name": "Monitoring Sentry",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "🔍 **Monitoring des erreurs avec Sentry** - Surveillez et diagnostiquez les erreurs en temps réel sur votre site."
+      },
+      {
+        "type": "checkbox",
+        "id": "sentry_enabled",
+        "label": "Activer Sentry",
+        "default": false,
+        "info": "Active le monitoring des erreurs avec Sentry"
+      },
+      {
+        "type": "text",
+        "id": "sentry_dsn",
+        "label": "DSN Sentry",
+        "info": "URL DSN de votre projet Sentry (format: https://key@org.ingest.sentry.io/project)"
+      },
+      {
+        "type": "range",
+        "id": "sentry_traces_sample_rate",
+        "min": 0,
+        "max": 1,
+        "step": 0.1,
+        "label": "Taux d'échantillonnage des traces",
+        "default": 0.1,
+        "info": "Pourcentage de transactions à tracer (0.1 = 10%, 1.0 = 100%)"
+      },
+      {
+        "type": "checkbox",
+        "id": "sentry_debug",
+        "label": "Mode debug",
+        "default": false,
+        "info": "Active les logs de debug Sentry dans la console (recommandé uniquement en développement)"
+      }
+      ,
+      {
+        "type": "text",
+        "id": "sentry_security_token",
+        "label": "Sentry Security Token (optionnel)",
+        "info": "(Optionnel) Si votre projet Sentry exige un Security Token, ajoutez-le ici. Le token sera utilisé pour envoyer l'en-tête X-Sentry-Token sur les requêtes d'ingestion."
+      }
+    ]
+  },
+  {
     "name": "Couleurs",
     "settings": [
       {
@@ -3677,58 +3723,58 @@
       }
     ]
   },
-{
-  "name": "Stories Animées (Tooltips)",
-  "settings": [
-    {
-      "type": "checkbox",
-      "id": "stories_tooltips_enable",
-      "label": "Activer les infobulles",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "stories_tooltips_delay",
-      "label": "Durée d'affichage (ms)",
-      "default": "3000",
-      "info": "Temps en millisecondes avant que l'infobulle disparaisse (ex: 3000 = 3 sec)."
-    },
-    {
-      "type": "select",
-      "id": "stories_tooltips_position",
-      "label": "Position de l'infobulle",
-      "default": "top",
-      "options": [
-        {
-          "value": "top",
-          "label": "Haut"
-        },
-        {
-          "value": "bottom",
-          "label": "Bas"
-        },
-        {
-          "value": "left",
-          "label": "Gauche"
-        },
-        {
-          "value": "right",
-          "label": "Droite"
-        }
-      ]
-    },
-    {
-      "type": "color",
-      "id": "stories_tooltips_bg",
-      "label": "Couleur de fond",
-      "default": "#000000"
-    },
-    {
-      "type": "color",
-      "id": "stories_tooltips_text",
-      "label": "Couleur du texte",
-      "default": "#ffffff"
-    }
-  ]
-}
+  {
+    "name": "Stories Animées (Tooltips)",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "stories_tooltips_enable",
+        "label": "Activer les infobulles",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "stories_tooltips_delay",
+        "label": "Durée d'affichage (ms)",
+        "default": "3000",
+        "info": "Temps en millisecondes avant que l'infobulle disparaisse (ex: 3000 = 3 sec)."
+      },
+      {
+        "type": "select",
+        "id": "stories_tooltips_position",
+        "label": "Position de l'infobulle",
+        "default": "top",
+        "options": [
+          {
+            "value": "top",
+            "label": "Haut"
+          },
+          {
+            "value": "bottom",
+            "label": "Bas"
+          },
+          {
+            "value": "left",
+            "label": "Gauche"
+          },
+          {
+            "value": "right",
+            "label": "Droite"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "stories_tooltips_bg",
+        "label": "Couleur de fond",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "stories_tooltips_text",
+        "label": "Couleur du texte",
+        "default": "#ffffff"
+      }
+    ]
+  }
 ]

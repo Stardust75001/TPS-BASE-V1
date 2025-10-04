@@ -1,19 +1,20 @@
 {% comment %}
----------------------------------------------------------
-Copyright © 2019/2024 Theme Shopiweb Premium. Tous droits réservés.
----------------------------------------------------------
+  ---------------------------------------------------------
+  Copyright © 2019/2024 Theme Shopiweb Premium. Tous droits réservés.
+  ---------------------------------------------------------
 {% endcomment %}
 
-{% liquid 
+{% liquid
   assign pt = section.settings.pt | prepend: 'pt-'
   assign pb = section.settings.pb | prepend: 'pb-'
   assign mt = section.settings.mt | prepend: 'mt-'
   assign mb = section.settings.mb | prepend: 'mb-'
 %}
 
-<section 
+<section
   id="list-collections-{{ section.id }}"
-  class="list-collections enter-view overflow-hidden {{ section.settings.bg_color }} {{ section.settings.text_align }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
+  class="list-collections enter-view overflow-hidden {{ section.settings.bg_color }} {{ section.settings.text_align }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}"
+>
   <div class="container">
     {% if section.settings.show_breadcrumbs %}
       <div class="breadcrumbs-wrapper mt-n6 mb-6">

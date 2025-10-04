@@ -80,9 +80,7 @@
     "3f99cec1-9952-4176-b640-6d7d85438f02": {
       "type": "featured-products",
       "settings": {
-        "products": [
-
-        ],
+        "products": [],
         "collection": "collection-airpods-pro",
         "limit": 12,
         "bg_color": "bg-light text-body",

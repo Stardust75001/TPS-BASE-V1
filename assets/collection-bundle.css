@@ -38,7 +38,7 @@ ul.bd-pss-tiers li {
 }
 
 ul.bd-pss-tiers li::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: -0.5rem;
   left: 50%;

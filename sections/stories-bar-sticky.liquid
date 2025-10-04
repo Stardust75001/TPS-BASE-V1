@@ -1,5 +1,5 @@
 {% comment %}
-Section : Stories Bar Sticky Configurable (préremplie)
+  Section : Stories Bar Sticky Configurable (préremplie)
 {% endcomment %}
 
 {% assign sort_order = section.settings.sort_order %}
@@ -12,7 +12,11 @@ Section : Stories Bar Sticky Configurable (préremplie)
 
     {% assign size = section.settings.icon_size | default: 90 %}
     {% for block in stories %}
-      <a href="{{ block.settings.link }}" class="animated-stories-link" style="--i:{{ forloop.index }}">
+      <a
+        href="{{ block.settings.link }}"
+        class="animated-stories-link"
+        style="--i:{{ forloop.index }}"
+      >
         {% if block.settings.image != blank %}
           <img
             src="{{ block.settings.image | image_url: width: size, height: size, crop: 'center' }}"
@@ -25,7 +29,8 @@ Section : Stories Bar Sticky Configurable (préremplie)
         <div
           class="tooltip-bubble"
           role="tooltip"
-          style="background-color: {{ section.settings.tooltip_bg }}; opacity: {{ section.settings.tooltip_opacity }};">
+          style="background-color: {{ section.settings.tooltip_bg }}; opacity: {{ section.settings.tooltip_opacity }};"
+        >
           {{ block.settings.title }}
         </div>
       </a>

@@ -1,155 +1,179 @@
-{% liquid 
-    assign pt = section.settings.pt | prepend: 'pt-'
-    assign pb = section.settings.pb | prepend: 'pb-'
-    assign mt = section.settings.mt | prepend: 'mt-'
-    assign mb = section.settings.mb | prepend: 'mb-'
+{% liquid
+  assign pt = section.settings.pt | prepend: 'pt-'
+  assign pb = section.settings.pb | prepend: 'pb-'
+  assign mt = section.settings.mt | prepend: 'mt-'
+  assign mb = section.settings.mb | prepend: 'mb-'
 %}
 
-<section id="video-hero-{{ section.id }}" class="video-hero {{ section.settings.bg_color }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}">
-    <div class="video-hero-wrapper position-relative">
-        <div class="video-container">
-            {% if section.settings.video_hosted != blank %}
-                <video 
-                    class="video-hero-video w-100 h-100" 
-                    autoplay 
-                    muted 
-                    loop 
-                    playsinline
-                    {% if section.settings.video_poster %}poster="{{ section.settings.video_poster | image_url: width: 1920 }}"{% endif %}>
-                    <source src="{{ section.settings.video_hosted }}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            {% elsif section.settings.video_url != blank %}
-                {% if section.settings.video_url contains 'youtube' %}
-                    <iframe 
-                        class="video-hero-video w-100 h-100"
-                        src="https://www.youtube.com/embed/{{ section.settings.video_url | split: 'v=' | last | split: '&' | first }}?autoplay=1&mute=1&loop=1&playlist={{ section.settings.video_url | split: 'v=' | last | split: '&' | first }}&controls=0&rel=0&modestbranding=1"
-                        frameborder="0" 
-                        allow="autoplay; encrypted-media" 
-                        allowfullscreen>
-                    </iframe>
-                {% elsif section.settings.video_url contains 'vimeo' %}
-                    <iframe 
-                        class="video-hero-video w-100 h-100"
-                        src="https://player.vimeo.com/video/{{ section.settings.video_url | split: '/' | last }}?autoplay=1&muted=1&loop=1&background=1&controls=0"
-                        frameborder="0" 
-                        allow="autoplay; fullscreen; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
-                {% endif %}
-            {% else %}
-                <div class="video-placeholder bg-secondary d-flex align-items-center justify-content-center">
-                    <div class="text-center text-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="5,3 19,12 5,21"></polygon>
-                        </svg>
-                        <p class="mt-2">Add your video</p>
-                    </div>
-                </div>
-            {% endif %}
-        </div>
-        
-        {% if section.settings.overlay_opacity > 0 %}
-            <div class="video-overlay" style="background: rgba(0,0,0,{{ section.settings.overlay_opacity | divided_by: 100.0 }});"></div>
+<section
+  id="video-hero-{{ section.id }}"
+  class="video-hero {{ section.settings.bg_color }} {{ pt }} {{ pb }} {{ mt }} {{ mb }}"
+>
+  <div class="video-hero-wrapper position-relative">
+    <div class="video-container">
+      {% if section.settings.video_hosted != blank %}
+        <video
+          class="video-hero-video w-100 h-100"
+          autoplay
+          muted
+          loop
+          playsinline
+          {% if section.settings.video_poster %}
+            poster="{{ section.settings.video_poster | image_url: width: 1920 }}"
+          {% endif %}
+        >
+          <source src="{{ section.settings.video_hosted }}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      {% elsif section.settings.video_url != blank %}
+        {% if section.settings.video_url contains 'youtube' %}
+          <iframe
+            class="video-hero-video w-100 h-100"
+            src="https://www.youtube.com/embed/{{ section.settings.video_url | split: 'v=' | last | split: '&' | first }}?autoplay=1&mute=1&loop=1&playlist={{ section.settings.video_url | split: 'v=' | last | split: '&' | first }}&controls=0&rel=0&modestbranding=1"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen
+          >
+          </iframe>
+        {% elsif section.settings.video_url contains 'vimeo' %}
+          <iframe
+            class="video-hero-video w-100 h-100"
+            src="https://player.vimeo.com/video/{{ section.settings.video_url | split: '/' | last }}?autoplay=1&muted=1&loop=1&background=1&controls=0"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowfullscreen
+          >
+          </iframe>
         {% endif %}
-        
-        <div class="video-content position-absolute w-100 h-100 d-flex align-items-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 mx-auto text-center">
-                        {% unless section.settings.heading == blank %}
-                            <h1 class="video-hero-title {{ section.settings.heading_size }} {{ section.settings.text_color }} mb-4">
-                                {{ section.settings.heading }}
-                            </h1>
-                        {% endunless %}
-                        
-                        {% unless section.settings.subheading == blank %}
-                            <p class="video-hero-subtitle {{ section.settings.subheading_size }} {{ section.settings.text_color }} mb-5">
-                                {{ section.settings.subheading }}
-                            </p>
-                        {% endunless %}
-                        
-                        {% unless section.settings.button_text == blank %}
-                            <a href="{{ section.settings.button_link | default: '#' }}" class="btn {{ section.settings.button_style }} {{ section.settings.button_size }}">
-                                {{ section.settings.button_text }}
-                            </a>
-                        {% endunless %}
-                    </div>
-                </div>
-            </div>
+      {% else %}
+        <div class="video-placeholder bg-secondary d-flex align-items-center justify-content-center">
+          <div class="text-center text-white">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="64"
+              height="64"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polygon points="5,3 19,12 5,21"></polygon>
+            </svg>
+            <p class="mt-2">Add your video</p>
+          </div>
         </div>
+      {% endif %}
     </div>
+
+    {% if section.settings.overlay_opacity > 0 %}
+      <div
+        class="video-overlay"
+        style="background: rgba(0,0,0,{{ section.settings.overlay_opacity | divided_by: 100.0 }});"
+      ></div>
+    {% endif %}
+
+    <div class="video-content position-absolute w-100 h-100 d-flex align-items-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center">
+            {% unless section.settings.heading == blank %}
+              <h1 class="video-hero-title {{ section.settings.heading_size }} {{ section.settings.text_color }} mb-4">
+                {{ section.settings.heading }}
+              </h1>
+            {% endunless %}
+
+            {% unless section.settings.subheading == blank %}
+              <p class="video-hero-subtitle {{ section.settings.subheading_size }} {{ section.settings.text_color }} mb-5">
+                {{ section.settings.subheading }}
+              </p>
+            {% endunless %}
+
+            {% unless section.settings.button_text == blank %}
+              <a
+                href="{{ section.settings.button_link | default: '#' }}"
+                class="btn {{ section.settings.button_style }} {{ section.settings.button_size }}"
+              >
+                {{ section.settings.button_text }}
+              </a>
+            {% endunless %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <style>
-    #video-hero-{{ section.id }} {
-        height: {{ section.settings.section_height }}vh;
-        overflow: hidden;
-    }
-    
-    #video-hero-{{ section.id }} .video-hero-wrapper {
-        height: 100%;
-    }
-    
-    #video-hero-{{ section.id }} .video-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-    }
-    
-    #video-hero-{{ section.id }} .video-hero-video {
-        object-fit: cover;
-        object-position: center;
-    }
-    
-    #video-hero-{{ section.id }} .video-placeholder {
-        height: 100%;
-    }
-    
-    #video-hero-{{ section.id }} .video-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 2;
-    }
-    
-    #video-hero-{{ section.id }} .video-content {
-        z-index: 3;
-    }
-    
-    #video-hero-{{ section.id }} .video-hero-title {
-        animation: fadeInUp 1s ease-out;
-    }
-    
-    #video-hero-{{ section.id }} .video-hero-subtitle {
-        animation: fadeInUp 1s ease-out 0.3s both;
-    }
-    
-    #video-hero-{{ section.id }} .btn {
-        animation: fadeInUp 1s ease-out 0.6s both;
-    }
-    
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    @media (max-width: 768px) {
-        #video-hero-{{ section.id }} {
-            height: {{ section.settings.section_height_mobile }}vh;
-        }
-    }
+  #video-hero-{{ section.id }} {
+      height: {{ section.settings.section_height }}vh;
+      overflow: hidden;
+  }
+
+  #video-hero-{{ section.id }} .video-hero-wrapper {
+      height: 100%;
+  }
+
+  #video-hero-{{ section.id }} .video-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+  }
+
+  #video-hero-{{ section.id }} .video-hero-video {
+      object-fit: cover;
+      object-position: center;
+  }
+
+  #video-hero-{{ section.id }} .video-placeholder {
+      height: 100%;
+  }
+
+  #video-hero-{{ section.id }} .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+  }
+
+  #video-hero-{{ section.id }} .video-content {
+      z-index: 3;
+  }
+
+  #video-hero-{{ section.id }} .video-hero-title {
+      animation: fadeInUp 1s ease-out;
+  }
+
+  #video-hero-{{ section.id }} .video-hero-subtitle {
+      animation: fadeInUp 1s ease-out 0.3s both;
+  }
+
+  #video-hero-{{ section.id }} .btn {
+      animation: fadeInUp 1s ease-out 0.6s both;
+  }
+
+  @keyframes fadeInUp {
+      from {
+          opacity: 0;
+          transform: translateY(30px);
+      }
+      to {
+          opacity: 1;
+          transform: translateY(0);
+      }
+  }
+
+  @media (max-width: 768px) {
+      #video-hero-{{ section.id }} {
+          height: {{ section.settings.section_height_mobile }}vh;
+      }
+  }
 </style>
 
 {% schema %}

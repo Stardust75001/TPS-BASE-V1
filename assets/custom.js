@@ -167,27 +167,27 @@ function handleAddToCartFormSubmit(form, event) {
 // ✅ Améliorations pour les formulaires newsletter
 function initNewsletterEnhancements() {
   const newsletterForms = document.querySelectorAll('form[action*="contact"], #newsletter-popup-form');
-  
+
   newsletterForms.forEach(form => {
     // Vérifie si c'est bien un formulaire newsletter
-    const isNewsletterForm = form.querySelector('input[name="contact[tags]"][value="newsletter"]') || 
+    const isNewsletterForm = form.querySelector('input[name="contact[tags]"][value="newsletter"]') ||
                             form.querySelector('input[name="contact[email]"]');
-    
+
     if (!isNewsletterForm) return;
-    
+
     const emailInput = form.querySelector('input[type="email"]');
     const nameInput = form.querySelector('input[name="contact[first_name]"]');
     const submitButton = form.querySelector('button[type="submit"]');
-    
+
     if (!emailInput || !submitButton) return;
-    
+
     // Validation en temps réel de l'email
     emailInput.addEventListener('input', function() {
       const isValid = this.checkValidity();
       this.classList.toggle('is-valid', isValid && this.value.length > 0);
       this.classList.toggle('is-invalid', !isValid && this.value.length > 0);
     });
-    
+
     // Validation du nom si présent
     if (nameInput) {
       nameInput.addEventListener('input', function() {
@@ -196,15 +196,15 @@ function initNewsletterEnhancements() {
         this.classList.toggle('is-invalid', this.value.length > 0 && !isValid);
       });
     }
-    
+
     // Gestion de la soumission
     form.addEventListener('submit', function(e) {
       const emailValid = emailInput.checkValidity();
       const nameValid = !nameInput || nameInput.value.trim().length >= 2;
-      
+
       if (!emailValid || !nameValid) {
         e.preventDefault();
-        
+
         if (!emailValid) {
           emailInput.classList.add('is-invalid');
           emailInput.focus();
@@ -214,12 +214,12 @@ function initNewsletterEnhancements() {
         }
         return;
       }
-      
+
       // Indication de chargement
       submitButton.disabled = true;
       const originalText = submitButton.textContent;
       submitButton.textContent = 'Inscription...';
-      
+
       // Restaurer l'état après 3 secondes (au cas où)
       setTimeout(() => {
         submitButton.disabled = false;
@@ -236,35 +236,35 @@ document.addEventListener('DOMContentLoaded', initNewsletterEnhancements);
 document.addEventListener('shopify:section:load', initNewsletterEnhancements);  // ✅ Newsletter Form Enhancement avec validation et accessibilité optimisée
 function initNewsletterValidation() {
   const forms = document.querySelectorAll('.newsletter-form');
-  
+
   forms.forEach(form => {
     const nameInput = form.querySelector('.newsletter-name-input');
     const emailInput = form.querySelector('.newsletter-email-input');
     const submitButton = form.querySelector('button[type="submit"], .newsletter-submit-btn');
     const statusDiv = form.querySelector('[id*="newsletter-status"]');
-    
+
     // Fonctions de validation améliorées
     function validateEmail(email) {
       const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return re.test(email.trim());
     }
-    
+
     function validateName(name) {
       return name.trim().length >= 2 && name.trim().length <= 50;
     }
-    
+
     function updateFieldState(input, isValid, message = '') {
       const errorDiv = form.querySelector(`#${input.id.replace(input.id.split('-').pop(), 'error-' + input.id.split('-').pop())}`);
-      
+
       // Nettoyer les états précédents
       input.classList.remove('success', 'error');
       input.setAttribute('aria-invalid', 'false');
-      
+
       if (errorDiv) {
         errorDiv.textContent = '';
         errorDiv.setAttribute('aria-hidden', 'true');
       }
-      
+
       if (input.value.length > 0) {
         if (isValid) {
           input.classList.add('success');
@@ -279,7 +279,7 @@ function initNewsletterValidation() {
         }
       }
     }
-    
+
     function announceToScreenReader(message) {
       if (statusDiv) {
         statusDiv.textContent = message;
@@ -289,7 +289,7 @@ function initNewsletterValidation() {
         }, 3000);
       }
     }
-    
+
     function updateSubmitButton(isFormValid) {
       if (submitButton) {
         if (isFormValid) {
@@ -301,61 +301,61 @@ function initNewsletterValidation() {
         }
       }
     }
-    
+
     function validateForm() {
       const isEmailValid = emailInput ? validateEmail(emailInput.value) : false;
       const isNameValid = nameInput ? (nameInput.value.length === 0 || validateName(nameInput.value)) : true;
-      
+
       return isEmailValid && isNameValid;
     }
-    
+
     // Validation en temps réel pour l'email
     if (emailInput) {
       emailInput.addEventListener('input', function() {
         const isValid = validateEmail(this.value);
         let message = '';
-        
+
         if (this.value.length > 0 && !isValid) {
           message = 'Veuillez entrer une adresse email valide';
         }
-        
+
         updateFieldState(this, isValid, message);
         updateSubmitButton(validateForm());
       });
-      
+
       emailInput.addEventListener('blur', function() {
         if (this.value.length > 0 && !validateEmail(this.value)) {
           announceToScreenReader('Adresse email invalide');
         }
       });
     }
-    
+
     // Validation en temps réel pour le nom
     if (nameInput) {
       nameInput.addEventListener('input', function() {
         const isValid = this.value.length === 0 || validateName(this.value);
         let message = '';
-        
+
         if (this.value.length > 0 && this.value.trim().length < 2) {
           message = 'Le prénom doit contenir au moins 2 caractères';
         } else if (this.value.length > 50) {
           message = 'Le prénom ne peut pas dépasser 50 caractères';
         }
-        
+
         updateFieldState(this, isValid, message);
         updateSubmitButton(validateForm());
       });
     }
-    
+
     // Gestion de la soumission du formulaire
     if (form.closest('form')) {
       form.closest('form').addEventListener('submit', function(e) {
         const isFormValid = validateForm();
-        
+
         if (!isFormValid) {
           e.preventDefault();
           announceToScreenReader('Veuillez corriger les erreurs dans le formulaire');
-          
+
           // Focus sur le premier champ invalide
           const firstInvalid = form.querySelector('.error');
           if (firstInvalid) {
@@ -363,36 +363,36 @@ function initNewsletterValidation() {
           }
           return false;
         }
-        
+
         // Animation du bouton de soumission
         if (submitButton) {
           const btnText = submitButton.querySelector('.btn-text');
           const btnLoader = submitButton.querySelector('.btn-loader');
-          
+
           if (btnText) btnText.style.display = 'none';
           if (btnLoader) btnLoader.style.display = 'inline-block';
-          
+
           submitButton.setAttribute('disabled', 'true');
           submitButton.setAttribute('aria-disabled', 'true');
-          
+
           announceToScreenReader('Inscription en cours...');
         }
       });
     }
-    
+
     // Validation initiale
     updateSubmitButton(validateForm());
-    
+
     // Gestion des focus pour l'accessibilité
     [nameInput, emailInput].filter(Boolean).forEach(input => {
       input.addEventListener('focus', function() {
         this.classList.add('focused');
       });
-      
+
       input.addEventListener('blur', function() {
         this.classList.remove('focused');
       });
-      
+
       // Support pour les raccourcis clavier
       input.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' && validateForm()) {
@@ -419,20 +419,20 @@ function initNewsletterAccessibility() {
       }
     }
   });
-  
+
   // Améliorer les boutons de soumission
   document.querySelectorAll('.newsletter-form button[type="submit"]').forEach(button => {
     if (!button.getAttribute('aria-label')) {
       button.setAttribute('aria-label', 'S\'inscrire à la newsletter');
     }
   });
-  
+
   // Ajouter des landmarks ARIA si nécessaire
   document.querySelectorAll('.newsletter-form').forEach(form => {
     if (!form.getAttribute('role')) {
       form.setAttribute('role', 'form');
     }
-    
+
     const parentForm = form.closest('form');
     if (parentForm && !parentForm.getAttribute('novalidate')) {
       parentForm.setAttribute('novalidate', 'true'); // Utiliser notre validation personnalisée
@@ -447,12 +447,12 @@ function handleResponsiveNewsletter() {
     tablet: window.matchMedia('(min-width: 768px) and (max-width: 1024px)'),
     desktop: window.matchMedia('(min-width: 1025px)')
   };
-  
+
   function updateResponsiveFeatures() {
     document.querySelectorAll('.newsletter-form').forEach(form => {
       // Ajuster la taille des champs selon l'écran
       const inputs = form.querySelectorAll('.newsletter-name-input, .newsletter-email-input');
-      
+
       if (mediaQueries.mobile.matches) {
         inputs.forEach(input => {
           input.style.fontSize = '16px'; // Évite le zoom automatique iOS
@@ -460,21 +460,28 @@ function handleResponsiveNewsletter() {
       }
     });
   }
-  
+
   // Écouter les changements de taille d'écran
   Object.values(mediaQueries).forEach(mq => {
     mq.addEventListener('change', updateResponsiveFeatures);
   });
-  
+
   updateResponsiveFeatures();
 }
-      
-      if (emailInput) {
+
+// Fonction pour initialiser la validation des formulaires newsletter
+function initNewsletterValidation() {
+  document.querySelectorAll('.newsletter-form').forEach(form => {
+    const emailInput = form.querySelector('.newsletter-email-input');
+    const nameInput = form.querySelector('.newsletter-name-input');
+    const submitButton = form.querySelector('.newsletter-submit');
+
+    if (emailInput) {
         emailInput.addEventListener('input', () => {
           const isValid = validateEmail(emailInput.value);
           updateFieldState(emailInput, isValid);
         });
-        
+
         emailInput.addEventListener('blur', () => {
           const isValid = validateEmail(emailInput.value);
           updateFieldState(emailInput, isValid);
@@ -483,13 +490,13 @@ function handleResponsiveNewsletter() {
           }
         });
       }
-      
+
       if (nameInput) {
         nameInput.addEventListener('input', () => {
           const isValid = validateName(nameInput.value);
           updateFieldState(nameInput, isValid);
         });
-        
+
         nameInput.addEventListener('blur', () => {
           const isValid = validateName(nameInput.value);
           updateFieldState(nameInput, isValid);
@@ -498,35 +505,41 @@ function handleResponsiveNewsletter() {
           }
         });
       }
-      
+
       // Gestion de la soumission
       if (submitButton) {
         form.addEventListener('submit', (e) => {
           let isFormValid = true;
           let errorMessages = [];
-          
+
           if (emailInput && !validateEmail(emailInput.value)) {
             updateFieldState(emailInput, false);
             errorMessages.push('Email invalide');
             isFormValid = false;
           }
-          
+
           if (nameInput && nameInput.value && !validateName(nameInput.value)) {
             updateFieldState(nameInput, false);
             errorMessages.push('Prénom invalide');
             isFormValid = false;
           }
-          
+
           if (!isFormValid) {
             e.preventDefault();
             announceToScreenReader('Erreurs dans le formulaire: ' + errorMessages.join(', '));
-            
+
             // Focus sur le premier champ en erreur
             const firstErrorField = form.querySelector('.is-invalid');
             if (firstErrorField) {
               firstErrorField.focus();
             }
             return false;
+          }
+        });
+      }
+    });
+}
+
 // Initialisation de toutes les fonctions newsletter
 document.addEventListener('DOMContentLoaded', function() {
   initNewsletterValidation();

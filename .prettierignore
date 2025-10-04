@@ -1,0 +1,26 @@
+# Ignore minified files
+*.min.js
+*.min.css
+
+# Ignore bundle files (usually pre-compiled)
+*bundle*.js
+*bundle*.css
+
+# Ignore vendor files
+vendor-*
+
+# Ignore node_modules
+node_modules/
+
+# Ignore lock files
+package-lock.json
+yarn.lock
+
+# Ignore build output
+dist/
+build/
+
+# Ignore problematic files (parser limitations)
+sections/map.liquid
+sections/diaporama_version_finale.liquid
+assets/custom.js

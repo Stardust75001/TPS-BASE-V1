@@ -1,5 +1,5 @@
 {% comment %}
-Section : Image avec texte + boutons (responsive, image mobile dédiée, no-gap auto)
+  Section : Image avec texte + boutons (responsive, image mobile dédiée, no-gap auto)
 {% endcomment %}
 
 {% liquid
@@ -14,12 +14,17 @@ Section : Image avec texte + boutons (responsive, image mobile dédiée, no-gap 
   {% if section.settings.image != blank or section.settings.image_mobile != blank %}
     <picture>
       {% if section.settings.image_mobile != blank %}
-        <source media="(max-width: 768px)" srcset="{{ section.settings.image_mobile | image_url: width: 800 }}">
+        <source
+          media="(max-width: 768px)"
+          srcset="{{ section.settings.image_mobile | image_url: width: 800 }}"
+        >
       {% endif %}
-      <img src="{{ section.settings.image | image_url: width: 1920 }}"
-           alt="{{ section.settings.title | escape }}"
-           loading="lazy"
-           class="image-banner-img">
+      <img
+        src="{{ section.settings.image | image_url: width: 1920 }}"
+        alt="{{ section.settings.title | escape }}"
+        loading="lazy"
+        class="image-banner-img"
+      >
     </picture>
   {% endif %}
 

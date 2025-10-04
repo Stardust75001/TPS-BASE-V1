@@ -7,12 +7,12 @@
  * @param {boolean} immediate - Exécuter immédiatement ou non.
  * @returns {Function} Fonction débitrée.
  */
-window.debounce = function(func, wait, immediate) {
+window.debounce = function (func, wait, immediate) {
   let timeout;
-  return function(...args) {
+  return function (...args) {
     const context = this;
 
-    const later = function() {
+    const later = function () {
       timeout = null;
       if (!immediate) func.apply(context, args);
     };

@@ -47,7 +47,9 @@
   padding: 4px;
   border: 1px solid #ccc;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
   cursor: pointer;
 }
 
@@ -141,7 +143,9 @@
   text-overflow: ellipsis;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
   z-index: 99999;
   opacity: 0;
   pointer-events: none;
@@ -360,8 +364,8 @@
   width: 100%;
 }
 
-.newsletter-form input[type="text"],
-.newsletter-form input[type="email"],
+.newsletter-form input[type='text'],
+.newsletter-form input[type='email'],
 .newsletter-name-input,
 .newsletter-email-input {
   padding: 10px;
@@ -373,11 +377,13 @@
   text-align: left;
   background-color: #fff;
   color: #000;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
-.newsletter-form input[type="text"]:focus,
-.newsletter-form input[type="email"]:focus,
+.newsletter-form input[type='text']:focus,
+.newsletter-form input[type='email']:focus,
 .newsletter-name-input:focus,
 .newsletter-email-input:focus {
   border-color: #007bff;
@@ -431,7 +437,7 @@
     font-size: 12px;
     margin-bottom: 4px;
   }
-  
+
   .newsletter-wrapper .newsletter-input-row {
     flex-direction: column;
     gap: 12px;
@@ -453,8 +459,8 @@
     gap: 8px;
   }
 
-  .newsletter-form input[type="text"],
-  .newsletter-form input[type="email"],
+  .newsletter-form input[type='text'],
+  .newsletter-form input[type='email'],
   .newsletter-form button,
   .newsletter-name-input,
   .newsletter-email-input {

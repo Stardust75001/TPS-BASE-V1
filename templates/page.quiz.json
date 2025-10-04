@@ -95,10 +95,7 @@
               "etui-airpods-pro-ruby"
             ],
             "set_2_values": "Grasse, 25-34, Non, Rouge",
-            "set_2_products": [
-              "etui-airpods-pro-ruby",
-              "etui-airpods-pro-summer"
-            ],
+            "set_2_products": ["etui-airpods-pro-ruby", "etui-airpods-pro-summer"],
             "set_3_values": "Sèche, 35-44, Oui",
             "set_3_products": [
               "etui-airpods-pro-smooth",
@@ -106,41 +103,23 @@
               "etui-airpods-pro-summer"
             ],
             "set_4_values": "Mixte, 35-44, Oui, Gris",
-            "set_4_products": [
-              "etui-airpods-pro-nuage"
-            ],
+            "set_4_products": ["etui-airpods-pro-nuage"],
             "set_5_values": "Mixte, 35-44, Oui, Violet",
-            "set_5_products": [
-              "etui-airpods-pro-summer"
-            ],
+            "set_5_products": ["etui-airpods-pro-summer"],
             "set_6_values": "",
-            "set_6_products": [
-
-            ],
+            "set_6_products": [],
             "set_7_values": "",
-            "set_7_products": [
-
-            ],
+            "set_7_products": [],
             "set_8_values": "",
-            "set_8_products": [
-
-            ],
+            "set_8_products": [],
             "set_9_values": "",
-            "set_9_products": [
-
-            ],
+            "set_9_products": [],
             "set_10_values": "",
-            "set_10_products": [
-
-            ],
+            "set_10_products": [],
             "set_11_values": "",
-            "set_11_products": [
-
-            ],
+            "set_11_products": [],
             "set_12_values": "",
-            "set_12_products": [
-
-            ],
+            "set_12_products": [],
             "breakpoint_xs": 2,
             "breakpoint_sm": 2,
             "breakpoint_md": 3,
@@ -150,13 +129,7 @@
           }
         }
       },
-      "block_order": [
-        "item_N7j7Tw",
-        "item_kyE8Gn",
-        "item_HGxf7R",
-        "item_h4a8bR",
-        "results_XNrrk7"
-      ],
+      "block_order": ["item_N7j7Tw", "item_kyE8Gn", "item_HGxf7R", "item_h4a8bR", "results_XNrrk7"],
       "settings": {
         "bg_color": "bg-light text-body",
         "bg_gradient": false,
@@ -195,7 +168,5 @@
       }
     }
   },
-  "order": [
-    "quiz_qTRKep"
-  ]
+  "order": ["quiz_qTRKep"]
 }

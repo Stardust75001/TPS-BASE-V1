@@ -1,0 +1,180 @@
+<!-- Test page pour vérifier l'intégration Sentry TPS BASE V1 -->
+<div class="container my-5">
+  <div class="row">
+    <div class="col-12">
+      <h1>🧪 Test Sentry - TPS BASE V1</h1>
+      <p class="lead">Cette page permet de tester l'intégration Sentry dans votre thème Shopify.</p>
+
+      <div class="alert alert-info">
+        <strong>ℹ️ Information :</strong>
+        <ul class="mb-0">
+          <li>Sentry activé : <strong id="sentry-status">Vérification...</strong></li>
+          <li>DSN configuré : <strong id="dsn-status">Vérification...</strong></li>
+          <li>Error Handler : <strong id="error-handler-status">Vérification...</strong></li>
+        </ul>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">🧪 Tests Sentry</h5>
+              <p class="card-text">Testez les différents types de capture d'erreurs.</p>
+
+              <button class="btn btn-primary me-2 mb-2" onclick="testSentryMessage()">
+                Test Message
+              </button>
+
+              <button class="btn btn-warning me-2 mb-2" onclick="testSentryError()">
+                Test Erreur
+              </button>
+
+              <button class="btn btn-success me-2 mb-2" onclick="testTPSHandler()">
+                Test TPS Handler
+              </button>
+
+              <button class="btn btn-info me-2 mb-2" onclick="testCartError()">
+                Test Erreur Panier
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">📊 Console</h5>
+              <p class="card-text">Surveillez la console pour voir les logs.</p>
+              <div
+                id="console-output"
+                style="height: 200px; overflow-y: auto; background: #f8f9fa; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 12px;"
+              >
+                <div>🚀 Prêt pour les tests...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Fonction pour ajouter des logs à la console visuelle
+function addConsoleLog(message, type = 'info') {
+  const output = document.getElementById('console-output');
+  const timestamp = new Date().toLocaleTimeString();
+  const icon = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+
+  const logDiv = document.createElement('div');
+  logDiv.innerHTML = `${timestamp} ${icon} ${message}`;
+  output.appendChild(logDiv);
+  output.scrollTop = output.scrollHeight;
+}
+
+// Vérification du statut au chargement
+document.addEventListener('DOMContentLoaded', function() {
+  // Vérifier Sentry
+  const sentryStatus = document.getElementById('sentry-status');
+  const dsnStatus = document.getElementById('dsn-status');
+  const errorHandlerStatus = document.getElementById('error-handler-status');
+
+  if (window.Sentry) {
+    sentryStatus.textContent = '✅ Activé';
+    sentryStatus.className = 'text-success';
+    addConsoleLog('Sentry SDK détecté', 'success');
+  } else {
+    sentryStatus.textContent = '❌ Non détecté';
+    sentryStatus.className = 'text-danger';
+    addConsoleLog('Sentry SDK non trouvé', 'error');
+  }
+
+  // Vérifier le DSN (on ne peut pas l'afficher pour des raisons de sécurité)
+  {% if settings.sentry_dsn %}
+    dsnStatus.textContent = '✅ Configuré';
+    dsnStatus.className = 'text-success';
+    addConsoleLog('DSN configuré dans les paramètres', 'success');
+  {% else %}
+    dsnStatus.textContent = '❌ Non configuré';
+    dsnStatus.className = 'text-danger';
+    addConsoleLog('DSN non configuré dans les paramètres', 'error');
+  {% endif %}
+
+  // Vérifier le gestionnaire d'erreurs TPS
+  if (window.TPSErrorHandler) {
+    errorHandlerStatus.textContent = '✅ Chargé';
+    errorHandlerStatus.className = 'text-success';
+    addConsoleLog('TPS Error Handler chargé', 'success');
+  } else {
+    errorHandlerStatus.textContent = '❌ Non chargé';
+    errorHandlerStatus.className = 'text-danger';
+    addConsoleLog('TPS Error Handler non trouvé', 'error');
+  }
+
+  // Auto-trigger tests when visiting the page with ?auto_sentry=1 or ?auto=1
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const auto = params.get('auto_sentry') === '1' || params.get('auto') === '1';
+    if (auto) {
+      addConsoleLog('Auto-trigger activé — envoi des tests Sentry dans 1.5s', 'info');
+      // delay a little to let the SDK initialize
+      setTimeout(function() {
+        if (window.Sentry) {
+          testSentryMessage();
+          setTimeout(testSentryError, 500);
+        } else {
+          addConsoleLog('Sentry non disponible — impossible d\'envoyer les tests auto', 'error');
+        }
+      }, 1500);
+    }
+  } catch (e) {
+    // ignore URL parsing errors
+  }
+});
+
+// Tests Sentry
+function testSentryMessage() {
+  addConsoleLog('Test message Sentry...');
+  if (window.Sentry) {
+    Sentry.captureMessage('Test message depuis la page de test TPS BASE V1', 'info');
+    addConsoleLog('Message envoyé à Sentry', 'success');
+  } else {
+    addConsoleLog('Sentry non disponible', 'error');
+  }
+}
+
+function testSentryError() {
+  addConsoleLog('Test erreur Sentry...');
+  if (window.Sentry) {
+    try {
+      throw new Error('Test error depuis la page de test TPS BASE V1');
+    } catch (error) {
+      Sentry.captureException(error);
+      addConsoleLog('Erreur envoyée à Sentry', 'success');
+    }
+  } else {
+    addConsoleLog('Sentry non disponible', 'error');
+  }
+}
+
+function testTPSHandler() {
+  addConsoleLog('Test TPS Error Handler...');
+  if (window.TPSErrorHandler) {
+    TPSErrorHandler.test();
+    addConsoleLog('Test TPS Handler executé', 'success');
+  } else {
+    addConsoleLog('TPS Error Handler non disponible', 'error');
+  }
+}
+
+function testCartError() {
+  addConsoleLog('Test erreur panier simulée...');
+  if (window.TPSErrorHandler) {
+    const simulatedError = new Error('Erreur simulée lors de l\'ajout au panier');
+    TPSErrorHandler.logCartError('add_to_cart', simulatedError, 12345);
+    addConsoleLog('Erreur panier envoyée via TPS Handler', 'success');
+  } else {
+    addConsoleLog('TPS Error Handler non disponible', 'error');
+  }
+}
+</script>

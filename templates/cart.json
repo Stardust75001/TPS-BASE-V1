@@ -75,8 +75,5 @@
       }
     }
   },
-  "order": [
-    "template-cart",
-    "cec97695-70cf-4ad3-9308-d5839ef3066f"
-  ]
+  "order": ["template-cart", "cec97695-70cf-4ad3-9308-d5839ef3066f"]
 }

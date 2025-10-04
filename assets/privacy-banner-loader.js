@@ -1,33 +1,33 @@
-document.addEventListener("DOMContentLoaded", function () {
-  if (localStorage.getItem("cookieAccepted") || localStorage.getItem("cookieRefused")) return;
+document.addEventListener('DOMContentLoaded', function () {
+  if (localStorage.getItem('cookieAccepted') || localStorage.getItem('cookieRefused')) return;
 
-  const locale = document.documentElement.lang || "en";
+  const locale = document.documentElement.lang || 'en';
 
   const translations = {
     fr: {
-      message: "Ce site utilise des cookies pour améliorer votre expérience.",
-      accept: "OK",
-      reject: "Refuser",
-      policy: "En savoir plus",
-      policyUrl: "/politiques-de-confidentialite"
+      message: 'Ce site utilise des cookies pour améliorer votre expérience.',
+      accept: 'OK',
+      reject: 'Refuser',
+      policy: 'En savoir plus',
+      policyUrl: '/politiques-de-confidentialite'
     },
     en: {
-      message: "This website uses cookies to enhance your experience.",
-      accept: "OK",
-      reject: "Decline",
-      policy: "Learn more",
-      policyUrl: "/policies/privacy-policy"
+      message: 'This website uses cookies to enhance your experience.',
+      accept: 'OK',
+      reject: 'Decline',
+      policy: 'Learn more',
+      policyUrl: '/policies/privacy-policy'
     },
     de: {
-      message: "Diese Website verwendet Cookies, um Ihr Erlebnis zu verbessern.",
-      accept: "OK",
-      reject: "Ablehnen",
-      policy: "Mehr erfahren",
-      policyUrl: "/datenschutz"
+      message: 'Diese Website verwendet Cookies, um Ihr Erlebnis zu verbessern.',
+      accept: 'OK',
+      reject: 'Ablehnen',
+      policy: 'Mehr erfahren',
+      policyUrl: '/datenschutz'
     }
   };
 
-  const t = translations[locale] || translations["en"];
+  const t = translations[locale] || translations['en'];
 
   const style = `
     #privacy-banner {
@@ -74,12 +74,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   `;
 
-  const styleTag = document.createElement("style");
+  const styleTag = document.createElement('style');
   styleTag.textContent = style;
   document.head.appendChild(styleTag);
 
-  const banner = document.createElement("div");
-  banner.id = "privacy-banner";
+  const banner = document.createElement('div');
+  banner.id = 'privacy-banner';
   banner.innerHTML = `
     <span>${t.message}</span>
     <a href="${t.policyUrl}" target="_blank" rel="noopener">${t.policy}</a>
@@ -89,13 +89,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.body.appendChild(banner);
 
-  document.getElementById("accept-cookies").addEventListener("click", function () {
-    localStorage.setItem("cookieAccepted", "true");
+  document.getElementById('accept-cookies').addEventListener('click', function () {
+    localStorage.setItem('cookieAccepted', 'true');
     banner.remove();
   });
 
-  document.getElementById("reject-cookies").addEventListener("click", function () {
-    localStorage.setItem("cookieRefused", "true");
+  document.getElementById('reject-cookies').addEventListener('click', function () {
+    localStorage.setItem('cookieRefused', 'true');
     banner.remove();
   });
 });

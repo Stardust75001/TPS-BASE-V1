@@ -468,9 +468,7 @@
     "a1739fa5-e424-4af6-81cb-bcfcb6e62407": {
       "type": "featured-products",
       "settings": {
-        "products": [
-
-        ],
+        "products": [],
         "collection": "",
         "limit": 12,
         "bg_color": "bg-light text-body",

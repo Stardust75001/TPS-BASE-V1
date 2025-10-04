@@ -6,7 +6,7 @@
 {% liquid
   assign spinner_size = size | default: 'medium'
   assign spinner_color = color | default: 'primary'
-  
+
   case spinner_size
     when 'small'
       assign spinner_class = 'spinner-sm'
@@ -17,7 +17,11 @@
   endcase
 %}
 
-<div class="loading-spinner {{ spinner_class }} text-{{ spinner_color }}" role="status" aria-hidden="true">
+<div
+  class="loading-spinner {{ spinner_class }} text-{{ spinner_color }}"
+  role="status"
+  aria-hidden="true"
+>
   <div class="spinner-border" role="status">
     <span class="visually-hidden">{{ 'general.loading' | t }}</span>
   </div>
@@ -28,22 +32,22 @@
     display: inline-block;
     text-align: center;
   }
-  
+
   .spinner-sm .spinner-border {
     width: 1rem;
     height: 1rem;
   }
-  
+
   .spinner-md .spinner-border {
     width: 2rem;
     height: 2rem;
   }
-  
+
   .spinner-lg .spinner-border {
     width: 3rem;
     height: 3rem;
   }
-  
+
   .loading-overlay {
     position: fixed;
     top: 0;
