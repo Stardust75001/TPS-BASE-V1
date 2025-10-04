@@ -249,8 +249,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* ========================================================================
@@ -262,20 +266,20 @@
   .checkout-sidebar {
     padding: 1rem;
   }
-  
+
   .checkout-sidebar {
     min-height: auto;
   }
-  
+
   .order-tracking-steps {
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .tracking-step::after {
     display: none;
   }
-  
+
   .contact-form {
     padding: 0 1rem;
   }

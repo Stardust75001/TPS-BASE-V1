@@ -1,0 +1,26 @@
+{
+  "singleQuote": true,
+  "printWidth": 100,
+  "tabWidth": 2,
+  "useTabs": false,
+  "trailingComma": "none",
+  "semi": true,
+  "bracketSpacing": true,
+  "arrowParens": "avoid",
+  "plugins": ["@shopify/prettier-plugin-liquid"],
+  "overrides": [
+    {
+      "files": ["*.liquid", "*.liquid.html"],
+      "options": {
+        "parser": "liquid-html",
+        "singleQuote": false
+      }
+    },
+    {
+      "files": ["*.json", "*.js", "*.css"],
+      "options": {
+        "singleQuote": true
+      }
+    }
+  ]
+}

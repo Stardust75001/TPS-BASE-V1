@@ -1,5 +1,5 @@
 {% comment %}
-Section : Stories Bar Sticky Configurable (dynamique via blocks)
+  Section : Stories Bar Sticky Configurable (dynamique via blocks)
 {% endcomment %}
 
 <div class="stories-bar-wrapper">
@@ -51,9 +51,12 @@ Section : Stories Bar Sticky Configurable (dynamique via blocks)
   <div class="stories-bar">
     {% assign lang = request.locale.iso_code %}
     {% case lang %}
-      {% when 'fr' %}{% assign base_url = '/fr/collections/' %}
-      {% when 'de' %}{% assign base_url = '/de/collections/' %}
-      {% else %}{% assign base_url = '/collections/' %}
+      {% when 'fr' -%}
+        {%- assign base_url = '/fr/collections/' %}
+      {% when 'de' -%}
+        {%- assign base_url = '/de/collections/' %}
+      {% else -%}
+        {%- assign base_url = '/collections/' %}
     {% endcase %}
 
     {% for block in section.blocks %}

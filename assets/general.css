@@ -13,7 +13,7 @@
 
 #main::after {
   z-index: 1019;
-  content: "";
+  content: '';
   width: 100%;
   height: 100%;
   position: absolute;
@@ -142,11 +142,11 @@
   box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.25);
 }
 
-.quantity-wrapper .btn[data-mode="minus"] {
+.quantity-wrapper .btn[data-mode='minus'] {
   left: 0;
 }
 
-.quantity-wrapper .btn[data-mode="plus"] {
+.quantity-wrapper .btn[data-mode='plus'] {
   right: 0;
 }
 
@@ -257,10 +257,10 @@ ul.timer-countdown {
 }
 
 ul.timer-countdown li {
-  border-radius: .25rem;
-  padding: .075rem .35rem;
+  border-radius: 0.25rem;
+  padding: 0.075rem 0.35rem;
   margin: 0 0.125rem;
-  font-size: .7rem;
+  font-size: 0.7rem;
   font-weight: bold;
   min-width: 20px;
   min-height: 18px;
@@ -370,7 +370,7 @@ ul.timer-countdown li {
 }
 
 #offcanvas-menu-nav .nav-link[aria-expanded]::after {
-  content: "";
+  content: '';
   position: absolute;
   right: 0.75rem;
   top: 50%;
@@ -382,7 +382,7 @@ ul.timer-countdown li {
   transition: all 0.2s ease-out;
 }
 
-#offcanvas-menu-nav .nav-link[aria-expanded="true"]::after {
+#offcanvas-menu-nav .nav-link[aria-expanded='true']::after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='5' y1='12' x2='19' y2='12'%3E%3C/line%3E%3C/svg%3E");
 }
 
@@ -691,7 +691,7 @@ body .shopify_subscriptions_fieldset label {
   align-items: center;
 }
 
-body .shopify_subscriptions_fieldset input[type="radio"] {
+body .shopify_subscriptions_fieldset input[type='radio'] {
   margin: 0 0.75rem 0 0;
 }
 
@@ -752,17 +752,20 @@ body .shopify_subscriptions_app_policy {
 @keyframes animation-eg-typage-spinner {
   0% {
     background-color: rgba(0, 0, 0, 1);
-    box-shadow: 12px 0px 0px 0px rgba(0, 0, 0, 0.2),
+    box-shadow:
+      12px 0px 0px 0px rgba(0, 0, 0, 0.2),
       24px 0px 0px 0px rgba(0, 0, 0, 0.2);
   }
   25% {
     background-color: rgba(0, 0, 0, 0.4);
-    box-shadow: 12px 0px 0px 0px rgba(0, 0, 0, 2),
+    box-shadow:
+      12px 0px 0px 0px rgba(0, 0, 0, 2),
       24px 0px 0px 0px rgba(0, 0, 0, 0.2);
   }
   75% {
     background-color: rgba(0, 0, 0, 0.4);
-    box-shadow: 12px 0px 0px 0px rgba(0, 0, 0, 0.2),
+    box-shadow:
+      12px 0px 0px 0px rgba(0, 0, 0, 0.2),
       24px 0px 0px 0px rgba(0, 0, 0, 2);
   }
 }
@@ -799,7 +802,7 @@ body .shopify_subscriptions_app_policy {
 }
 
 #eg-whatsapp-button::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 1px;
   right: 1px;
@@ -911,7 +914,7 @@ body .shopify_subscriptions_app_policy {
 }
 
 #eg-whatsapp-dialog-header-img-wrapper::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 4px;
   right: 2px;
@@ -959,7 +962,7 @@ body .shopify_subscriptions_app_policy {
 }
 
 #eg-whatsapp-dialog-msg::after {
-  content: "";
+  content: '';
   border-top: 0px solid transparent;
   border-bottom: 12px solid transparent;
   border-right: 8px solid white;
@@ -1035,7 +1038,9 @@ body .shopify_subscriptions_app_policy {
   align-items: center;
   justify-content: center;
   min-height: 3em;
-  box-shadow: rgb(0 0 0 / 15%) 0px 4px 24px, rgb(0 0 0 / 5%) 0px 2px 6px;
+  box-shadow:
+    rgb(0 0 0 / 15%) 0px 4px 24px,
+    rgb(0 0 0 / 5%) 0px 2px 6px;
 }
 @media (min-width: 450px) {
   .cookie-popup {
@@ -1107,7 +1112,7 @@ body .shopify_subscriptions_app_policy {
 
 /* =====================
    Pop-up Premium modal
-   ===================== */  
+   ===================== */
 @keyframes shopibtns {
   0% {
     box-shadow: 0 0 5px #198754;

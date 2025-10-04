@@ -1,5 +1,5 @@
 {% comment %}
-Section : Image avec texte + boutons multilingue (clé t: dans fichiers de langue)
+  Section : Image avec texte + boutons multilingue (clé t: dans fichiers de langue)
 {% endcomment %}
 
 {% liquid
@@ -14,12 +14,17 @@ Section : Image avec texte + boutons multilingue (clé t: dans fichiers de langu
   {% if section.settings.image or section.settings.image_mobile %}
     <picture>
       {% if section.settings.image_mobile %}
-        <source media="(max-width: 768px)" srcset="{{ section.settings.image_mobile | image_url: width: 800 }}">
+        <source
+          media="(max-width: 768px)"
+          srcset="{{ section.settings.image_mobile | image_url: width: 800 }}"
+        >
       {% endif %}
-      <img src="{{ section.settings.image | image_url: width: 1920 }}"
-           alt="{{ section.settings.title_key | t }}"
-           loading="lazy"
-           class="image-banner-img">
+      <img
+        src="{{ section.settings.image | image_url: width: 1920 }}"
+        alt="{{ section.settings.title_key | t }}"
+        loading="lazy"
+        class="image-banner-img"
+      >
     </picture>
   {% endif %}
 
@@ -49,13 +54,13 @@ Section : Image avec texte + boutons multilingue (clé t: dans fichiers de langu
 </section>
 
 <style>
-@media screen and (max-width: 768px) {
-  .image-banner-wrapper {
-    margin: 0 !important;
-    padding: 0 !important;
-    background: transparent !important;
+  @media screen and (max-width: 768px) {
+    .image-banner-wrapper {
+      margin: 0 !important;
+      padding: 0 !important;
+      background: transparent !important;
+    }
   }
-}
 </style>
 
 {% schema %}
@@ -63,18 +68,79 @@ Section : Image avec texte + boutons multilingue (clé t: dans fichiers de langu
   "name": "Image + but multi",
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Image desktop" },
-    { "type": "image_picker", "id": "image_mobile", "label": "Image mobile (affichée uniquement < 768px)" },
-    { "type": "text", "id": "title_key", "label": "Clé de titre", "default": "custom_sections.image_banner.title" },
-    { "type": "text", "id": "text_key", "label": "Clé de description", "default": "custom_sections.image_banner.text" },
-    { "type": "text", "id": "btn_primary_label_key", "label": "Clé bouton principal", "default": "custom_sections.image_banner.primary_button" },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image mobile (affichée uniquement < 768px)"
+    },
+    {
+      "type": "text",
+      "id": "title_key",
+      "label": "Clé de titre",
+      "default": "custom_sections.image_banner.title"
+    },
+    {
+      "type": "text",
+      "id": "text_key",
+      "label": "Clé de description",
+      "default": "custom_sections.image_banner.text"
+    },
+    {
+      "type": "text",
+      "id": "btn_primary_label_key",
+      "label": "Clé bouton principal",
+      "default": "custom_sections.image_banner.primary_button"
+    },
     { "type": "url", "id": "btn_primary_url", "label": "Lien du bouton principal" },
-    { "type": "text", "id": "btn_secondary_label_key", "label": "Clé second bouton", "default": "custom_sections.image_banner.secondary_button" },
+    {
+      "type": "text",
+      "id": "btn_secondary_label_key",
+      "label": "Clé second bouton",
+      "default": "custom_sections.image_banner.secondary_button"
+    },
     { "type": "url", "id": "btn_secondary_url", "label": "Lien du second bouton" },
-    { "type": "text", "id": "custom_class", "label": "Classe CSS personnalisée", "default": "image-banner" },
-    { "type": "range", "id": "mt", "label": "Marge supérieure", "min": 0, "max": 20, "step": 1, "default": 0 },
-    { "type": "range", "id": "mb", "label": "Marge inférieure", "min": 0, "max": 20, "step": 1, "default": 0 },
-    { "type": "range", "id": "pt", "label": "Padding supérieur", "min": 0, "max": 20, "step": 1, "default": 0 },
-    { "type": "range", "id": "pb", "label": "Padding inférieur", "min": 0, "max": 20, "step": 1, "default": 0 }
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Classe CSS personnalisée",
+      "default": "image-banner"
+    },
+    {
+      "type": "range",
+      "id": "mt",
+      "label": "Marge supérieure",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "mb",
+      "label": "Marge inférieure",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "pt",
+      "label": "Padding supérieur",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "pb",
+      "label": "Padding inférieur",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 0
+    }
   ],
   "presets": [
     {

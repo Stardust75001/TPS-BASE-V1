@@ -4,17 +4,15 @@
    Pour plus d'informations, visitez : https://www.shopiweb.fr
    ======================================================================== */
 
-const localStorageKey = "shopiweb_wishlist_v1";
+const localStorageKey = 'shopiweb_wishlist_v1';
 
 /* =====================
    Retirer de la liste de souhaits
    ===================== */
-window.handleWishlistItemRemoval = (btn) => {
+window.handleWishlistItemRemoval = btn => {
   let wishlist = JSON.parse(localStorage.getItem(localStorageKey)) || [];
 
-  wishlist = wishlist.filter(
-    (elem) => elem.handle !== btn.dataset.productHandle
-  );
+  wishlist = wishlist.filter(elem => elem.handle !== btn.dataset.productHandle);
 
   localStorage.setItem(localStorageKey, JSON.stringify(wishlist));
 
@@ -24,28 +22,24 @@ window.handleWishlistItemRemoval = (btn) => {
 /* =====================
    Ajouter ou retirer de la liste de souhaits
    ===================== */
-window.removeOrAddFromWishlist = async (btn) => {
+window.removeOrAddFromWishlist = async btn => {
   let wishlist = JSON.parse(localStorage.getItem(localStorageKey)) || [];
-  const isWishlisted = wishlist.some(
-    (elem) => elem.handle === btn.dataset.productHandle
-  );
+  const isWishlisted = wishlist.some(elem => elem.handle === btn.dataset.productHandle);
 
   if (isWishlisted) {
-    wishlist = wishlist.filter(
-      (elem) => elem.handle !== btn.dataset.productHandle
-    );
+    wishlist = wishlist.filter(elem => elem.handle !== btn.dataset.productHandle);
   } else {
     const response = await fetch(`/products/${btn.dataset.productHandle}.js`);
     const product = await response.json();
 
-    const variants = product.variants.map((variant) => ({
+    const variants = product.variants.map(variant => ({
       id: variant.id,
       title: variant.title,
       compare_at_price: variant.compare_at_price,
       price: variant.price,
       featured_image: {
-        src: variant.featured_image?.src || null,
-      },
+        src: variant.featured_image?.src || null
+      }
     }));
 
     wishlist.push({
@@ -59,7 +53,7 @@ window.removeOrAddFromWishlist = async (btn) => {
       featured_image: product.featured_image,
       vendor: product.vendor,
       time: Date.now(),
-      variants,
+      variants
     });
   }
 
@@ -74,56 +68,50 @@ window.removeOrAddFromWishlist = async (btn) => {
 const initializeWishlist = () => {
   const wishlist = JSON.parse(localStorage.getItem(localStorageKey)) || [];
 
-  document.querySelectorAll(".btn-wishlist-add-remove").forEach((btn) => {
-    const isWishlisted = wishlist.some(
-      (elem) => elem.handle === btn.dataset.productHandle
-    );
+  document.querySelectorAll('.btn-wishlist-add-remove').forEach(btn => {
+    const isWishlisted = wishlist.some(elem => elem.handle === btn.dataset.productHandle);
 
     if (isWishlisted) {
-      btn.querySelector("svg").setAttribute("fill", "currentColor");
-      btn.setAttribute("aria-label", btn.dataset.textRemove);
-      btn.classList.add("is-wishlisted");
+      btn.querySelector('svg').setAttribute('fill', 'currentColor');
+      btn.setAttribute('aria-label', btn.dataset.textRemove);
+      btn.classList.add('is-wishlisted');
     } else {
-      btn.querySelector("svg").setAttribute("fill", "none");
-      btn.setAttribute("aria-label", btn.dataset.textAdd);
-      btn.classList.remove("is-wishlisted");
+      btn.querySelector('svg').setAttribute('fill', 'none');
+      btn.setAttribute('aria-label', btn.dataset.textAdd);
+      btn.classList.remove('is-wishlisted');
     }
   });
 
-  document.querySelectorAll(".wishlist-count-badge").forEach((badge) => {
+  document.querySelectorAll('.wishlist-count-badge').forEach(badge => {
     if (wishlist.length === 0) {
-      badge.setAttribute("hidden", "hidden");
+      badge.setAttribute('hidden', 'hidden');
     } else {
-      badge.removeAttribute("hidden");
+      badge.removeAttribute('hidden');
       badge.textContent = wishlist.length;
     }
   });
 
   if (wishlist.length) {
-    const productList = document.querySelector(
-      "#offcanvas-wishlist-product-listing"
-    );
-    let productListItems = "";
+    const productList = document.querySelector('#offcanvas-wishlist-product-listing');
+    let productListItems = '';
 
-    wishlist.forEach((product) => {
-      let variantOptions = "";
+    wishlist.forEach(product => {
+      let variantOptions = '';
 
-      product.variants.forEach((variant) => {
+      product.variants.forEach(variant => {
         variantOptions += `
                     <option 
                         value="${variant.id}"
-                        data-compare-at-price="${
-                          variant.compare_at_price || ""
-                        }"
+                        data-compare-at-price="${variant.compare_at_price || ''}"
                         data-price="${variant.price}"
                         data-variant-image="${
                           variant.featured_image.src
                             ? Shopify.resizeImage(
                                 variant.featured_image.src,
                                 `${productList.dataset.imgWidth}x${productList.dataset.imgHeight}`,
-                                "center"
+                                'center'
                               )
-                            : ""
+                            : ''
                         }">
                         ${variant.title}
                     </option>
@@ -140,9 +128,9 @@ const initializeWishlist = () => {
                                       productList.dataset.imgThumbnail
                                     }" 
                                     src="${Shopify.resizeImage(
-                                      product.featured_image || "no-image.gif",
+                                      product.featured_image || 'no-image.gif',
                                       `${productList.dataset.imgWidth}x${productList.dataset.imgHeight}`,
-                                      "center"
+                                      'center'
                                     )}"
                                     alt="" 
                                     width="${productList.dataset.imgWidth}"
@@ -160,55 +148,36 @@ const initializeWishlist = () => {
                                data-id="${product.id}">
                             </div>
                             <p class="product-item-price small mb-3">
-                                <span ${
-                                  product.compare_at_price > product.price
-                                    ? ""
-                                    : "hidden"
-                                }>
+                                <span ${product.compare_at_price > product.price ? '' : 'hidden'}>
                                     <span class="product-item-price-final me-1">
                                         <span class="visually-hidden">
-                                            ${
-                                              productList.dataset.textPriceSale
-                                            } &nbsp;
+                                            ${productList.dataset.textPriceSale} &nbsp;
                                         </span>
-                                        <span ${
-                                          product.price_varies ? "" : "hidden"
-                                        }>
+                                        <span ${product.price_varies ? '' : 'hidden'}>
                                             ${productList.dataset.textPriceFrom}
                                         </span>
                                         ${Shopify.formatMoney(product.price)}
                                     </span>
                                     <span class="product-item-price-compare text-muted">
                                         <span class="visually-hidden">
-                                            ${
-                                              productList.dataset
-                                                .textPriceRegular
-                                            } &nbsp;
+                                            ${productList.dataset.textPriceRegular} &nbsp;
                                         </span>
                                         <s>
-                                            ${Shopify.formatMoney(
-                                              product.compare_at_price
-                                            )}
+                                            ${Shopify.formatMoney(product.compare_at_price)}
                                         </s>
                                     </span>
                                 </span>
                                 <span class="product-item-price-final" ${
-                                  product.compare_at_price > product.price
-                                    ? "hidden"
-                                    : ""
+                                  product.compare_at_price > product.price ? 'hidden' : ''
                                 }>
-                                    <span ${
-                                      product.price_varies ? "" : "hidden"
-                                    }>
+                                    <span ${product.price_varies ? '' : 'hidden'}>
                                         ${productList.dataset.textPriceFrom}
                                     </span>
                                     ${Shopify.formatMoney(product.price)}
                                 </span>
                             </p>
                             <div class="form-wrapper" ${
-                              productList.dataset.showAtcForm === "true"
-                                ? ""
-                                : "hidden"
+                              productList.dataset.showAtcForm === 'true' ? '' : 'hidden'
                             }>
                                 <form method="post" action="/cart/add" accept-charset="UTF-8" class="shopify-product-form" enctype="multipart/form-data" onsubmit="handleAddToCartFormSubmit(this, event)">
                                     <input type="hidden" name="form_type" value="product">
@@ -218,27 +187,18 @@ const initializeWishlist = () => {
                                                 class="form-select form-select-sm w-100 me-3" 
                                                 name="id" 
                                                 aria-label="${
-                                                  productList.dataset
-                                                    .textSelectVariant
+                                                  productList.dataset.textSelectVariant
                                                 }"
                                                 onchange="handleProductItemVariantChange(this, event)"
-                                                ${
-                                                  product.variants.length === 1
-                                                    ? "hidden"
-                                                    : ""
-                                                }>
+                                                ${product.variants.length === 1 ? 'hidden' : ''}>
                                                 ${variantOptions}
                                             </select>
                                         <button
                                             class="btn-atc btn btn-sm btn-primary px-4 flex-shrink-0"
-                                            data-product-handle="${
-                                              product.handle
-                                            }"
+                                            data-product-handle="${product.handle}"
                                             type="submit"
                                             name="add"
-                                            data-text-add-to-cart="${
-                                              productList.dataset.textAdd
-                                            }">
+                                            data-text-add-to-cart="${productList.dataset.textAdd}">
                                             ${productList.dataset.textAdd}
                                         </button>
                                     </div>
@@ -248,9 +208,7 @@ const initializeWishlist = () => {
                                 class="btn-remove btn btn-sm"
                                 data-product-handle="${product.handle}"
                                 onclick="handleWishlistItemRemoval(this)"
-                                aria-label="${
-                                  productList.dataset.textWishlistRemove
-                                }">
+                                aria-label="${productList.dataset.textWishlistRemove}">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                     <polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line>
                                 </svg>
@@ -265,37 +223,25 @@ const initializeWishlist = () => {
     window.SPR?.initDomEls();
     window.SPR?.loadBadges();
 
-    document.querySelectorAll("#offcanvas-wishlist .btn-atc").forEach((btn) => {
-      btn.addEventListener("click", () => {
+    document.querySelectorAll('#offcanvas-wishlist .btn-atc').forEach(btn => {
+      btn.addEventListener('click', () => {
         setTimeout(() => {
           window.handleWishlistItemRemoval(btn);
-          bootstrap.Offcanvas.getOrCreateInstance("#offcanvas-wishlist").hide();
+          bootstrap.Offcanvas.getOrCreateInstance('#offcanvas-wishlist').hide();
         }, 300);
       });
     });
 
-    document
-      .querySelector("#offcanvas-wishlist-empty")
-      .setAttribute("hidden", "hidden");
-    document
-      .querySelector("#offcanvas-wishlist-product-listing")
-      .removeAttribute("hidden");
+    document.querySelector('#offcanvas-wishlist-empty').setAttribute('hidden', 'hidden');
+    document.querySelector('#offcanvas-wishlist-product-listing').removeAttribute('hidden');
   } else {
-    document
-      .querySelector("#offcanvas-wishlist-empty")
-      .removeAttribute("hidden");
-    document
-      .querySelector("#offcanvas-wishlist-product-listing")
-      .setAttribute("hidden", "hidden");
-    document.querySelector("#offcanvas-wishlist-product-listing").innerHTML =
-      "";
+    document.querySelector('#offcanvas-wishlist-empty').removeAttribute('hidden');
+    document.querySelector('#offcanvas-wishlist-product-listing').setAttribute('hidden', 'hidden');
+    document.querySelector('#offcanvas-wishlist-product-listing').innerHTML = '';
   }
 };
 initializeWishlist();
 
-window.addEventListener("updated.shopiweb.cart", initializeWishlist);
-window.addEventListener("onCollectionShopiwebUpdate", initializeWishlist);
-window.addEventListener(
-  "init.shopiweb.recommended_products",
-  initializeWishlist
-);
+window.addEventListener('updated.shopiweb.cart', initializeWishlist);
+window.addEventListener('onCollectionShopiwebUpdate', initializeWishlist);
+window.addEventListener('init.shopiweb.recommended_products', initializeWishlist);

@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "f66f8bfb-17fa-4447-80a2-b66b805d47f1": {
@@ -14,41 +5,26 @@
       "blocks": {
         "collection_block_HU4C6V": {
           "type": "collection_block",
-          "settings": {
-            "collection": "le-red-carpet"
-          }
+          "settings": { "collection": "le-red-carpet" }
         },
         "collection_block_9NVVUi": {
           "type": "collection_block",
           "disabled": true,
-          "settings": {
-            "collection": "fashion-district"
-          }
+          "settings": { "collection": "fashion-district" }
         },
         "collection_block_FNaQd4": {
           "type": "collection_block",
-          "settings": {
-            "collection": "playground"
-          }
+          "settings": { "collection": "playground" }
         },
         "collection_block_RGp3nz": {
           "type": "collection_block",
-          "settings": {
-            "collection": "time-for-a-walk"
-          }
+          "settings": { "collection": "time-for-a-walk" }
         },
         "collection_block_QrLRGW": {
           "type": "collection_block",
-          "settings": {
-            "collection": "pet-tech"
-          }
+          "settings": { "collection": "pet-tech" }
         },
-        "collection_block_FecyJP": {
-          "type": "collection_block",
-          "settings": {
-            "collection": ""
-          }
-        }
+        "collection_block_FecyJP": { "type": "collection_block", "settings": { "collection": "" } }
       },
       "block_order": [
         "collection_block_HU4C6V",
@@ -69,7 +45,5 @@
       }
     }
   },
-  "order": [
-    "f66f8bfb-17fa-4447-80a2-b66b805d47f1"
-  ]
+  "order": ["f66f8bfb-17fa-4447-80a2-b66b805d47f1"]
 }

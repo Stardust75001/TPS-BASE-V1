@@ -2,7 +2,13 @@
   {% for block in section.blocks %}
     <div class="column">
       {% if block.settings.image != blank %}
-        <img src="{{ block.settings.image | image_url: width: 160 }}" alt="{{ block.settings.title | escape }}" width="32" height="32" loading="lazy">
+        <img
+          src="{{ block.settings.image | image_url: width: 160 }}"
+          alt="{{ block.settings.title | escape }}"
+          width="32"
+          height="32"
+          loading="lazy"
+        >
       {% endif %}
       {% if block.settings.title != blank %}
         <h3>{{ block.settings.title }}</h3>

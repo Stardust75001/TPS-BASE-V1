@@ -32,9 +32,7 @@
           }
         }
       },
-      "block_order": [
-        "desktop_MXD7nE"
-      ],
+      "block_order": ["desktop_MXD7nE"],
       "settings": {
         "bundle_tiers": "100:10,200:20,300:40",
         "bundle_redirect_checkout": false,
@@ -81,7 +79,5 @@
       }
     }
   },
-  "order": [
-    "34ba8053-12fd-455b-b4ee-9479456a0099"
-  ]
+  "order": ["34ba8053-12fd-455b-b4ee-9479456a0099"]
 }

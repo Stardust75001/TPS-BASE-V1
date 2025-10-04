@@ -2,7 +2,12 @@
   <!-- Image principale -->
   <div style="flex: 1 1 40%; max-width: 500px;">
     {% if product.featured_image %}
-      <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title | escape }}" style="width: 100%; border: 1px solid #ddd; padding: 10px;" loading="lazy">
+      <img
+        src="{{ product.featured_image | image_url: width: 800 }}"
+        alt="{{ product.title | escape }}"
+        style="width: 100%; border: 1px solid #ddd; padding: 10px;"
+        loading="lazy"
+      >
     {% endif %}
   </div>
 
@@ -37,7 +42,10 @@
         </select>
       {% endif %}
 
-      <button type="submit" style="background-color: #FFA41C; color: black; border: none; padding: 12px 24px; font-weight: bold; font-size: 16px; cursor: pointer;">
+      <button
+        type="submit"
+        style="background-color: #FFA41C; color: black; border: none; padding: 12px 24px; font-weight: bold; font-size: 16px; cursor: pointer;"
+      >
         Ajouter au panier
       </button>
     </form>

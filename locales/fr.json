@@ -52,7 +52,7 @@
     "section_1": "Section personnalisée 1",
     "section_2": "Section personnalisée 2"
   },
-"sections": {
+  "sections": {
     "list_collections": {
       "name": "Collections",
       "settings": {
@@ -93,7 +93,7 @@
     },
     "header": "En-tête",
     "footer": ""
-},
+  },
   "collection": {
     "btn_filter_products": "Filtrer les produits",
     "sort_by": "Trier par",
@@ -181,28 +181,28 @@
     "save": "Enregistrer",
     "select_variant": "Sélectionner une variante"
   },
-"general": {
-  "menu": "Menu",
-  "all_rights_reserved": "Tous droits réservés",
-  "secure_payments": "Paiements sécurisés",
-  "newsletter": {
-    "name_placeholder": "Entrez votre nom",
-    "input_label": "Entrez votre e-mail",
-    "submit_button": "S'abonner",
-    "confirmation_text": "Merci pour votre abonnement !"
-  },
-  "breadcrumbs": {
-    "home": "Accueil",
-    "label": "Vous êtes ici :"
-  },
-  "cookies": {
-    "consent": "Nous utilisons des cookies pour améliorer votre expérience."
-  },
-  "404_page": {
-    "title": "404 - Page non trouvée",
-    "subtext": "La page que vous recherchez n'existe pas.",
-    "button": "Retour à l'accueil"
-},
+  "general": {
+    "menu": "Menu",
+    "all_rights_reserved": "Tous droits réservés",
+    "secure_payments": "Paiements sécurisés",
+    "newsletter": {
+      "name_placeholder": "Entrez votre nom",
+      "input_label": "Entrez votre e-mail",
+      "submit_button": "S'abonner",
+      "confirmation_text": "Merci pour votre abonnement !"
+    },
+    "breadcrumbs": {
+      "home": "Accueil",
+      "label": "Vous êtes ici :"
+    },
+    "cookies": {
+      "consent": "Nous utilisons des cookies pour améliorer votre expérience."
+    },
+    "404_page": {
+      "title": "404 - Page non trouvée",
+      "subtext": "La page que vous recherchez n'existe pas.",
+      "button": "Retour à l'accueil"
+    },
     "search_page": {
       "title": "Rechercher dans la boutique",
       "title_search_performed": "Résultats de recherche",
@@ -457,13 +457,13 @@
     "title": "Personnalisé",
     "description": "Personnalisez votre sélection"
   },
-"footer": {
-  "newsletter": {
-    "title": "Inscrivez-vous à notre newsletter",
-    "first_name_placeholder": "Entrez votre prénom",
-    "email_placeholder": "Entrez votre adresse e-mail",
-    "submit_button": "S'inscrire",
-    "notice_html": "En vous inscrivant pour recevoir nos e-mails, vous acceptez nos conditions générales et notre <a href=\"/pages/confidentialite\">politique de confidentialité</a>."
+  "footer": {
+    "newsletter": {
+      "title": "Inscrivez-vous à notre newsletter",
+      "first_name_placeholder": "Entrez votre prénom",
+      "email_placeholder": "Entrez votre adresse e-mail",
+      "submit_button": "S'inscrire",
+      "notice_html": "En vous inscrivant pour recevoir nos e-mails, vous acceptez nos conditions générales et notre <a href=\"/pages/confidentialite\">politique de confidentialité</a>."
+    }
   }
-}
 }

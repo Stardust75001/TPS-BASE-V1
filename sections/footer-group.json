@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "type": "footer",
   "name": "Groupe de pied de page",
@@ -63,7 +54,7 @@
         "show_first_name": true,
         "first_name_placeholder": "Enter your name",
         "btn_color": "btn-primary",
-        "notice": "<p>By signing up to receive emails, you agree <strong>t</strong>o our <a href=\"/pages/conditions-generales-de-vente\" title=\"GENERAL TERMS AND CONDITIONS OF SALE (GTCS)\">Terms of Sale </a>and <a href=\"/pages/politique-de-confidentilaite\" title=\"PRIVACY POLICY\">Privacy Policy</a>.</p>",
+        "notice": "<p>By signing up to receive emails, you agree <strong>t<\/strong>o our <a href=\"\/pages\/conditions-generales-de-vente\" title=\"GENERAL TERMS AND CONDITIONS OF SALE (GTCS)\">Terms of Sale <\/a>and <a href=\"\/pages\/politique-de-confidentilaite\" title=\"PRIVACY POLICY\">Privacy Policy<\/a>.<\/p>",
         "pt": 0,
         "pb": 0,
         "mt": 0,
@@ -75,34 +66,18 @@
       "blocks": {
         "menu_xVQw8g": {
           "type": "menu",
-          "settings": {
-            "menu": "help-2",
-            "title": "HELP",
-            "title_size": "h6"
-          }
+          "settings": { "menu": "help-2", "title": "HELP", "title_size": "h6" }
         },
         "menu_6Cqn9w": {
           "type": "menu",
-          "settings": {
-            "menu": "legal",
-            "title": "LEGAL",
-            "title_size": "h6"
-          }
+          "settings": { "menu": "legal", "title": "LEGAL", "title_size": "h6" }
         },
         "menu_g8wJjy": {
           "type": "menu",
-          "settings": {
-            "menu": "store",
-            "title": "STORE",
-            "title_size": "h6"
-          }
+          "settings": { "menu": "store", "title": "STORE", "title_size": "h6" }
         }
       },
-      "block_order": [
-        "menu_xVQw8g",
-        "menu_6Cqn9w",
-        "menu_g8wJjy"
-      ],
+      "block_order": ["menu_xVQw8g", "menu_6Cqn9w", "menu_g8wJjy"],
       "settings": {
         "bg_color": "bg-tertiary text-white",
         "bg_gradient": false,
@@ -118,11 +93,11 @@
         "about_bg_color": "bg-dark text-white",
         "about_bg_gradient": false,
         "about_bg_transparent": false,
-        "about_logo": "shopify://shop_images/LOGO_ARRONDI_NT12052025_-_1200x628.jpg-removebg-preview.png",
+        "about_logo": "shopify:\/\/shop_images\/LOGO_ARRONDI_NT12052025_-_1200x628.jpg-removebg-preview.png",
         "about_logo_height": 100,
         "svg_logo_footer": "",
         "logo_svg_height": 50,
-        "about_description": "<p>A FALCON TRADING COMPANY </p><p>RCS PARIS 450 573 712</p>",
+        "about_description": "<p>A FALCON TRADING COMPANY <\/p><p>RCS PARIS 450 573 712<\/p>",
         "about_phone_text": "+33 7 69 23 87 99",
         "about_phone_url": "tel:+33769238799",
         "about_email_text": "hello@thepetsociety.paris",
@@ -133,9 +108,5 @@
       }
     }
   },
-  "order": [
-    "bf5e08e7-a4d4-484a-9229-05d359a62590",
-    "newsletter",
-    "footer"
-  ]
+  "order": ["bf5e08e7-a4d4-484a-9229-05d359a62590", "newsletter", "footer"]
 }

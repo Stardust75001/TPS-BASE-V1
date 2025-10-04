@@ -152,43 +152,43 @@
   ]
 }
 {% endschema %}
----------------------------------------------------------
-Copyright © 2019/2024 Theme Shopiweb Premium. Tous droits réservés.
-La copie, la modification, la distribution ou l'utilisation
-non autorisée de ce code ou de toute partie de celui-ci est formellement interdite.
-Les contrevenants seront poursuivis dans toute la mesure permise par la loi.
+--------------------------------------------------------- Copyright © 2019/2024 Theme Shopiweb
+Premium. Tous droits réservés. La copie, la modification, la distribution ou l'utilisation non
+autorisée de ce code ou de toute partie de celui-ci est formellement interdite. Les contrevenants
+seront poursuivis dans toute la mesure permise par la loi.
 ---------------------------------------------------------
 {% comment %}
----------------------------------------------------------
-Copyright © 2019/2024 Theme Shopiweb Premium. Tous droits réservés.
----------------------------------------------------------
+  ---------------------------------------------------------
+  Copyright © 2019/2024 Theme Shopiweb Premium. Tous droits réservés.
+  ---------------------------------------------------------
 {% endcomment %}
 
 {%- style -%}
-@media screen and (max-width: 767px) {
-  .carousel-caption .btn-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 15px;
-  }
+  @media screen and (max-width: 767px) {
+    .carousel-caption .btn-wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
 
-  .carousel-caption .btn-wrapper .btn {
-    font-size: 14px;
-    padding: 8px 18px;
-    margin: 0;
-    text-align: center;
+    .carousel-caption .btn-wrapper .btn {
+      font-size: 14px;
+      padding: 8px 18px;
+      margin: 0;
+      text-align: center;
+    }
   }
-}
 {%- endstyle -%}
 
 <!-- Boutons dans le carousel -->
-<div class="carousel-caption {{ block.settings.caption_position_mobile }} {{ block.settings.caption_position_desktop }}"
-     style="color: {{ block.settings.caption_color }};">
+<div
+  class="carousel-caption {{ block.settings.caption_position_mobile }} {{ block.settings.caption_position_desktop }}"
+  style="color: {{ block.settings.caption_color }};"
+>
   <div style="max-width: {{ block.settings.caption_max_width }}px">
-
     {% unless block.settings.subtitle_img == blank %}
       <img
         class="img-fluid mb-5"
@@ -196,7 +196,8 @@ Copyright © 2019/2024 Theme Shopiweb Premium. Tous droits réservés.
         alt="{{ block.settings.subtitle_img.alt | escape }}"
         width="{{ block.settings.brand_image_size }}"
         height="auto"
-        loading="lazy">
+        loading="lazy"
+      >
     {% endunless %}
 
     {% unless block.settings.subtitle == blank %}
@@ -215,16 +216,24 @@ Copyright © 2019/2024 Theme Shopiweb Premium. Tous droits réservés.
       </div>
     {% endunless %}
 
-<div class="btn-wrapper">
-  {% unless block.settings.btn_text == blank %}
-    <a class="btn {{ block.settings.btn_color }} {{ block.settings.btn_size }}" href="{{ block.settings.btn_url }}">
-      {{ block.settings.btn_text }}
-    </a>
-  {% endunless %}
+    <div class="btn-wrapper">
+      {% unless block.settings.btn_text == blank %}
+        <a
+          class="btn {{ block.settings.btn_color }} {{ block.settings.btn_size }}"
+          href="{{ block.settings.btn_url }}"
+        >
+          {{ block.settings.btn_text }}
+        </a>
+      {% endunless %}
 
-  {% unless block.settings.btn_secondary_text == blank %}
-    <a class="btn {{ block.settings.btn_secondary_color }} {{ block.settings.btn_secondary_size }}" href="{{ block.settings.btn_secondary_url }}">
-      {{ block.settings.btn_secondary_text }}
-    </a>
-  {% endunless %}
+      {% unless block.settings.btn_secondary_text == blank %}
+        <a
+          class="btn {{ block.settings.btn_secondary_color }} {{ block.settings.btn_secondary_size }}"
+          href="{{ block.settings.btn_secondary_url }}"
+        >
+          {{ block.settings.btn_secondary_text }}
+        </a>
+      {% endunless %}
+    </div>
+  </div>
 </div>

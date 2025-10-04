@@ -5,30 +5,30 @@
  * TPS BASE V1 - Shopiweb Premium
  */
 
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 class AnalyticsUpdater {
   async run() {
-    console.log("🔄 Mise à jour des configurations Analytics");
-    console.log("=".repeat(50));
+    console.log('🔄 Mise à jour des configurations Analytics');
+    console.log('='.repeat(50));
 
     await this.createScriptsDirectory();
     await this.updateEnvironmentVars();
     await this.updateSentryConfig();
     await this.updateGitHubSettings();
 
-    console.log("\n✅ Configuration terminée !");
+    console.log('\n✅ Configuration terminée !');
   }
 
   async createScriptsDirectory() {
-    console.log("\n📁 Création du dossier scripts...");
+    console.log('\n📁 Création du dossier scripts...');
 
-    const scriptsDir = path.join(process.cwd(), "scripts");
+    const scriptsDir = path.join(process.cwd(), 'scripts');
 
     if (!fs.existsSync(scriptsDir)) {
       fs.mkdirSync(scriptsDir, { recursive: true });
-      console.log("✅ Dossier scripts créé");
+      console.log('✅ Dossier scripts créé');
     }
 
     const checkIntegrationsScript = `#!/usr/bin/env node
@@ -60,9 +60,9 @@ console.log('3. Configurer selon le store Shopify de destination');
 console.log('4. Mettre à jour toutes les variables d\\'environnement');
 `;
 
-    const checkIntegrationsPath = path.join(scriptsDir, "check-integrations.js");
+    const checkIntegrationsPath = path.join(scriptsDir, 'check-integrations.js');
     fs.writeFileSync(checkIntegrationsPath, checkIntegrationsScript);
-    console.log("✅ Script check-integrations.js créé");
+    console.log('✅ Script check-integrations.js créé');
 
     try {
       fs.chmodSync(checkIntegrationsPath, 0o755);
@@ -72,30 +72,30 @@ console.log('4. Mettre à jour toutes les variables d\\'environnement');
   }
 
   async updateEnvironmentVars() {
-    console.log("\n📝 Variables analytics à configurer :");
-    console.log("  • GOOGLE_ANALYTICS_ID: ID Google Analytics (GA4)");
-    console.log("  • FACEBOOK_PIXEL_ID: ID Facebook Pixel");
-    console.log("  • TIKTOK_PIXEL_ID: ID TikTok Pixel");
-    console.log("  • AHREFS_ANALYTICS_KEY: Clé Ahrefs Analytics");
-    console.log("  • SENTRY_DSN: DSN Sentry (nouveau projet requis)");
-    console.log("\n💡 Éditez le fichier .env avec vos nouvelles valeurs");
+    console.log('\n📝 Variables analytics à configurer :');
+    console.log('  • GOOGLE_ANALYTICS_ID: ID Google Analytics (GA4)');
+    console.log('  • FACEBOOK_PIXEL_ID: ID Facebook Pixel');
+    console.log('  • TIKTOK_PIXEL_ID: ID TikTok Pixel');
+    console.log('  • AHREFS_ANALYTICS_KEY: Clé Ahrefs Analytics');
+    console.log('  • SENTRY_DSN: DSN Sentry (nouveau projet requis)');
+    console.log('\n💡 Éditez le fichier .env avec vos nouvelles valeurs');
   }
 
   async updateSentryConfig() {
-    console.log("\n�� Configuration Sentry...");
-    console.log("⚠️  IMPORTANT: Créez un NOUVEAU projet Sentry pour ce repo !");
-    console.log("1. Aller sur https://sentry.io");
+    console.log('\n�� Configuration Sentry...');
+    console.log('⚠️  IMPORTANT: Créez un NOUVEAU projet Sentry pour ce repo !');
+    console.log('1. Aller sur https://sentry.io');
     console.log('2. Créer nouveau projet : "TPS-BASE-V1"');
-    console.log("3. Copier le DSN dans .env");
+    console.log('3. Copier le DSN dans .env');
   }
 
   async updateGitHubSettings() {
-    console.log("\n⚙️  Configuration GitHub...");
-    console.log("Secrets GitHub à configurer dans ce repo :");
-    console.log("• SHOPIFY_CLI_THEME_TOKEN");
-    console.log("• SHOPIFY_FLAG_STORE");
-    console.log("• SENTRY_AUTH_TOKEN (si monitoring actif)");
-    console.log("\nURL: https://github.com/Stardust75001/TPS-BASE-V1/settings/secrets/actions");
+    console.log('\n⚙️  Configuration GitHub...');
+    console.log('Secrets GitHub à configurer dans ce repo :');
+    console.log('• SHOPIFY_CLI_THEME_TOKEN');
+    console.log('• SHOPIFY_FLAG_STORE');
+    console.log('• SENTRY_AUTH_TOKEN (si monitoring actif)');
+    console.log('\nURL: https://github.com/Stardust75001/TPS-BASE-V1/settings/secrets/actions');
   }
 }
 

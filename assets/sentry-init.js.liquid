@@ -1,0 +1,48 @@
+{% comment %}
+  Sentry init loader
+  - Prefer loading the SDK from the theme assets (sentry-bundle.tracing.min.js)
+  - If asset is not present or fails to load, fallback to Sentry CDN
+  - Initialize using theme settings (sentry_dsn, tracesSampleRate, environment, release)
+{% endcomment %}
+
+{% if settings.sentry_enabled and settings.sentry_dsn %}
+  (function() { var LOCAL_SRC = '{{ 'sentry-bundle.tracing.min.js' | asset_url }}'; var CDN_SRC =
+  'https://browser.sentry-cdn.com/7.120.0/bundle.tracing.min.js';
+
+  // If a security token is configured, inject it into outgoing requests to ingest.sentry.io var
+  SENTRY_TOKEN = {{ settings.sentry_security_token | json }}; if (SENTRY_TOKEN) { try { // Patch
+  fetch var origFetch = window.fetch; window.fetch = function(input, init) { try { var url = (typeof
+  input === 'string') ? input : (input && input.url); if (url && url.indexOf('ingest.sentry.io') !==
+  -1) { init = init || {}; init.headers = init.headers || {}; // If headers is a Headers instance,
+  convert to object if (init.headers instanceof Headers) { var h = {};
+  init.headers.forEach(function(v, k) { h[k] = v; }); init.headers = h; }
+  init.headers['X-Sentry-Token'] = SENTRY_TOKEN; } } catch (e) { console && console.warn &&
+  console.warn('sentry-token fetch patch error', e); } return origFetch.apply(this, arguments); };
+
+  // Patch XMLHttpRequest var OrigXHR = window.XMLHttpRequest; function PatchedXHR() { var xhr = new
+  OrigXHR(); var origOpen = xhr.open; xhr.open = function(method, url) { this._sentry_url = url;
+  return origOpen.apply(this, arguments); }; var origSend = xhr.send; xhr.send = function(body) {
+  try { if (this._sentry_url && this._sentry_url.indexOf('ingest.sentry.io') !== -1) {
+  this.setRequestHeader && this.setRequestHeader('X-Sentry-Token', SENTRY_TOKEN); } } catch (e) { /*
+  ignore */ } return origSend.apply(this, arguments); }; return xhr; } PatchedXHR.prototype =
+  OrigXHR.prototype; window.XMLHttpRequest = PatchedXHR; console && console.info &&
+  console.info('Sentry security token injection active'); } catch (e) { console && console.warn &&
+  console.warn('Failed to patch fetch/XHR for Sentry token', e); } }
+
+  function loadScript(src, onload, onerror) { var s = document.createElement('script'); s.src = src;
+  s.crossOrigin = 'anonymous'; s.defer = true; s.onload = onload; s.onerror = onerror;
+  document.head.appendChild(s); }
+
+  function doInit() { try { if (window.Sentry && window.Sentry.init) { Sentry.init({ dsn:
+  {{ settings.sentry_dsn | json }}, integrations: [new Sentry.BrowserTracing()], tracesSampleRate:
+  {{ settings.sentry_traces_sample_rate | default: 1.0 }}, environment:
+  {{ shop.permanent_domain | json }}, release: {{ settings.theme_version | default: 'dev' | json }}
+  }); console && console.info && console.info('Sentry initialized (init script)'); } else { console
+  && console.warn && console.warn('Sentry not present to init'); } } catch (e) { console &&
+  console.error && console.error('Sentry init error', e); } }
+
+  // Try loading local asset first loadScript(LOCAL_SRC, function() { doInit(); }, function() { //
+  fallback to CDN loadScript(CDN_SRC, function() { doInit(); }, function() { console &&
+  console.error && console.error('Failed to load Sentry SDK from both local asset and CDN'); }); });
+  })();
+{% endif %}

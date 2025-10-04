@@ -1,35 +1,36 @@
 {% comment %}
----------------------------------------------------------
-Copyright © 2019/2024 Theme Shopiweb Premium. Tous droits réservés.
-La copie, la modification, la distribution ou l'utilisation
-non autorisée de ce code ou de toute partie de celui-ci est formellement interdite.
-Les contrevenants seront poursuivis dans toute la mesure permise par la loi.
----------------------------------------------------------
+  ---------------------------------------------------------
+  Copyright © 2019/2024 Theme Shopiweb Premium. Tous droits réservés.
+  La copie, la modification, la distribution ou l'utilisation
+  non autorisée de ce code ou de toute partie de celui-ci est formellement interdite.
+  Les contrevenants seront poursuivis dans toute la mesure permise par la loi.
+  ---------------------------------------------------------
 {% endcomment %}
 
-{% liquid 
-      assign pt = section.settings.pt | prepend: 'pt-'
-      assign pb = section.settings.pb | prepend: 'pb-'
-  
-      assign bg_color = section.settings.bg_color
-  
-      if section.settings.bg_gradient
-          assign bg_color = bg_color | append: ' bg-gradient'
-      endif
-  
-      if section.settings.bg_option == 'navbar-transparent' and request.page_type == 'index'
-          assign bg_color = bg_color | append: ' navbar-hover navbar-transparent text-white'
-      elsif section.settings.bg_option == 'navbar-backdrop' and request.page_type == 'index'
-          assign bg_color = bg_color | append: ' navbar-backdrop'
-      endif
-  
-      if section.settings.always_show_toggle
-          assign navbar_mobile_classes = ''
-          assign navbar_desktop_classes = 'd-none'
-      else 
-          assign navbar_mobile_classes = 'd-lg-none'
-          assign navbar_desktop_classes = 'd-none d-lg-block'
-      endif %}
+{% liquid
+  assign pt = section.settings.pt | prepend: 'pt-'
+  assign pb = section.settings.pb | prepend: 'pb-'
+
+  assign bg_color = section.settings.bg_color
+
+  if section.settings.bg_gradient
+    assign bg_color = bg_color | append: ' bg-gradient'
+  endif
+
+  if section.settings.bg_option == 'navbar-transparent' and request.page_type == 'index'
+    assign bg_color = bg_color | append: ' navbar-hover navbar-transparent text-white'
+  elsif section.settings.bg_option == 'navbar-backdrop' and request.page_type == 'index'
+    assign bg_color = bg_color | append: ' navbar-backdrop'
+  endif
+
+  if section.settings.always_show_toggle
+    assign navbar_mobile_classes = ''
+    assign navbar_desktop_classes = 'd-none'
+  else
+    assign navbar_mobile_classes = 'd-lg-none'
+    assign navbar_desktop_classes = 'd-none d-lg-block'
+  endif
+%}
 
 {% style %}
   /* Logo */
@@ -53,7 +54,7 @@ Les contrevenants seront poursuivis dans toute la mesure permise par la loi.
       filter: unset !important;
   }
   {% endif %}
-  
+
   /* Block Micro Menu Header */
   @media screen and (max-width: 990px) {
     .barre-outils {
@@ -64,246 +65,334 @@ Les contrevenants seront poursuivis dans toute la mesure permise par la loi.
 
 <!-- Block Micro Menu Header -->
 {% for block in section.blocks %}
-    {% case block.type %}
-        <!-- Micro Menu -->
-        {% when 'tools' %}
-        <div class="barre-outils {{ block.settings.bg_color }} {% if block.settings.bg_gradient %}bg-gradient {% endif %}">
-            <div class="tools container d-flex small p-3">
-                <div class="links align-self-center">
-                    {% for link in block.settings.toolbar_menu.links %}
-                        <a class="link text-decoration-none p-2 {% if block.settings.bg_color contains 'text-white' %}text-current-color{% else %}link-dark{% endif %}" href="{{ link.url }}" target="_blank">
-                          {{ link.title }}
-                        </a>
-                    {% endfor %}
-                </div>
-                <div class="sociaux d-flex justify-content-end align-items-center flex-grow-1 flex-shrink-1">
-                    {% if block.settings.option-outils == blank %}
-                        {% render 'social-icons' %}
-                    {% else %}
-                        <div class="links-sav">
-                          <a class="link-dark text-decoration-none p-2" href="{{ block.settings.option_link }}">{{ block.settings.option_text }}</a>
-                        </div>
-                    {% endif %}
-                </div>
-
-                {% if block.settings.language_selector_show or block.settings.currency_selector_show %}
-                    {% if localization.available_languages.size > 1 or shop.enabled_currencies.size > 1 %}
-                        <div class="d-flex justify-content-center py-2 ms-4">
-                            {% if block.settings.language_selector_show %}
-                                {% render 'dropdown-localization', btn_color: block.settings.lang_currency_btn_color %}
-                            {% endif %}
-                            {% if block.settings.currency_selector_show %}
-                                {% render 'dropdown-currency', btn_color: block.settings.lang_currency_btn_color %}
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                {% endif %}
-              
-            </div>
-        </div>
-    {% endcase %}
-{% endfor %}
-
-<nav 
-    id="navbar-mobile" 
-    class="navbar {{ navbar_mobile_classes }} {{ bg_color }} {{ section.settings.shadow }} {{ pt }} {{ pb }}">
-    <div class="container d-block">
-        <div class="row align-items-center">
-            <div class="col-3">
-                <ul class="nav flex-nowrap">
-                    <a 
-                        class="nav-link ms-n2"
-                        href="#offcanvas-menu" 
-                        data-bs-toggle="offcanvas" 
-                        aria-controls="offcanvas-menu"
-                        aria-label="{{ 'general.accessibility.menu' | t }}"
-                        role="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
-                        </svg>
-                        {% if settings.layout_mobile == 'navbar-mobile-with-search' %}
-                            {% if section.settings.mobile_menu_label %}
-                                <span class="ms-2 extra-small text-uppercase">
-                                    {{ 'general.menu' | t }}
-                                </span>
-                            {% else %}
-                                <span class="ms-10 extra-small text-uppercase"></span>
-                            {% endif %}
-                        {% endif %}
-                    </a>
-                </ul>
-            </div>
-            <div class="col-6 text-center">
-                <a class="navbar-brand mx-auto py-0" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
-                    {% if section.settings.logo %}
-                        {% assign logo_height_x2 = section.settings.logo_height_mobile | times: 2 %}
-                        <img
-                            class="img-fluid"
-                            src="{{ section.settings.logo | image_url: height: logo_height_x2 }}" 
-                            alt="{{ shop.name }}"
-                            width="{{ section.settings.logo_height_mobile | times: section.settings.logo.aspect_ratio | round }}" 
-                            height="{{ section.settings.logo_height_mobile }}"
-                            loading="lazy">
-                    {% elsif section.settings.logo_svg != blank %}
-                        <span class="svg-no-transparent" style="fill: initial;">{{ section.settings.logo_svg }}</span>
-                    {% else %}
-                        <span class="fs-3">
-                            {{ shop.name }}
-                        </span>
-                    {% endif %}
-                </a>
-            </div>
-            <div class="col-3">
-                <ul class="nav justify-content-end flex-nowrap">
-                    {% if settings.layout_mobile == 'navbar-mobile-with-search' %}
-                        <a 
-                            class="nav-link px-3"
-                            href="#offcanvas-search" 
-                            data-bs-toggle="offcanvas" 
-                            aria-controls="offcanvas-search"
-                            aria-label="{{ 'general.accessibility.search' | t }}"
-                            role="button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                            </svg>
-                        </a>
-                    {% endif %}
-                    {% if shop.customer_accounts_enabled and section.settings.always_show_toggle %}
-                        <a 
-                            class="nav-link d-none d-lg-block {% if template.name == 'login' or template.name == 'account' %}active{% endif %}" 
-                            aria-current="{% if template.name == 'login' or template.name == 'account' %}page{% endif %}" 
-                            href="{{ routes.account_url }}"
-                            aria-label="{{ 'general.accessibility.account' | t }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                <circle cx="12" cy="7" r="4"></circle>
-                            </svg>
-                        </a>
-                    {% endif %}
-                    {% if settings.wishlist_enable and section.settings.always_show_toggle %}
-                        <a 
-                            class="wishlist-icon nav-link d-none d-lg-block"
-                            href="#offcanvas-wishlist"
-                            data-bs-toggle="offcanvas" 
-                            aria-controls="offcanvas-wishlist" 
-                            aria-label="{{ 'general.accessibility.wishlist' | t }}"
-                            role="button">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                            </svg>
-                            <span 
-                                class="wishlist-count-badge badge {% if section.settings.bg_color contains 'bg-primary' %}bg-white text-dark{% else %}bg-primary{% endif %}" 
-                                aria-live="polite"
-                                aria-atomic="true"
-                                hidden>
-                            </span>
-                        </a>
-                    {% endif %}
-                    <a 
-                        class="cart-icon nav-link me-n2" 
-                        {% if settings.cart_drawer_disable == true or request.page_type == 'cart' %}
-                            href="{{ routes.cart_url }}" 
-                        {% else %}
-                            href="#offcanvas-cart" 
-                            data-bs-toggle="offcanvas" 
-                            aria-controls="offcanvas-cart" 
-                            role="button"
-                        {% endif %}
-                        aria-label="{{ 'general.accessibility.cart' | t }} {{ cart.item_count }}">
-                        {% render 'icon-cart' %}
-                        <span 
-                            class="cart-count-badge badge {% if bg_color contains 'bg-primary' %}bg-white text-body{% else %}bg-primary{% endif %}"
-                            {% if cart.item_count == 0 %}hidden{% endif %}>
-                            {{ cart.item_count }}
-                        </span>
-                    </a> 
-                </ul>
-            </div>
-        </div>
-    </div>
-</nav>
-                  
-<nav 
-    id="navbar-desktop" 
-    class="navbar {{ navbar_desktop_classes }} {{ bg_color }} {{ section.settings.shadow }} {{ section.settings.menu_desktop_trigger }} {{ pt }} {{ pb }}">
-    <div class="{{ section.settings.container }}">
-        <div class="row align-items-center flex-grow-1">
-            <div class="{% if section.settings.layout_desktop == 'navbar-desktop-logo-left' %}col-3{% else %}col-2 order-1 text-center{% endif %}">
-              <div class="d-none d-lg-block me-3">
-                <a href="{{ routes.root_url }}" class="d-flex align-items-center text-decoration-none">
-                  <img src="{{ 'HOME.png' | asset_url }}" alt="Home" width="40" height="40" class="me-1" style="border-radius: 50%;" loading="lazy">
+  {% case block.type %}
+      <!-- Micro Menu -->
+    {% when 'tools' %}
+      <div class="barre-outils {{ block.settings.bg_color }} {% if block.settings.bg_gradient %}bg-gradient {% endif %}">
+        <div class="tools container d-flex small p-3">
+          <div class="links align-self-center">
+            {% for link in block.settings.toolbar_menu.links %}
+              <a
+                class="link text-decoration-none p-2 {% if block.settings.bg_color contains 'text-white' %}text-current-color{% else %}link-dark{% endif %}"
+                href="{{ link.url }}"
+                target="_blank"
+              >
+                {{ link.title }}
+              </a>
+            {% endfor %}
+          </div>
+          <div class="sociaux d-flex justify-content-end align-items-center flex-grow-1 flex-shrink-1">
+            {% if block.settings['option-outils'] == blank %}
+              {% render 'social-icons' %}
+            {% else %}
+              <div class="links-sav">
+                <a
+                  class="link-dark text-decoration-none p-2"
+                  href="{{ block.settings.option_link }}"
+                >
+                  {{- block.settings.option_text -}}
                 </a>
               </div>
-              <a class="navbar-brand me-auto py-0" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
-                    {% if section.settings.logo %}
-                        {% assign logo_height_x2 = section.settings.logo_height_desktop | times: 2 %}
-                        <img
-                            class="img-fluid"
-                            src="{{ section.settings.logo | image_url: height: logo_height_x2 }}" 
-                            alt="{{ shop.name }}"
-                            width="{{ section.settings.logo_height_desktop | times: section.settings.logo.aspect_ratio | round }}" 
-                            height="{{ section.settings.logo_height_desktop }}"
-                            loading="lazy">
-                    {% elsif section.settings.logo_svg != blank %}
-                        <span class="svg-no-transparent" style="fill: initial;">{{ section.settings.logo_svg }}</span>
-                    {% else %}
-                        <span class="fs-3">
-                            {{ shop.name }}
-                        </span>
-                    {% endif %}
-                </a>
-            </div>
-            <div class="{% if section.settings.layout_desktop == 'navbar-desktop-logo-left' %}col-6{% else %}col-5 order-0{% endif %}">
-                {% render 'navbar-megamenu' %}
-            </div>
-            <div class="{% if section.settings.layout_desktop == 'navbar-desktop-logo-left' %}col-3{% else %}col-5 order-2{% endif %}">
-                {% render 'navbar-desktop-icons' %}
-            </div>
+            {% endif %}
+          </div>
+
+          {% if block.settings.language_selector_show or block.settings.currency_selector_show %}
+            {% if localization.available_languages.size > 1 or shop.enabled_currencies.size > 1 %}
+              <div class="d-flex justify-content-center py-2 ms-4">
+                {% if block.settings.language_selector_show %}
+                  {% render 'dropdown-localization',
+                    btn_color: block.settings.lang_currency_btn_color
+                  %}
+                {% endif %}
+                {% if block.settings.currency_selector_show %}
+                  {% render 'dropdown-currency',
+                    btn_color: block.settings.lang_currency_btn_color
+                  %}
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endif %}
         </div>
+      </div>
+  {% endcase %}
+{% endfor %}
+
+<nav
+  id="navbar-mobile"
+  class="navbar {{ navbar_mobile_classes }} {{ bg_color }} {{ section.settings.shadow }} {{ pt }} {{ pb }}"
+>
+  <div class="container d-block">
+    <div class="row align-items-center">
+      <div class="col-3">
+        <ul class="nav flex-nowrap">
+          <a
+            class="nav-link ms-n2"
+            href="#offcanvas-menu"
+            data-bs-toggle="offcanvas"
+            aria-controls="offcanvas-menu"
+            aria-label="{{ 'general.accessibility.menu' | t }}"
+            role="button"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            {% if settings.layout_mobile == 'navbar-mobile-with-search' %}
+              {% if section.settings.mobile_menu_label %}
+                <span class="ms-2 extra-small text-uppercase">
+                  {{ 'general.menu' | t }}
+                </span>
+              {% else %}
+                <span class="ms-10 extra-small text-uppercase"></span>
+              {% endif %}
+            {% endif %}
+          </a>
+        </ul>
+      </div>
+      <div class="col-6 text-center">
+        <a
+          class="navbar-brand mx-auto py-0"
+          href="{{ routes.root_url }}"
+          aria-label="{{ shop.name }}"
+        >
+          {% if section.settings.logo %}
+            {% assign logo_height_x2 = section.settings.logo_height_mobile | times: 2 %}
+            <img
+              class="img-fluid"
+              src="{{ section.settings.logo | image_url: height: logo_height_x2 }}"
+              alt="{{ shop.name }}"
+              width="{{ section.settings.logo_height_mobile | times: section.settings.logo.aspect_ratio | round }}"
+              height="{{ section.settings.logo_height_mobile }}"
+              loading="lazy"
+            >
+          {% elsif section.settings.logo_svg != blank %}
+            <span class="svg-no-transparent" style="fill: initial;">
+              {{- section.settings.logo_svg -}}
+            </span>
+          {% else %}
+            <span class="fs-3">
+              {{ shop.name }}
+            </span>
+          {% endif %}
+        </a>
+      </div>
+      <div class="col-3">
+        <ul class="nav justify-content-end flex-nowrap">
+          {% if settings.layout_mobile == 'navbar-mobile-with-search' %}
+            <a
+              class="nav-link px-3"
+              href="#offcanvas-search"
+              data-bs-toggle="offcanvas"
+              aria-controls="offcanvas-search"
+              aria-label="{{ 'general.accessibility.search' | t }}"
+              role="button"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </a>
+          {% endif %}
+          {% if shop.customer_accounts_enabled and section.settings.always_show_toggle %}
+            <a
+              class="nav-link d-none d-lg-block {% if template.name == 'login' or template.name == 'account' %}active{% endif %}"
+              aria-current="{% if template.name == 'login' or template.name == 'account' %}page{% endif %}"
+              href="{{ routes.account_url }}"
+              aria-label="{{ 'general.accessibility.account' | t }}"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </a>
+          {% endif %}
+          {% if settings.wishlist_enable and section.settings.always_show_toggle %}
+            <a
+              class="wishlist-icon nav-link d-none d-lg-block"
+              href="#offcanvas-wishlist"
+              data-bs-toggle="offcanvas"
+              aria-controls="offcanvas-wishlist"
+              aria-label="{{ 'general.accessibility.wishlist' | t }}"
+              role="button"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+              <span
+                class="wishlist-count-badge badge {% if section.settings.bg_color contains 'bg-primary' %}bg-white text-dark{% else %}bg-primary{% endif %}"
+                aria-live="polite"
+                aria-atomic="true"
+                hidden
+              >
+              </span>
+            </a>
+          {% endif %}
+          <a
+            class="cart-icon nav-link me-n2"
+            {% if settings.cart_drawer_disable == true or request.page_type == 'cart' %}
+              href="{{ routes.cart_url }}"
+            {% else %}
+              href="#offcanvas-cart"
+              data-bs-toggle="offcanvas"
+              aria-controls="offcanvas-cart"
+              role="button"
+            {% endif %}
+            aria-label="{{ 'general.accessibility.cart' | t }} {{ cart.item_count }}"
+          >
+            {% render 'icon-cart' %}
+            <span
+              class="cart-count-badge badge {% if bg_color contains 'bg-primary' %}bg-white text-body{% else %}bg-primary{% endif %}"
+              {% if cart.item_count == 0 %}
+                hidden
+              {% endif %}
+            >
+              {{ cart.item_count }}
+            </span>
+          </a>
+        </ul>
+      </div>
     </div>
+  </div>
+</nav>
+
+<nav
+  id="navbar-desktop"
+  class="navbar {{ navbar_desktop_classes }} {{ bg_color }} {{ section.settings.shadow }} {{ section.settings.menu_desktop_trigger }} {{ pt }} {{ pb }}"
+>
+  <div class="{{ section.settings.container }}">
+    <div class="row align-items-center flex-grow-1">
+      <div class="{% if section.settings.layout_desktop == 'navbar-desktop-logo-left' %}col-3{% else %}col-2 order-1 text-center{% endif %}">
+        <div class="d-none d-lg-block me-3">
+          <a href="{{ routes.root_url }}" class="d-flex align-items-center text-decoration-none">
+            <img
+              src="{{ 'HOME.png' | asset_url }}"
+              alt="Home"
+              width="40"
+              height="40"
+              class="me-1"
+              style="border-radius: 50%;"
+              loading="lazy"
+            >
+          </a>
+        </div>
+        <a
+          class="navbar-brand me-auto py-0"
+          href="{{ routes.root_url }}"
+          aria-label="{{ shop.name }}"
+        >
+          {% if section.settings.logo %}
+            {% assign logo_height_x2 = section.settings.logo_height_desktop | times: 2 %}
+            <img
+              class="img-fluid"
+              src="{{ section.settings.logo | image_url: height: logo_height_x2 }}"
+              alt="{{ shop.name }}"
+              width="{{ section.settings.logo_height_desktop | times: section.settings.logo.aspect_ratio | round }}"
+              height="{{ section.settings.logo_height_desktop }}"
+              loading="lazy"
+            >
+          {% elsif section.settings.logo_svg != blank %}
+            <span class="svg-no-transparent" style="fill: initial;">
+              {{- section.settings.logo_svg -}}
+            </span>
+          {% else %}
+            <span class="fs-3">
+              {{ shop.name }}
+            </span>
+          {% endif %}
+        </a>
+      </div>
+      <div class="{% if section.settings.layout_desktop == 'navbar-desktop-logo-left' %}col-6{% else %}col-5 order-0{% endif %}">
+        {% render 'navbar-megamenu' %}
+      </div>
+      <div class="{% if section.settings.layout_desktop == 'navbar-desktop-logo-left' %}col-3{% else %}col-5 order-2{% endif %}">
+        {% render 'navbar-desktop-icons' %}
+      </div>
+    </div>
+  </div>
 </nav>
 
 {% render 'offcanvas-menu' %}
 
 <script type="application/ld+json">
+  {
+      "@context": "http://schema.org",
+      "@type": "Organization",
+      "name": {{ shop.name | json }},
+      {% if section.settings.logo %}
+          "logo": {{ section.settings.logo | image_url: width: 500 | prepend: "https:" | json }},
+      {% endif %}
+      "sameAs": [
+          {{ settings.social_facebook | json }},
+          {{ settings.social_twitter | json }},
+          {{ settings.social_instagram | json }},
+          {{ settings.social_pinterest | json }},
+          {{ settings.social_tiktok | json }},
+          {{ settings.social_snapchat | json }},
+          {{ settings.social_snapchat | json }},
+          {{ settings.social_youtube | json }},
+          {{ settings.social_linkedin | json }}
+      ],
+      "url": {{ request.origin | append: page.url | json }}
+  }
+</script>
+
+{% if request.page_type == 'index' %}
+  {% assign potential_action_target = request.origin
+    | append: routes.search_url
+    | append: '?q={search_term_string}'
+  %}
+  <script type="application/ld+json">
     {
         "@context": "http://schema.org",
-        "@type": "Organization",
+        "@type": "WebSite",
         "name": {{ shop.name | json }},
-        {% if section.settings.logo %}
-            "logo": {{ section.settings.logo | image_url: width: 500 | prepend: "https:" | json }},
-        {% endif %}
-        "sameAs": [
-            {{ settings.social_facebook | json }},
-            {{ settings.social_twitter | json }},
-            {{ settings.social_instagram | json }},
-            {{ settings.social_pinterest | json }},
-            {{ settings.social_tiktok | json }},
-            {{ settings.social_snapchat | json }},
-            {{ settings.social_snapchat | json }},
-            {{ settings.social_youtube | json }},
-            {{ settings.social_linkedin | json }}
-        ],
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": {{ potential_action_target | json }},
+            "query-input": "required name=search_term_string"
+        },
         "url": {{ request.origin | append: page.url | json }}
     }
-</script>
-  
-{% if request.page_type == 'index' %}
-    {% assign potential_action_target = request.origin | append: routes.search_url | append: "?q={search_term_string}" %}
-    <script type="application/ld+json">
-        {
-            "@context": "http://schema.org",
-            "@type": "WebSite",
-            "name": {{ shop.name | json }},
-            "potentialAction": {
-                "@type": "SearchAction",
-                "target": {{ potential_action_target | json }},
-                "query-input": "required name=search_term_string"
-            },
-            "url": {{ request.origin | append: page.url | json }}
-        }
-    </script>
+  </script>
 {% endif %}
 
 {% schema %}
@@ -638,105 +727,109 @@ Les contrevenants seront poursuivis dans toute la mesure permise par la loi.
       "limit": 1,
       "settings": [
         {
-            "type": "header",
-            "content": "🏆 Application Micro Menu",
-            "info": "👉 Application Version Shopiweb Premium"
+          "type": "header",
+          "content": "🏆 Application Micro Menu",
+          "info": "👉 Application Version Shopiweb Premium"
         },
         {
-            "type": "paragraph", 
-            "content": "Documentation FR : [Micro menu by Shopiweb](https:\/\/www.docs.shopiweb.fr\/theme-premium\/documentation\/en-tete\/en-tete-navigation\/micro-menu)"
+          "type": "paragraph",
+          "content": "Documentation FR : [Micro menu by Shopiweb](https:\/\/www.docs.shopiweb.fr\/theme-premium\/documentation\/en-tete\/en-tete-navigation\/micro-menu)"
         },
         {
-            "type": "paragraph",
-            "content": "Visible seulement sur ordinateur."
+          "type": "paragraph",
+          "content": "Visible seulement sur ordinateur."
         },
         {
-            "type": "header",
-            "content": "General"
+          "type": "header",
+          "content": "General"
         },
         {
-            "type": "select",
-            "id": "bg_color",
-            "label": "Couleur de l'arrière plan",
-            "default": "bg-light text-body",
-            "options": [
-                { "group": "Principal", "value": "bg-primary text-white", "label": "Primaire" },
-                { "group": "Principal", "value": "bg-secondary text-white", "label": "Secondaire" },
-                { "group": "Principal", "value": "bg-tertiary text-white", "label": "Tertiaire" },
-                { "group": "Intermédiaire", "value": "bg-white text-dark", "label": "Blanc" },
-                { "group": "Intermédiaire", "value": "bg-light text-body", "label": "Claire" },
-                { "group": "Intermédiaire", "value": "bg-dark text-white", "label": "Sombre" },
-                { "group": "Par défaut", "value": "bg-body text-body", "label": "Corps (body)" }
-            ]
+          "type": "select",
+          "id": "bg_color",
+          "label": "Couleur de l'arrière plan",
+          "default": "bg-light text-body",
+          "options": [
+            { "group": "Principal", "value": "bg-primary text-white", "label": "Primaire" },
+            { "group": "Principal", "value": "bg-secondary text-white", "label": "Secondaire" },
+            { "group": "Principal", "value": "bg-tertiary text-white", "label": "Tertiaire" },
+            { "group": "Intermédiaire", "value": "bg-white text-dark", "label": "Blanc" },
+            { "group": "Intermédiaire", "value": "bg-light text-body", "label": "Claire" },
+            { "group": "Intermédiaire", "value": "bg-dark text-white", "label": "Sombre" },
+            { "group": "Par défaut", "value": "bg-body text-body", "label": "Corps (body)" }
+          ]
         },
         {
-            "type": "checkbox",
-            "id": "bg_gradient",
-            "label": "Dégradé d'arrière-plan",
-            "default": false,
-            "info": "Ne s'applique pas aux couleurs claires"
+          "type": "checkbox",
+          "id": "bg_gradient",
+          "label": "Dégradé d'arrière-plan",
+          "default": false,
+          "info": "Ne s'applique pas aux couleurs claires"
         },
         {
-            "type": "link_list",
-            "id": "toolbar_menu",
-            "label": "Menu",
-            "default": "main-menu"
+          "type": "link_list",
+          "id": "toolbar_menu",
+          "label": "Menu",
+          "default": "main-menu"
         },
         {
-            "type": "checkbox",
-            "id": "option-outils",
-            "label": "Remplacer les icônes par un lien",
-            "default": true
+          "type": "checkbox",
+          "id": "option-outils",
+          "label": "Remplacer les icônes par un lien",
+          "default": true
         },
         {
-            "type": "text",
-            "id": "option_text",
-            "label": "Titre du lien",
-            "default": "Service client 7j/7"
+          "type": "text",
+          "id": "option_text",
+          "label": "Titre du lien",
+          "default": "Service client 7j/7"
         },
         {
-            "type": "url",
-            "id": "option_link",
-            "label": "Lien de redirection"
+          "type": "url",
+          "id": "option_link",
+          "label": "Lien de redirection"
         },
         {
-            "type": "checkbox",
-            "id": "language_selector_show",
-            "label": "Afficher le sélecteur de language",
-            "default": true
+          "type": "checkbox",
+          "id": "language_selector_show",
+          "label": "Afficher le sélecteur de language",
+          "default": true
         },
         {
-            "type": "checkbox",
-            "id": "currency_selector_show",
-            "label": "Afficher le sélecteur de devise",
-            "default": true
+          "type": "checkbox",
+          "id": "currency_selector_show",
+          "label": "Afficher le sélecteur de devise",
+          "default": true
         },
         {
-            "type": "select",
-            "id": "lang_currency_btn_color",
-            "label": "Couleur du bouton langue\/devise",
-            "default": "btn-outline-dark",
-            "options": [
-                { "group": "Normal", "value": "btn-link", "label": "Lien" },
-                { "group": "Normal", "value": "btn-light", "label": "Claire" },
-                { "group": "Normal", "value": "btn-dark", "label": "Sombre" },
-                { "group": "Normal", "value": "btn-primary", "label": "Primaire" },
-                { "group": "Normal", "value": "btn-secondary", "label": "Secondaire" },
-                { "group": "Normal", "value": "btn-tertiary", "label": "Tertiaire" },
-                { "group": "Normal", "value": "btn-success", "label": "Succès" },
-                { "group": "Normal", "value": "btn-danger", "label": "Danger" },
-                { "group": "Normal", "value": "btn-warning", "label": "Avertissement" },
-                { "group": "Normal", "value": "btn-info", "label": "Info" },
-                { "group": "Contour", "value": "btn-outline-light", "label": "Contour Claire" },
-                { "group": "Contour", "value": "btn-outline-dark", "label": "Contour Sombre" },
-                { "group": "Contour", "value": "btn-outline-primary", "label": "Contour Primaire" },
-                { "group": "Contour", "value": "btn-outline-secondary", "label": "Contour Secondaire" },
-                { "group": "Contour", "value": "btn-outline-tertiary", "label": "Contour Tertiaire" },
-                { "group": "Contour", "value": "btn-outline-success", "label": "Contour Succès" },
-                { "group": "Contour", "value": "btn-outline-danger", "label": "Contour Danger" },
-                { "group": "Contour", "value": "btn-outline-warning", "label": "Contour Avertissement" },
-                { "group": "Contour", "value": "btn-outline-info", "label": "Contour Info" }
-            ]
+          "type": "select",
+          "id": "lang_currency_btn_color",
+          "label": "Couleur du bouton langue\/devise",
+          "default": "btn-outline-dark",
+          "options": [
+            { "group": "Normal", "value": "btn-link", "label": "Lien" },
+            { "group": "Normal", "value": "btn-light", "label": "Claire" },
+            { "group": "Normal", "value": "btn-dark", "label": "Sombre" },
+            { "group": "Normal", "value": "btn-primary", "label": "Primaire" },
+            { "group": "Normal", "value": "btn-secondary", "label": "Secondaire" },
+            { "group": "Normal", "value": "btn-tertiary", "label": "Tertiaire" },
+            { "group": "Normal", "value": "btn-success", "label": "Succès" },
+            { "group": "Normal", "value": "btn-danger", "label": "Danger" },
+            { "group": "Normal", "value": "btn-warning", "label": "Avertissement" },
+            { "group": "Normal", "value": "btn-info", "label": "Info" },
+            { "group": "Contour", "value": "btn-outline-light", "label": "Contour Claire" },
+            { "group": "Contour", "value": "btn-outline-dark", "label": "Contour Sombre" },
+            { "group": "Contour", "value": "btn-outline-primary", "label": "Contour Primaire" },
+            { "group": "Contour", "value": "btn-outline-secondary", "label": "Contour Secondaire" },
+            { "group": "Contour", "value": "btn-outline-tertiary", "label": "Contour Tertiaire" },
+            { "group": "Contour", "value": "btn-outline-success", "label": "Contour Succès" },
+            { "group": "Contour", "value": "btn-outline-danger", "label": "Contour Danger" },
+            {
+              "group": "Contour",
+              "value": "btn-outline-warning",
+              "label": "Contour Avertissement"
+            },
+            { "group": "Contour", "value": "btn-outline-info", "label": "Contour Info" }
+          ]
         }
       ]
     },
@@ -746,62 +839,66 @@ Les contrevenants seront poursuivis dans toute la mesure permise par la loi.
       "limit": 1,
       "settings": [
         {
-            "type": "header",
-            "content": "🏆 Application Bouton Navigation",
-            "info": "👉 Application Version Shopiweb Premium"
+          "type": "header",
+          "content": "🏆 Application Bouton Navigation",
+          "info": "👉 Application Version Shopiweb Premium"
         },
         {
-            "type": "paragraph", 
-            "content": "Documentation FR : [Bouton by Shopiweb](https:\/\/www.docs.shopiweb.fr\/theme-premium\/documentation\/en-tete\/en-tete-navigation\/bouton)"
+          "type": "paragraph",
+          "content": "Documentation FR : [Bouton by Shopiweb](https:\/\/www.docs.shopiweb.fr\/theme-premium\/documentation\/en-tete\/en-tete-navigation\/bouton)"
         },
         {
-            "type": "text",
-            "id": "btn_text",
-            "label": "Texte du bouton",
-            "default": "Commander",
-            "info": "Laisser vide pour désactiver"
+          "type": "text",
+          "id": "btn_text",
+          "label": "Texte du bouton",
+          "default": "Commander",
+          "info": "Laisser vide pour désactiver"
         },
         {
-            "type": "url",
-            "id": "btn_url",
-            "label": "URL du bouton"
+          "type": "url",
+          "id": "btn_url",
+          "label": "URL du bouton"
         },
         {
-            "type": "select",
-            "id": "btn_color",
-            "label": "Couleur du bouton",
-            "default": "btn-primary",
-            "options": [
-                { "group": "Normal", "value": "btn-link", "label": "Lien" },
-                { "group": "Normal", "value": "btn-light", "label": "Claire" },
-                { "group": "Normal", "value": "btn-dark", "label": "Sombre" },
-                { "group": "Normal", "value": "btn-primary", "label": "Primaire" },
-                { "group": "Normal", "value": "btn-secondary", "label": "Secondaire" },
-                { "group": "Normal", "value": "btn-tertiary", "label": "Tertiaire" },
-                { "group": "Normal", "value": "btn-success", "label": "Succès" },
-                { "group": "Normal", "value": "btn-danger", "label": "Danger" },
-                { "group": "Normal", "value": "btn-warning", "label": "Avertissement" },
-                { "group": "Normal", "value": "btn-info", "label": "Info" },
-                { "group": "Contour", "value": "btn-outline-light", "label": "Contour Claire" },
-                { "group": "Contour", "value": "btn-outline-dark", "label": "Contour Sombre" },
-                { "group": "Contour", "value": "btn-outline-primary", "label": "Contour Primaire" },
-                { "group": "Contour", "value": "btn-outline-secondary", "label": "Contour Secondaire" },
-                { "group": "Contour", "value": "btn-outline-tertiary", "label": "Contour Tertiaire" },
-                { "group": "Contour", "value": "btn-outline-success", "label": "Contour Succès" },
-                { "group": "Contour", "value": "btn-outline-danger", "label": "Contour Danger" },
-                { "group": "Contour", "value": "btn-outline-warning", "label": "Contour Avertissement" },
-                { "group": "Contour", "value": "btn-outline-info", "label": "Contour Info" }
-            ]
+          "type": "select",
+          "id": "btn_color",
+          "label": "Couleur du bouton",
+          "default": "btn-primary",
+          "options": [
+            { "group": "Normal", "value": "btn-link", "label": "Lien" },
+            { "group": "Normal", "value": "btn-light", "label": "Claire" },
+            { "group": "Normal", "value": "btn-dark", "label": "Sombre" },
+            { "group": "Normal", "value": "btn-primary", "label": "Primaire" },
+            { "group": "Normal", "value": "btn-secondary", "label": "Secondaire" },
+            { "group": "Normal", "value": "btn-tertiary", "label": "Tertiaire" },
+            { "group": "Normal", "value": "btn-success", "label": "Succès" },
+            { "group": "Normal", "value": "btn-danger", "label": "Danger" },
+            { "group": "Normal", "value": "btn-warning", "label": "Avertissement" },
+            { "group": "Normal", "value": "btn-info", "label": "Info" },
+            { "group": "Contour", "value": "btn-outline-light", "label": "Contour Claire" },
+            { "group": "Contour", "value": "btn-outline-dark", "label": "Contour Sombre" },
+            { "group": "Contour", "value": "btn-outline-primary", "label": "Contour Primaire" },
+            { "group": "Contour", "value": "btn-outline-secondary", "label": "Contour Secondaire" },
+            { "group": "Contour", "value": "btn-outline-tertiary", "label": "Contour Tertiaire" },
+            { "group": "Contour", "value": "btn-outline-success", "label": "Contour Succès" },
+            { "group": "Contour", "value": "btn-outline-danger", "label": "Contour Danger" },
+            {
+              "group": "Contour",
+              "value": "btn-outline-warning",
+              "label": "Contour Avertissement"
+            },
+            { "group": "Contour", "value": "btn-outline-info", "label": "Contour Info" }
+          ]
         },
         {
-            "type": "select",
-            "id": "btn_size",
-            "label": "Taille du bouton",
-            "default": "btn-sm",
-            "options": [
-                { "value": "btn-sm", "label": "Petit" },
-                { "value": "btn-md", "label": "Normal" }
-            ]
+          "type": "select",
+          "id": "btn_size",
+          "label": "Taille du bouton",
+          "default": "btn-sm",
+          "options": [
+            { "value": "btn-sm", "label": "Petit" },
+            { "value": "btn-md", "label": "Normal" }
+          ]
         }
       ]
     }

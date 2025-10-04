@@ -4,6 +4,7 @@
   "description": "TPS BASE V1 - Shopify Theme by Shopiweb Premium",
   "main": "index.js",
   "scripts": {
+    "format": "prettier --write \"**/*.{liquid,json,js,css,md}\"",
     "dev": "shopify theme dev",
     "build": "shopify theme build",
     "deploy": "shopify theme push",
@@ -21,6 +22,11 @@
     "npm": ">=8.0.0"
   },
   "devDependencies": {
+    "@shopify/prettier-plugin-liquid": "^1.10.0",
+    "prettier": "^3.6.2",
     "stylelint": "^14.16.1"
+  },
+  "dependencies": {
+    "@sentry/browser": "^10.17.0"
   }
 }

@@ -2,7 +2,7 @@
 
 let hasRegisteredElements = false;
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   if (hasRegisteredElements) return;
   hasRegisteredElements = true;
 
@@ -14,13 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
           super();
           this.count = 0;
           this.attachShadow({ mode: 'open' });
-          this.shadowRoot.innerHTML = \`
+          this.shadowRoot.innerHTML = `
             <button>Clicks: 0</button>
-          \`;
+          `;
           this.button = this.shadowRoot.querySelector('button');
           this.button.addEventListener('click', () => {
             this.count++;
-            this.button.textContent = \`Clicks: \${this.count}\`;
+            this.button.textContent = `Clicks: ${this.count}`;
           });
         }
       }
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       class HelloMessage extends HTMLElement {
         connectedCallback() {
-          this.textContent = "Hello, this is a custom element!";
+          this.textContent = 'Hello, this is a custom element!';
         }
       }
       customElements.define('hello-message', HelloMessage);
@@ -83,12 +83,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         connectedCallback() {
-          this.innerHTML = \`
+          this.innerHTML = `
             <div class="privacy-banner-container" style="background:#816C58; color:white; padding: 20px; text-align: center; position: relative;">
               <span>We use cookies to improve your experience. By using this site, you accept our <a href="/pages/politique-de-confidentialite" style="color:#FFF; text-decoration:underline;">privacy policy</a>.</span>
               <button style="position: absolute; right: 15px; top: 15px; background: transparent; border: none; color: white; font-size: 20px; cursor: pointer;" aria-label="Close privacy banner">&times;</button>
             </div>
-          \`;
+          `;
 
           this.querySelector('button').addEventListener('click', () => {
             this.style.display = 'none';
@@ -104,9 +104,8 @@ document.addEventListener("DOMContentLoaded", () => {
         customElements.define('shopiweb-privacy-banner', PrivacyBannerElement);
         console.log("✅ Fallback custom element 'shopiweb-privacy-banner' registered");
       } catch (fallbackError) {
-        console.error("❌ Impossible de définir le custom element fallback:", fallbackError);
+        console.error('❌ Impossible de définir le custom element fallback:', fallbackError);
       }
     }
   }
-
 });

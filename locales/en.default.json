@@ -52,45 +52,45 @@
     "section_1": "Custom Section 1",
     "section_2": "Custom Section 2"
   },
-"sections": {
-  "list_collections": {
-    "name": "Collections",
-    "settings": {
-      "show_breadcrumbs": {
-        "label": "Show breadcrumbs"
-      },
-      "text_align": {
-        "label": "Text alignment"
-      },
-      "bg_color": {
-        "label": "Background color"
+  "sections": {
+    "list_collections": {
+      "name": "Collections",
+      "settings": {
+        "show_breadcrumbs": {
+          "label": "Show breadcrumbs"
+        },
+        "text_align": {
+          "label": "Text alignment"
+        },
+        "bg_color": {
+          "label": "Background color"
+        }
       }
-    }
-  },
-  "colors": {
-  "white": {
-    "label": "White"
-  },
-  "light": {
-    "label": "Light"
-  },
-  "body": {
-    "label": "Body"
-  }
-},
-"alignment": {
-  "left": "Left",
-  "center": "Center"
-},
-"featured_collections": {
-  "settings": {
-    "btn_text": {
-      "label": "Button text",
-      "default": "View all collections",
-      "info": "Leave blank to disable"
-    }
-  }
-},
+    },
+    "colors": {
+      "white": {
+        "label": "White"
+      },
+      "light": {
+        "label": "Light"
+      },
+      "body": {
+        "label": "Body"
+      }
+    },
+    "alignment": {
+      "left": "Left",
+      "center": "Center"
+    },
+    "featured_collections": {
+      "settings": {
+        "btn_text": {
+          "label": "Button text",
+          "default": "View all collections",
+          "info": "Leave blank to disable"
+        }
+      }
+    },
     "header": "Header",
     "footer": ""
   },

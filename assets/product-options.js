@@ -24,7 +24,7 @@ function handleProductOptionChange(e) {
     // ✅ MAJ prix
     const priceEl = document.querySelector(`.product-price[data-product-id="${productId}"]`);
     if (priceEl) {
-      priceEl.textContent = Shopify.formatMoney(matchedVariant.price, "{{ shop.money_format }}");
+      priceEl.textContent = Shopify.formatMoney(matchedVariant.price, '{{ shop.money_format }}');
     }
 
     // ✅ MAJ image
