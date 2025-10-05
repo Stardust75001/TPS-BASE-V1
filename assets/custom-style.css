@@ -200,12 +200,12 @@
   max-width: 160px;
   width: 100%;
   height: auto;
-  object-fit: contain;
+  object-fit: cover;
   margin-bottom: 1rem;
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-30%, -50%);
+  transform: translate(-50%, -50%);
   background-color: transparent;
   border: none;
 }
