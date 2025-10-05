@@ -99,65 +99,7 @@
                         aria-label="{{ email_ph }}"
 
 <style>
-/* Les champs ne passent jamais à la ligne et prennent toute la place disponible */
-.newsletter-input {
-  white-space: nowrap;
-  flex: 1 1 0%;
-  min-width: 0;
-}
-                        aria-describedby="newsletter-description-{{ section.id }} newsletter-email-error-{{ section.id }}"
-.newsletter-input::placeholder {
-  font-size: var(--ph-size, 15px); /* valeur par défaut */
-  line-height: 1.2;
-  opacity: .9;
-}
-</style>
-
-<script>
-(function () {
-  function availWidth(el) {
-    const cs = getComputedStyle(el);
-    return el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-  }
-  function setFont(ctx, el, size) {
-    const cs = getComputedStyle(el);
-    ctx.font = `${cs.fontWeight || 400} ${size}px ${cs.fontFamily || 'inherit'}`;
-  }
-  function fit(el) {
-    const text = el.getAttribute('placeholder') || '';
-    if (!text) return;
-    const min = parseFloat(el.dataset.phMin || 11);
-    const max = parseFloat(el.dataset.phMax || 16);
-    const w = Math.max(0, availWidth(el));
-    if (!w) return;
-
-    const ctx = document.createElement('canvas').getContext('2d');
-    // si ça passe en taille max on garde
-    setFont(ctx, el, max);
-    if (ctx.measureText(text).width <= w) {
-      el.style.setProperty('--ph-size', max + 'px');
-      return;
-    }
-    // recherche binaire de la plus grande taille qui tient
-    let lo = min, hi = max, best = min;
-    while (lo <= hi) {
-      const mid = (lo + hi) >> 1;
-      setFont(ctx, el, mid);
-      if (ctx.measureText(text).width <= w) { best = mid; lo = mid + 1; }
-      else { hi = mid - 1; }
-    }
-    el.style.setProperty('--ph-size', best + 'px');
-  }
-  function run() {
-    document.querySelectorAll('.newsletter-input').forEach(fit);
-  }
-  addEventListener('load', run, { once: true });
-  addEventListener('resize', run);
-  document.addEventListener('shopify:section:load', run);
-  document.addEventListener('shopify:section:select', run);
-})();
-</script>
-                        aria-required="true"
+/* Les champs sont sur une ligne, prennent toute la place, et le conteneur est en flex */
                         aria-invalid="false"
                         autocorrect="off"
                         autocapitalize="off"

@@ -1757,25 +1757,27 @@ body.sticky-header-active {
 /* ===== NEWSLETTER FORM OPTIMIZED FOR ONE LINE WITH VISIBLE LABELS ===== */
 
 .newsletter-form {
-  max-width: 600px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
 /* Container principal pour les champs en ligne */
 .newsletter-input-row {
   display: flex;
-  gap: 15px;
+  gap: 12px;
   width: 100%;
   margin-bottom: 15px;
-  align-items: flex-end; /* Aligne les champs sur leur base */
+  align-items: flex-end;
+  flex-wrap: wrap;
 }
 
 /* Groupe de champ (label + input) */
 .newsletter-field-group {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  min-width: 0;
+  flex: 1 1 100px;
+  min-width: 100px;
+  max-width: 100%;
 }
 
 /* Labels visibles et lisibles */
@@ -1795,7 +1797,7 @@ body.sticky-header-active {
 /* Champs d'entrée optimisés */
 .newsletter-name-input,
 .newsletter-email-input {
-  flex: 1;
+  flex: 1 1 100px;
   padding: 12px 16px;
   border: 1px solid #e0e0e0;
   outline: none;
@@ -1804,11 +1806,13 @@ body.sticky-header-active {
   border-radius: 6px;
   min-width: 0;
   width: 100%;
+  max-width: 100%;
   transition:
     border-color 0.3s ease,
     box-shadow 0.3s ease;
-  height: 48px; /* Hauteur fixe pour l'alignement */
+  height: 48px;
   box-sizing: border-box;
+  white-space: normal;
 }
 
 /* États de focus */
@@ -1825,13 +1829,15 @@ body.sticky-header-active {
 @media (min-width: 1025px) {
   .newsletter-input-row {
     flex-direction: row;
-    gap: 20px;
+    gap: 8px;
     align-items: flex-end;
+    flex-wrap: nowrap;
   }
 
   .newsletter-field-group {
-    flex: 1;
-    min-width: 200px;
+    flex: 1 1 150px;
+    min-width: 120px;
+    max-width: 100%;
   }
 
   .newsletter-label {
@@ -1845,6 +1851,7 @@ body.sticky-header-active {
     padding: 14px 18px;
     font-size: 16px;
     height: 52px;
+    white-space: normal;
   }
 }
 
@@ -1854,19 +1861,21 @@ body.sticky-header-active {
     flex-direction: row;
     gap: 16px;
     align-items: flex-end;
+    flex-wrap: wrap;
   }
 
   .newsletter-field-group {
-    flex: 1;
-    min-width: 150px;
+    flex: 1 1 100px;
+    min-width: 100px;
+    max-width: 100%;
   }
 
   .newsletter-label {
     font-size: 14px;
     margin-bottom: 6px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
   }
 
   .newsletter-name-input,
@@ -1874,6 +1883,7 @@ body.sticky-header-active {
     padding: 12px 16px;
     font-size: 15px;
     height: 48px;
+    white-space: normal;
   }
 }
 
@@ -1886,20 +1896,23 @@ body.sticky-header-active {
 
   .newsletter-field-group {
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
   }
 
   .newsletter-label {
     font-size: 14px;
     margin-bottom: 5px;
-    white-space: normal; /* Permet le retour à la ligne sur mobile */
+    white-space: normal;
   }
 
   .newsletter-name-input,
   .newsletter-email-input {
     padding: 14px 16px;
-    font-size: 16px; /* Évite le zoom automatique iOS */
+    font-size: 16px;
     height: 52px;
-    min-height: 48px; /* Minimum tactile */
+    min-height: 44px;
+    white-space: normal;
   }
 }
 
