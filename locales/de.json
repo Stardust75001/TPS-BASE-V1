@@ -50,7 +50,11 @@
       "text_3": "Text 3"
     },
     "section_1": "Benutzerdefinierter Abschnitt 1",
-    "section_2": "Benutzerdefinierter Abschnitt 2"
+    "section_2": "Benutzerdefinierter Abschnitt 2",
+    "image_banner_title": "Entdecken Sie eine Oase der Eleganz und Innovation für Ihre Haustiere.",
+    "image_banner_description": "Kuratiertes Sortiment, Gourmet-Leckerlis und Premium-Pflege erwarten Sie.",
+    "image_banner_btn_primary": "JETZT ENTDECKEN!",
+    "image_banner_btn_secondary": "ÜBER UNS"
   },
   "sections": {
     "list_collections": {
@@ -261,7 +265,8 @@
       "slide_of": "Folie {{ current }} von {{ total }}",
       "toggle_sound": "Ton umschalten",
       "utility_icons": "Dienstsymbole",
-      "wishlist": "Wunschliste"
+      "wishlist": "Wunschliste",
+      "back_to_top": "Zurück nach oben"
     },
     "wishlist": {
       "offcanvas_title": "Ihre Wunschliste",
@@ -300,7 +305,20 @@
       "follow_us": "Folgen Sie uns",
       "menu": "Menü",
       "optional": "Optional",
-      "share": "Teilen"
+      "share": "Teilen",
+      "loading": "Wird geladen...",
+      "policy": {
+        "default_title": "Richtlinieninformationen",
+        "default_content": "Bitte fügen Sie Ihren Richtlinientext im Admin-Bereich hinzu.",
+        "last_updated": "Zuletzt aktualisiert: {{ date }}"
+      },
+      "map": {
+        "address": "Adresse",
+        "phone": "Telefon",
+        "email": "E-Mail",
+        "hours": "Öffnungszeiten",
+        "api_key_missing": "Bitte fügen Sie Ihren Google Maps API-Schlüssel in den Theme-Einstellungen hinzu."
+      }
     },
     "password_page": {
       "password_form": {
@@ -318,7 +336,20 @@
     },
     "btn_add_to_cart": "In den Warenkorb",
     "text_note_saved": "Notiz gespeichert",
-    "text_btn_save": "Speichern"
+    "text_btn_save": "Speichern",
+    "loading": "Laden...",
+    "map": {
+      "email": "E-Mail",
+      "address": "Adresse",
+      "phone": "Telefon",
+      "hours": "Std",
+      "api_key_missing": "Bitte fügen Sie Ihren Google Maps API-Schlüssel in den Designeinstellungen hinzu."
+    },
+    "policy": {
+      "default_title": "Richtlinieninformationen",
+      "default_content": "Bitte fügen Sie Ihren Richtlinieninhalt im Admin-Bereich hinzu.",
+      "last_updated": "Zuletzt aktualisiert: {{ date }}"
+    }
   },
   "cart": {
     "title": "Ihr Warenkorb",
@@ -362,6 +393,17 @@
       "review": {
         "blocks": {
           "company_location": "Unternehmensstandort"
+        }
+      },
+      "thank_you": {
+        "payment_method_not_charged": "Nicht berechnet",
+        "thank_you_confirmed_items_with_email": {
+          "one": "Sie erhalten in Kürze eine Bestätigungs-E-Mail mit Ihrer Bestellnummer",
+          "other": "Sie erhalten in Kürze Bestätigungs-E-Mails mit Ihren Bestellnummern"
+        },
+        "thank_you_confirmed_items_with_phone": {
+          "one": "Sie erhalten in Kürze eine Bestätigungs-SMS mit Ihrer Bestellnummer",
+          "other": "Sie erhalten in Kürze Bestätigungstexte mit Ihren Bestellnummern"
         }
       }
     }
@@ -473,11 +515,41 @@
   },
   "footer": {
     "newsletter": {
-      "title": "Abonnieren Sie unseren Newsletter",
-      "first_name_placeholder": "Geben Sie Ihren Vornamen ein",
-      "email_placeholder": "Geben Sie Ihre E-Mail-Adresse ein",
-      "submit_button": "Abonnieren",
-      "notice_html": "Mit dem Abonnieren unseres Newsletters stimmen Sie unseren Allgemeinen Geschäftsbedingungen und unserer <a href=\"/pages/confidentialite\">Datenschutzrichtlinie</a> zu."
+      "title": "ABONNIEREN SIE UNSEREN NEWSLETTER",
+      "description_html": "<p>Erhalten Sie die neuesten Updates, Sonderangebote und Tipps zur Tierpflege.</p>",
+      "first_name_placeholder": "Geben Sie Ihren Namen ein",
+      "notice_html": "<p>Mit der Anmeldung stimmen Sie unseren <a href=\"/pages/conditions-generales-de-vente\">Allgemeinen Geschäftsbedingungen</a> und unserer <a href=\"/pages/politique-de-confidentilaite\">Datenschutzrichtlinie</a> zu.</p>"
+    },
+    "menu": {
+      "help": "HILFE",
+      "legal": "RECHTLICHES",
+      "store": "SHOP"
+    },
+    "about": {
+      "description_html": "<p>Eine FALCON TRADING DIVISION</p><p>RCS PARIS 450 573 712</p>"
+    }
+  },
+  "checkout": {
+    "order_status": {
+      "date": "Datum",
+      "email": "E-Mail",
+      "title": "Bestellstatus - {{ order_number }}",
+      "thank_you": "Vielen Dank für Ihre Bestellung!",
+      "order_confirmed": "Ihre Bestellung wurde bestätigt",
+      "order_details": "Bestelldetails",
+      "order_number": "Bestellnummer",
+      "total": "Gesamt",
+      "phone": "Telefon",
+      "shipping_address": "Lieferadresse",
+      "continue_shopping": "Weiter einkaufen"
+    }
+  },
+  "customer_accounts": {
+    "payment_methods": {
+      "add_payment_method_dropdown": {
+        "credit_or_debit_card": "Kredit- oder Debitkarte",
+        "bank_account": "Bankkonto"
+      }
     }
   }
 }

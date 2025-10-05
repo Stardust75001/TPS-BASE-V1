@@ -50,7 +50,11 @@
       "text_3": "Texte 3"
     },
     "section_1": "Section personnalisée 1",
-    "section_2": "Section personnalisée 2"
+    "section_2": "Section personnalisée 2",
+    "image_banner_title": "Découvrez un havre d'élégance et d'innovation pour vos animaux.",
+    "image_banner_description": "Sélections raffinées, friandises gourmandes et soins haut de gamme vous attendent.",
+    "image_banner_btn_primary": "ENTREZ !",
+    "image_banner_btn_secondary": "À PROPOS"
   },
   "sections": {
     "list_collections": {
@@ -299,7 +303,20 @@
       "follow_us": "Suivez-nous",
       "menu": "Menu",
       "optional": "Optionnel",
-      "share": "Partager"
+      "share": "Partager",
+      "loading": "Chargement...",
+      "policy": {
+        "default_title": "Informations sur la politique",
+        "default_content": "Veuillez ajouter le contenu de votre politique dans l'admin.",
+        "last_updated": "Dernière mise à jour : {{ date }}"
+      },
+      "map": {
+        "address": "Adresse",
+        "phone": "Téléphone",
+        "email": "Email",
+        "hours": "Horaires",
+        "api_key_missing": "Veuillez ajouter votre clé API Google Maps dans les paramètres du thème."
+      }
     },
     "password_page": {
       "password_form": {
@@ -459,11 +476,18 @@
   },
   "footer": {
     "newsletter": {
-      "title": "Inscrivez-vous à notre newsletter",
-      "first_name_placeholder": "Entrez votre prénom",
-      "email_placeholder": "Entrez votre adresse e-mail",
-      "submit_button": "S'inscrire",
-      "notice_html": "En vous inscrivant pour recevoir nos e-mails, vous acceptez nos conditions générales et notre <a href=\"/pages/confidentialite\">politique de confidentialité</a>."
+      "title": "ABONNEZ-VOUS À NOTRE NEWSLETTER",
+      "description_html": "<p>Recevez nos nouveautés, offres spéciales et conseils pour vos animaux.</p>",
+      "first_name_placeholder": "Entrez votre nom",
+      "notice_html": "<p>En vous inscrivant, vous acceptez nos <a href=\"/pages/conditions-generales-de-vente\">Conditions de vente</a> et notre <a href=\"/pages/politique-de-confidentilaite\">Politique de confidentialité</a>.</p>"
+    },
+    "menu": {
+      "help": "AIDE",
+      "legal": "LÉGAL",
+      "store": "BOUTIQUE"
+    },
+    "about": {
+      "description_html": "<p>Une division FALCON TRADING</p><p>RCS PARIS 450 573 712</p>"
     }
   }
 }

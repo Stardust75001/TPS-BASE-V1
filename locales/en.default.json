@@ -10,9 +10,9 @@
 {
   "no_reviews": "No reviews",
   "announcement": {
-    "shipping_notice": "Shipping throughout Europe (EEA)",
-    "title": "Announcement",
-    "text": "This is an announcement message."
+    "shipping_notice": "",
+    "title": "",
+    "text": ""
   },
   "gift_card": {
     "title": "Here's your gift card!",
@@ -50,7 +50,11 @@
       "text_3": "Text 3"
     },
     "section_1": "Custom Section 1",
-    "section_2": "Custom Section 2"
+    "section_2": "Custom Section 2",
+    "image_banner_title": "Discover a haven of elegance and innovation for your pets.",
+    "image_banner_description": "Curated selections, gourmet treats, and premium care await.",
+    "image_banner_btn_primary": "COME ON IN!",
+    "image_banner_btn_secondary": "ABOUT US"
   },
   "sections": {
     "list_collections": {
@@ -249,12 +253,11 @@
       "model_3d_fullscreen": "Fullscreen model",
       "model_3d_increase": "Increase model size",
       "back_to_top": "Back to top",
-      "product_media_gallery": "Product media gallery",
+      "product_media_gallery": "Product gallery",
       "model_3d_list_label": "3D models",
       "next": "Next",
       "payment_methods": "Payment methods",
       "previous": "Previous",
-      "product_media_gallery": "Product gallery",
       "product_options": "Product options",
       "search": "Search",
       "skip_content": "Skip to content",
@@ -489,11 +492,18 @@
   },
   "footer": {
     "newsletter": {
-      "title": "Sign up for our newsletter",
-      "first_name_placeholder": "Enter your first name",
-      "email_placeholder": "Enter your email",
-      "submit_button": "Subscribe",
-      "notice_html": "By signing up to receive emails, you agree to our terms and conditions and our <a href=\"/pages/confidentialite\">privacy policy</a>."
+      "title": "SUBSCRIBE TO OUR NEWSLETTER",
+      "description_html": "<p>Get the latest updates, special offers, and pet care tips.</p>",
+      "first_name_placeholder": "Enter your name",
+      "notice_html": "<p>By signing up, you agree to our <a href=\"/pages/conditions-generales-de-vente\">Terms of Sale</a> and <a href=\"/pages/politique-de-confidentilaite\">Privacy Policy</a>.</p>"
+    },
+    "menu": {
+      "help": "HELP",
+      "legal": "LEGAL",
+      "store": "STORE"
+    },
+    "about": {
+      "description_html": "<p>A FALCON TRADING DIVISION</p><p>RCS PARIS 450 573 712</p>"
     }
   }
 }
