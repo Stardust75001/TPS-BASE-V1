@@ -160,11 +160,9 @@
 											{%- endunless -%}
 
 										{% when 'newsletter' %}
-											{% unless block.settings.description == blank %}
-												<div class="rte mt-2 mb-3 small">
-													{{ block.settings.description }}
-												</div>
-											{% endunless %}
+											<div class="rte mt-2 mb-3 small">
+												{{ 'footer.newsletter.description_html' | t }}
+											</div>
 
 											{% form 'customer' %}
 												<input type="hidden" name="contact[tags]" value="newsletter">
@@ -209,11 +207,9 @@
 													</button>
 												</div>
 
-												{% unless block.settings.notice == blank %}
-													<div class="notice rte mt-3 lh-sm extra-small text-center">
-														{{ block.settings.notice }}
-													</div>
-												{% endunless %}
+												<div class="notice rte mt-3 lh-sm extra-small text-center">
+													{{ 'footer.newsletter.notice_html' | t }}
+												</div>
 											{% endform %}
 									{% endcase %}
 								</div>
