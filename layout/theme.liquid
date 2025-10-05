@@ -185,5 +185,52 @@
       <script src="{{ 'wishlist.js' | asset_url }}" async></script>
     {% endif %}
     <script src="{{ 'stories-tooltips.js' | asset_url }}" defer></script>
+    <!-- Newsletter placeholder auto-fit script -->
+    <script>
+      (function () {
+        function availWidth(el) {
+          const cs = getComputedStyle(el);
+          return el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+        }
+
+        function setFont(ctx, el, size) {
+          const cs = getComputedStyle(el);
+          ctx.font = (cs.fontWeight || 400) + ' ' + size + 'px ' + (cs.fontFamily || 'inherit');
+        }
+
+        function fit(el) {
+          const text = el.getAttribute('placeholder') || '';
+          if (!text) return;
+          const min = parseFloat(el.dataset.phMin || 11);
+          const max = parseFloat(el.dataset.phMax || 16);
+          const w = Math.max(0, availWidth(el));
+          if (!w) return;
+
+          const ctx = document.createElement('canvas').getContext('2d');
+          // if max already fits, keep it
+          setFont(ctx, el, max);
+          if (ctx.measureText(text).width <= w) { el.style.setProperty('--ph-size', max + 'px'); return; }
+
+          // binary search for best size
+          let lo = min, hi = max, best = min;
+          while (lo <= hi) {
+            const mid = Math.floor((lo + hi) / 2);
+            setFont(ctx, el, mid);
+            if (ctx.measureText(text).width <= w) { best = mid; lo = mid + 1; }
+            else { hi = mid - 1; }
+          }
+          el.style.setProperty('--ph-size', best + 'px');
+        }
+
+        function run() {
+          document.querySelectorAll('.newsletter-input').forEach(fit);
+        }
+
+        window.addEventListener('load', run, { once: true });
+        window.addEventListener('resize', run);
+        document.addEventListener('shopify:section:load', run);
+        document.addEventListener('shopify:section:select', run);
+      })();
+    </script>
   </body>
 </html>

@@ -18,57 +18,24 @@
 %}
 
 {% style %}
-  /* Image2 SVG */
-      .navbar-brand svg {
-        width: {{ section.settings.logo_svg_height }}%;
-      }
-  /* Footer height reduction */
-  #footer {
-      padding-top: 0.75rem !important;
-      padding-bottom: 0.75rem !important;
-  }
-  .footer-logo-img {
-      max-height: 24px;
-  }
-  .footer-logo-wrapper {
-      padding-top: 0.25rem !important;
-      padding-bottom: 0.75rem !important;
-  }
-  .footer-social-icons img.social-img-icon {
-      height: 14px !important;
-      width: 14px !important;
-  }
-  .footer-social-icons {
-      gap: 0.25rem;
-  }
-  .footer-copyright {
-      margin-bottom: 0.25rem !important;
-      font-size: 0.8em;
+/* Image2 SVG */
+  .navbar-brand svg {
+    width: {{ section.settings.logo_svg_height }}%;
   }
 {% endstyle %}
 
 <footer id="footer" class="{{ bg_color }} {{ pt }} {{ pb }}">
   <div class="footer-logo-wrapper d-flex justify-content-center align-items-center">
-    {% if settings.logo %}
-      <img
-        loading="lazy"
-        height="auto"
-        width="auto"
-        src="{{ settings.logo | image_url }}"
-        alt="{{ shop.name }}"
-        class="footer-logo-img"
-      >
-    {% endif %}
-  </div>
+  {% if settings.logo %}
+    <img src="{{ settings.logo | image_url }}" alt="{{ shop.name }}" class="footer-logo-img" width="24" height="24">
+  {% endif %}
+</div>
   <div class="{{ section.settings.container }}">
     <div id="footer-blocks" class="row mb-10">
       {% if section.settings.show_about_area %}
         <div class="col-lg-4">
-          <div
-            id="footer-about"
-            class="me-xl-10 mb-7 mb-lg-0 rounded {% if section.settings.about_bg_transparent %}bg-transparent{% else %}{{ about_bg_color }}{% endif %}"
-          >
-            <a class="navbar-brand mb-3" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+          <div id="footer-about" class="me-xl-10 mb-7 mb-lg-0 rounded text-center {% if section.settings.about_bg_transparent %}bg-transparent{% else %}{{ about_bg_color }}{% endif %}">
+                        <a class="navbar-brand mb-3" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
               {% if section.settings.about_logo != blank %}
                 {% assign logo_height_x2 = section.settings.about_logo_height | times: 2 %}
                 <img
@@ -79,9 +46,7 @@
                   height="{{ section.settings.about_logo_height }}"
                   loading="lazy"
                 >
-              {% elsif section.settings.about_logo == blank
-                and section.settings.svg_logo_footer != blank
-              %}
+              {% elsif section.settings.about_logo == blank and section.settings.svg_logo_footer != blank %}
                 {{ section.settings.svg_logo_footer }}
               {% else %}
                 <span class="fs-3">
@@ -96,18 +61,8 @@
             {% endunless %}
             {% unless section.settings.about_phone_text == blank %}
               <div id="footer-about-phone mb-1">
-                <a
-                  class="rte small d-inline-flex align-items-center"
-                  href="{{ section.settings.about_phone_url }}"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-telephone-fill me-3"
-                    viewBox="0 0 16 16"
-                  >
+                <a class="rte small d-inline-flex align-items-center" href="{{ section.settings.about_phone_url }}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-fill me-3" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
                   </svg>
                   {{ section.settings.about_phone_text }}
@@ -116,18 +71,8 @@
             {% endunless %}
             {% unless section.settings.about_email_text == blank %}
               <div id="footer-about-email mb-1">
-                <a
-                  class="rte small d-inline-flex align-items-center"
-                  href="{{ section.settings.about_email_url }}"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-envelope-fill me-3"
-                    viewBox="0 0 16 16"
-                  >
+                <a class="rte small d-inline-flex align-items-center" href="{{ section.settings.about_email_url }}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill me-3" viewBox="0 0 16 16">
                     <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555ZM0 4.697v7.104l5.803-3.558L0 4.697ZM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757Zm3.436-.586L16 11.801V4.697l-5.803 3.546Z"></path>
                   </svg>
                   {{ section.settings.about_email_text }}
@@ -137,14 +82,7 @@
             {% unless section.settings.about_adresse_text == blank %}
               <div id="footer-about-adresse mb-0">
                 <div class="small rte d-inline-flex align-items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-geo-alt-fill me-3"
-                    viewBox="0 0 16 16"
-                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo-alt-fill me-3" viewBox="0 0 16 16">
                     <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
                   </svg>
                   {{ section.settings.about_adresse_text }}
@@ -164,8 +102,7 @@
                 data-bs-toggle="collapse"
                 aria-expanded="false"
                 aria-controls="block-collapse-{{ block.id }}"
-                role="button"
-              >
+                role="button">
                 {{ block.settings.title }}
               </a>
               <h3 class="title d-none d-lg-inline-block {{ block.settings.title_size }}">
@@ -183,10 +120,7 @@
                         </div>
                       {% endunless %}
                       {% unless block.settings.btn_text == blank %}
-                        <a
-                          class="btn btn-sm w-100 mt-6 {{ block.settings.btn_color }} {{ btn_shadow_sp }} {{ block.settings.btn_size }}"
-                          href="{{ block.settings.btn_url }}"
-                        >
+                        <a class="btn btn-sm w-100 mt-6 {{ block.settings.btn_color }} {{ btn_shadow_sp }} {{ block.settings.btn_size }}" href="{{ block.settings.btn_url }}">
                           {{ block.settings.btn_text }}
                         </a>
                       {% endunless %}
@@ -211,18 +145,14 @@
                       {% endunless %}
                       {% unless block.settings.image_footer == blank -%}
                         {% assign image_height_2x = block.settings.image_footer_height | times: 2 %}
-                        <a
-                          class="d-flex align-items-center"
-                          href="{{ block.settings.image_link_url }}"
-                        >
+                        <a class="d-flex align-items-center" href="{{ block.settings.image_link_url }}">
                           <img
                             class="img-fluid mx-auto d-block rounded mt-4"
-                            src="{{ block.settings.image_footer | image_url: height: image_height_2x }}"
+                            src= "{{ block.settings.image_footer | image_url: height: image_height_2x }}"
                             alt="{{ shop.name }}"
                             width="{{ block.settings.image_footer_height | times: block.settings.image_footer.aspect_ratio | round }}"
                             height="{{ block.settings.image_footer_height }}"
-                            loading="lazy"
-                          >
+                            loading="lazy">
                         </a>
                       {%- else -%}
                         {{ 'detailed-apparel-1' | placeholder_svg_tag: 'placeholder-svg rounded' }}
