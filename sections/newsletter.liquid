@@ -99,8 +99,12 @@
                         aria-label="{{ email_ph }}"
 
 <style>
-/* Les champs ne passent jamais à la ligne */
-.newsletter-input { white-space: nowrap; }
+/* Les champs ne passent jamais à la ligne et prennent toute la place disponible */
+.newsletter-input {
+  white-space: nowrap;
+  flex: 1 1 0%;
+  min-width: 0;
+}
                         aria-describedby="newsletter-description-{{ section.id }} newsletter-email-error-{{ section.id }}"
 .newsletter-input::placeholder {
   font-size: var(--ph-size, 15px); /* valeur par défaut */
