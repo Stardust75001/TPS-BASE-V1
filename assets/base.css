@@ -1757,7 +1757,8 @@ body.sticky-header-active {
 /* ===== NEWSLETTER FORM OPTIMIZED FOR ONE LINE WITH VISIBLE LABELS ===== */
 
 .newsletter-form {
-  max-width: 900px;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -1813,6 +1814,13 @@ body.sticky-header-active {
   height: 48px;
   box-sizing: border-box;
   white-space: normal;
+}
+
+.newsletter-name-input::placeholder,
+.newsletter-email-input::placeholder {
+  font-size: 10px;
+  line-height: 1.2;
+  opacity: .9;
 }
 
 /* États de focus */
@@ -2788,23 +2796,22 @@ body.sticky-header-active {
 
 /* ===== PLACEHOLDERS COMME LABELS PRINCIPAUX ===== */
 
-/* Placeholders bien visibles et lisibles */
+
+/* Placeholders bien visibles et lisibles - unified rule */
 .newsletter-name-input::placeholder,
 .newsletter-email-input::placeholder {
-  color: #6b7280 !important;
-  opacity: 1 !important;
-  font-weight: 500 !important;
-  font-size: 16px !important;
-  line-height: 1.5 !important;
-  transition: all 0.3s ease !important;
+  font-size: 10px !important;
+  line-height: 1.2;
+  opacity: 0.9;
+  color: #6b7280;
 }
+
 
 /* Placeholders au focus - restent lisibles */
 .newsletter-name-input:focus::placeholder,
 .newsletter-email-input:focus::placeholder {
-  color: #9ca3af !important;
-  opacity: 0.8 !important;
-  transform: translateY(-2px) !important;
+  color: #9ca3af;
+  opacity: 0.8;
 }
 
 /* Amélioration de la lisibilité sur tous les supports */

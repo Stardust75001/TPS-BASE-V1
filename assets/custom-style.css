@@ -472,15 +472,11 @@
 
   /* === Newsletter placeholder sizing: keep inputs on one line and scale placeholder only === */
   .newsletter-input { white-space: nowrap; }
-  .newsletter-input::placeholder {
-    font-size: var(--ph-size, 15px); /* default */
-    line-height: 1.2;
-    opacity: 0.9;
-  }
+  /* Removed duplicate .newsletter-input::placeholder rule, now handled in base.css */
 
   /* For small viewports keep behavior predictable */
   @media (max-width: 480px) {
-    .newsletter-input::placeholder { font-size: calc(var(--ph-size, 15px) - 1px); }
+    /* Removed duplicate .newsletter-input::placeholder rule, now handled in base.css */
   }
   .newsletter-terms {
     font-size: 11px;
