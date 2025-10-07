@@ -1,24 +1,4 @@
-name: Weekly Sitemap Submit (GSC API)
-
-on:
-  schedule:
-    # 20:00 Europe/Paris (2 crons pour l'été/hiver car GHA est en UTC)
-    - cron: "0 18 * * 0"  # CEST (été)
-    - cron: "0 19 * * 0"  # CET  (hiver)
-  workflow_dispatch: {}
-
-env:
-  # Propriété Search Console (TYPE DOMAIN)
-  GSC_PROPERTY: "sc-domain:thepetsociety.paris"
-
-  # Liste des sitemaps à soumettre (tu peux n’en laisser qu’un : sitemap.xml)
-  SITEMAP_URLS: >
-    https://thepetsociety.paris/sitemap.xml
-    https://thepetsociety.paris/sitemap_products_1.xml
-    https://thepetsociety.paris/sitemap_collections_1.xml
-    https://thepetsociety.paris/sitemap_pages_1.xml
-    https://thepetsociety.paris/sitemap_blogs_1.xml
-
+# .github/workflows/weekly-sitemap-submit.yml
 jobs:
   submit:
     runs-on: ubuntu-latest
@@ -31,8 +11,9 @@ jobs:
       - name: Setup gcloud
         uses: google-github-actions/setup-gcloud@v2
 
-      # Sécurité : ne lancer que s'il est 20:00 à Paris
+      # ⬇️ Ne bloque que pour le cron, pas pour workflow_dispatch
       - name: Guard 20:00 Europe/Paris
+        if: ${{ github.event_name == 'schedule' }}
         run: |
           NOW=$(TZ=Europe/Paris date +%H:%M)
           echo "Current time in Paris: $NOW"
@@ -52,13 +33,40 @@ print(urllib.parse.quote(os.environ["VAL"], safe=""))
 PY
           }
 
+          submit_one () {
+            local endpoint="$1"
+            local max_attempts=5
+            local attempt=1
+            local backoff=2
+            while :; do
+              echo "PUT $endpoint (attempt $attempt/$max_attempts)"
+              httpcode=$(curl -sS -o /tmp/res.txt -w "%{http_code}" -X PUT "$endpoint" \
+                -H "Authorization: Bearer $ACCESS_TOKEN" \
+                -H "Content-Type: application/json" || true)
+              if [[ "$httpcode" =~ ^2 ]]; then
+                echo "✅ OK ($httpcode)"
+                return 0
+              fi
+              # Retry sur 429/5xx
+              if [[ "$httpcode" == "429" || "$httpcode" =~ ^5 ]]; then
+                if [ "$attempt" -lt "$max_attempts" ]; then
+                  echo "⚠️ $httpcode, retry in ${backoff}s…"
+                  sleep "$backoff"
+                  attempt=$((attempt+1))
+                  backoff=$((backoff*2))
+                  continue
+                fi
+              fi
+              echo "❌ Failed ($httpcode)"
+              echo "Response:"
+              cat /tmp/res.txt || true
+              return 1
+            done
+          }
+
           for URL in $SITEMAP_URLS; do
             VAL="$GSC_PROPERTY"; SITE_ENC=$(VAL="$VAL" urlenc)
             VAL="$URL";          FEED_ENC=$(VAL="$VAL" urlenc)
             ENDPOINT="https://www.googleapis.com/webmasters/v3/sites/${SITE_ENC}/sitemaps/${FEED_ENC}"
-            echo "PUT $ENDPOINT"
-            curl -fsS -X PUT "$ENDPOINT" \
-              -H "Authorization: Bearer $ACCESS_TOKEN" \
-              -H "Content-Type: application/json" \
-              && echo "✅ Submitted $URL" || { echo "❌ Failed $URL"; exit 1; }
+            submit_one "$ENDPOINT"
           done
