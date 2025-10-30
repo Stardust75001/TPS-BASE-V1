@@ -1,0 +1,21 @@
+name: 🔍 Ahrefs SEO Audit
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Fetch Ahrefs Data
+        env:
+          AHREFS_API_KEY: ${{ secrets.AHREFS_API_KEY }}
+          STORE_URL: "https://thepetsociety.paris"
+        run: |
+          npm install axios
+          node .github/scripts/ahrefs-audit.js
